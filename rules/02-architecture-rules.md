@@ -55,4 +55,6 @@ Khi thực hiện một tính năng mới (Ví dụ: "Thêm lý do disable vào 
 ## 4. Code Generation Rules
 Dự án phụ thuộc nhiều vào code generation.
 *   **Khi nào chạy:** Sau khi sửa Entity, Model, API Service (Retrofit), Table (Drift), hoặc Routes.
+*   **Quy tắc Handover:** AI **KHÔNG** tự động chạy lệnh này (do tốn tài nguyên). AI phải **DỪNG LẠI** và yêu cầu User chạy:
+    > "Tôi đã cập nhật cấu trúc dữ liệu. Bạn vui lòng chạy `make gen` để cập nhật code sinh. Hãy xác nhận 'OK' khi hoàn tất để tôi tiếp tục."
 *   **Lệnh:** `make gen` (cho one-time build) hoặc `make gen-watch`.

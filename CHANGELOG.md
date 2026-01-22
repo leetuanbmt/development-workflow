@@ -2,6 +2,14 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [2.2.0] - 2026-01-22
+### ⚡️ Optimization & Workflow Refinement
+- **Code Gen Checkpoint:** Thêm quy tắc bắt buộc AI dừng lại (Wait Step) khi gặp task cần chạy `build_runner`, chuyển quyền thực thi cho User.
+- **Skill Unification:** Tinh gọn hệ thống Skill.
+    - Hợp nhất `pr_reviewer` vào `code_reviewer` (Reviewer giờ đây check cả tính nhất quán và DB migration).
+    - Merge `feature_analyst` vào `feature_architect`.
+- **Documentation:** Cập nhật `README.md` phản ánh chính xác quy trình "Humanized Simulation" và "Atomic Execution".
+
 ## [2.1.0] - 2026-01-22
 ### 🚀 Enhancements (Advanced Automation)
 - **Atomic Execution:** AI tự động chia nhỏ các task lớn (quy tắc >150 dòng) để tránh mất context và đảm bảo chất lượng code.

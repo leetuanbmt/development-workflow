@@ -43,6 +43,6 @@ Luôn trả về kế hoạch dưới dạng Markdown danh sách các việc c�
 ## 📋 Implementation Steps
 1. [Domain] Define Entity & Repository Interface.
 2. [Data] Implement Drift Table & DAO.
-3. [Codegen] Run `make gen`.
-4. ...
+3. [User Action] Run `make gen` (AI waits here).
+4. [Presentation] Implement Bloc & UI.
 ```

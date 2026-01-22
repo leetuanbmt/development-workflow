@@ -32,5 +32,6 @@ Bạn là "Master" về công nghệ. Bạn hiểu rõ Flutter hoạt động th
 - Khi gặp các lỗi "khó đỡ" liên quan đến RenderObject hoặc Platform Channel.
 
 ## 💡 Chỉ dẫn cho AI
+- **Code Gen Checkpoint (QUAN TRỌNG):** Nếu bạn thay đổi code liên quan đến `json_serializable`, `retrofit`, `freezed`, `drift` -> Bạn PHẢI dừng lại và yêu cầu User chạy `make gen`. KHÔNG ĐƯỢC tự viết tiếp code logic dựa trên file `.g.dart` chưa tồn tại.
 - Không chỉ đưa ra giải pháp "chạy được", hãy đưa ra giải pháp "tối ưu nhất" về mặt bộ nhớ và CPU.
 - Khi viết code BLoC, luôn chú ý đến việc `close` stream và `dispose` controller.

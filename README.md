@@ -1,97 +1,48 @@
-# Standard AI Development Workflow (SOP)
+# 🤖 Kansuke Photo - AI Development Workflow (SOP)
 
-Đây là bộ cấu hình chuẩn cho hệ thống AI Agent hỗ trợ phát triển phần mềm. Kansuke Photo là dự án hiện tại đang áp dụng bộ quy trình này.
+Đây là bộ cấu hình chuẩn cho hệ thống AI Agent hỗ trợ phát triển dự án Kansuke Photo. Quy trình này được thiết kế để cân bằng giữa **tốc độ phát triển** và **tính ổn định của hệ thống** (Clean Architecture).
 
 ---
 
 ## 🚦 Master Workflow: `/start-task`
-Đây là cổng giao tiếp duy nhất để bắt đầu mọi tác vụ. AI sẽ thực hiện thảo luận đa vai trò trước khi hành động.
-
-### 💡 Ví dụ Template chuẩn (Biometric Login Integration)
-
-> **User:** `/start-task Thêm tính năng đăng nhập bằng sinh trắc học`
-
-🟢 BẮT ĐẦU: /start-task Thêm tính năng đăng nhập bằng sinh trắc học
-
-System: Xác định Intent -> New Feature.
-Default Mode: Standard (Vì đây là tính năng bảo mật, cần kỹ lưỡng).
-
-AI sẽ kích hoạt "Cuộc họp nội bộ" (Simulation).
+Mọi tác vụ bắt đầu bằng lệnh `/start-task`. AI sẽ không bao giờ code ngay mà thực hiện 3 bước:
+1.  **Memory Check:** Tìm kiếm bài học cũ trong Knowledge Base.
+2.  **Internal Simulation (Brainstorming):** Giả lập cuộc họp giữa BA, Architect và QA Lead để tìm rủi ro.
+3.  **Mode Selection:** Chọn chế độ `Standard` (Full quy trình), `Hotfix` (Làm nhanh), hoặc `Prototype` (POC).
 
 ---
 
-🗣️ Phase 1: Team Brainstorming Session
-
-> **🤖 Moderator (Tech Lead):** "Team, chúng ta có yêu cầu làm Login Biometric (Vân tay/FaceID). Mode: Standard. Mọi người cho ý kiến nhé."
->
-> **🕵️ QA Lead (Risk Assessment):**
-> "Khoan đã, tính năng này đầy rủi ro. Tôi có vài câu hỏi 'What-if':
-> 1. Thiết bị: Nếu máy không có cảm biến vân tay (hoặc bị hỏng), app có ẩn nút này đi không hay disable?
-> 2. Fallback: Nếu user đổi vân tay trong cài đặt máy (ví dụ thêm ngón tay mới), token cũ có bị vô hiệu hóa không? (Bảo mật).
-> 3. Flow: Nếu xác thực thất bại quá 5 lần (bị OS khóa tạm thời), UI sẽ báo gì? Có nút chuyển sang nhập Password thường không?"
->
-> **🏛️ Architect (Tech Solution):**
-> "Ghi nhận ý kiến của QA. Về kỹ thuật, tôi đề xuất:
-> 1. Lib: Dùng `local_auth`.
-> 2. Logic: Check `canCheckBiometrics` trước khi render UI.
-> 3. Storage: Token đăng nhập phải được lưu trong `flutter_secure_storage`.
-> 4. Security: Cấu hình `AndroidEmbeddingV2` cho Android và `FaceID` permission trong `Info.plist` iOS."
->
-> **🧑‍💼 BA (User Experience):**
-> "Về trải nghiệm, tôi muốn:
-> 1. Lần đầu mở app sau khi update, nên có dialog hỏi 'Bạn có muốn bật đăng nhập nhanh không?'.
-> 2. Nút Biometric phải nằm gần ngón cái, dễ bấm.
-> 3. Icon phải đổi linh hoạt (FaceID icon cho iPhone X+, Fingerprint cho Android cũ)."
->
-> **🤖 Moderator (Conclusion):**
-> "Chốt! Chúng ta cần một Spec chi tiết xử lý 3 vấn đề: Hardware Check, Fallback Flow, và Secure Storage. Chưa đủ điều kiện để Code ngay (DoR Fail)."
+## ⏸️ Code Gen Checkpoint (QUAN TRỌNG)
+Dự án phụ thuộc vào Code Generation (`Freezed`, `Drift`, `Retrofit`). Để tối ưu tài nguyên:
+*   **AI Action:** Khi sửa file gốc, AI sẽ **DỪNG LẠI** tại checkpoint.
+*   **User Action:** Người dùng tự chạy lệnh `make gen` trên máy local.
+*   **Resume:** AI tiếp tục viết code logic sau khi người dùng xác nhận "OK".
 
 ---
 
-🛑 Phase 2: Action Proposal (User Interaction)
+## 🛠 Các Lệnh Điều phối (Workflows)
 
-Dựa trên cuộc thảo luận trên, tôi (AI Agent) quay lại hỏi bạn:
-
-> Chào bạn, Team đã thảo luận xong.
-> Chúng tôi phát hiện vài điểm cần làm rõ trước khi code để tránh bug về sau:
-> 1. Fallback: Khi Biometric fail, bạn muốn user nhập PIN hay Password account?
-> 2. UI: Bạn có muốn hiện dialog gợi ý bật Biometric lần đầu không?
->
-> Đề xuất: Hãy chạy `/write-spec` để chốt các luồng này trước. Bạn có đồng ý không?
-
-*(Tôi đang đợi phản hồi của bạn để tiếp tục, thay vì tự ý code bừa).*
+| Lĩnh vực | Lệnh (Command) | Mục đích |
+| :--- | :--- | :--- |
+| **Setup** | `/setup-agent` | Khởi tạo ngữ cảnh dự án (Tech Stack, Rules). |
+| **Đặc tả** | `/write-spec` | Viết User Stories và Acceptance Criteria. |
+| **Kiến trúc** | `/design-feature` | Thiết kế các layer (Domain/Data/Presentation). |
+| **Phát triển** | `/implement-feature`| **(Atomic Execution)** Chia nhỏ task, code từng phần. |
+| **Chất lượng** | `/review-code` | Review code dựa trên chuẩn Clean Architecture & Lint. |
+| **Sửa lỗi** | `/investigate` | Điều tra nguyên nhân gốc rễ (Root Cause Analysis). |
 
 ---
 
-## 🛠 Detailed Workflows (Quy trình Chi tiết)
+## 📐 Nguyên tắc Cốt lõi (Core Rules)
 
-AI sẽ tự động điều phối các workflow dưới đây:
-
-| Lĩnh vực | Lệnh (Command) | File Cấu hình | Mục đích |
-| :--- | :--- | :--- | :--- |
-| **Setup** | `/setup-agent` | `workflows/setup-agent.md` | **(Run First)** Tự động quét và cài đặt ngữ cảnh dự án. |
-| **Hệ thống** | `/project-overview`| `workflows/project-overview.md` | Báo cáo tổng quan dự án (Onboarding). |
-| **Sản phẩm** | `/write-spec` | `workflows/write-spec.md` | Viết tài liệu đặc tả (User Stories, Specs). |
-| **Thiết kế** | `/design-feature` | `workflows/design-feature.md` | Thiết kế kiến trúc (Domain/Data/UI). |
-| **Phát triển** | `/implement-feature` | `workflows/implement-feature.md` | **(Gated Check DoR)** Biến Spec thành Code. |
-| **Chất lượng** | `/review-code` | `workflows/review-code.md` | **(DoD Enforced)** Review code theo chuẩn Lint/Test. |
-| **Sửa lỗi** | `/investigate` | `workflows/investigate.md` | Điều tra và sửa lỗi (Root Cause Analysis). |
+1.  **Atomic Execution:** Chia nhỏ task lớn. Code không quá 150 dòng/file. Dừng lại xác nhận sau mỗi file lớn.
+2.  **Clean Architecture:** Tuân thủ nghiêm ngặt 3 layer. Domain layer là Pure Dart.
+3.  **Context-Aware Review:** Reviewer phải hiểu nghiệp vụ (Intent) trước khi check cú pháp.
+4.  **Proactive Memory:** Tự động đề xuất lưu bài học kinh nghiệm sau mỗi task thành công.
 
 ---
 
-## 📏 System Rules (Bộ Luật)
-
-Agent tham chiếu các file luật trong `.agent/rules/` để đảm bảo tính nhất quán:
-1.  **`00-core-behavior.md`**: Quy tắc ứng xử & Template thảo luận chuẩn.
-2.  **`01-project-context.md`**: Ngữ cảnh riêng của dự án (Tech Stack, Commands).
-3.  **`02-architecture-rules.md`**: Quy chuẩn Clean Architecture.
-4.  **`04-definition-of-done.md`**: Tiêu chuẩn DoR/DoD.
-
----
-
-## 🚀 Getting Started (Hướng dẫn Cài đặt)
-
-Để áp dụng bộ quy trình này vào dự án mới:
-1.  Copy thư mục `.agent/` vào root dự án.
-2.  Chạy lệnh khởi tạo: **`/setup-agent`** (Để AI tự học dự án của bạn).
-3.  Bắt đầu làm việc: `/start-task`.
+## 🚀 Cách Bắt đầu
+1.  Đảm bảo đã cài đặt đủ môi trường Flutter/Dart.
+2.  Chạy `/setup-agent` để AI cập nhật ngữ cảnh dự án mới nhất.
+3.  Sử dụng `/start-task [yêu cầu]` để bắt đầu làm việc.

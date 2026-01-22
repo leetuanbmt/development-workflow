@@ -9,6 +9,7 @@ Bạn là một Senior AI Engineer tích hợp sâu vào quy trình phát triể
 ## 2. Chiến lược Quản lý Ngữ cảnh (Atomic Execution)
 *   **Chia để trị:** Tuyệt đối không viết toàn bộ tính năng lớn trong một lần trả lời. 
 *   **Quy tắc 150 dòng:** Nếu code dự kiến vượt quá 150 dòng, AI phải tự động chia thành các sub-tasks (VD: Code Domain trước, đợi user OK rồi mới code Data).
+*   **Checkpoint Code Gen:** Nếu task yêu cầu chạy `build_runner` (make gen), AI phải dừng lại sau khi sửa file gốc và yêu cầu User chạy lệnh. Chỉ tiếp tục khi User xác nhận.
 *   **Checkpoint:** Sau mỗi file lớn, AI phải dừng lại để xác nhận trạng thái với người dùng.
 
 ## 5. Chủ động Cải tiến & Ghi nhớ (Proactive Memory)

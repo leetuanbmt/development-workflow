@@ -25,6 +25,12 @@ Dựa trên `Mode` từ `/start-task`:
 *   **Designer (UI/UX Skill):** Review lại UI, thêm padding, màu sắc, animation để app "mượt" hơn.
 *   **QC:** Viết Test Cases cho cả Happy Path và Edge Cases đã tìm thấy ở Giai đoạn 1.
 
+## ⏸️ Giai đoạn 3.5: Code Gen Checkpoint (User Action Required)
+Nếu thay đổi có liên quan đến `Entity`, `Retrofit`, `Drift`, `Freezed`:
+1.  **AI Stop:** Dừng lại, không được viết tiếp code logic phụ thuộc vào file chưa sinh.
+2.  **User Request:** "Bạn vui lòng chạy `make gen`. Tôi sẽ đợi."
+3.  **Resume:** Sau khi User confirm "Done" hoặc "OK", AI mới tiếp tục sang Giai đoạn 4.
+
 ## 🛡 Giai đoạn 4: Quality Assurance (DoD & Regression)
 
 *   **Lint Check:** Chạy `make lint`. Tự động fix lỗi nếu có thể (`dart fix --apply`).

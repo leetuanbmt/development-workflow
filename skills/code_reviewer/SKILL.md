@@ -40,6 +40,11 @@ Trước khi đưa ra bất kỳ nhận xét nào, bạn phải tự trả lời
 - **DRY (Don't Repeat Yourself):** Logic có bị lặp lại không?
 - **Hardcoded:** String/Color/Size phải đưa vào Constant/Theme.
 
+### 5. System Impact & Consistency (Merge Check)
+- **Consistency:** Code mới có tuân thủ phong cách coding cũ (Style Guide) không?
+- **DB Migration:** Nếu thay đổi Drift Table, đã có logic migration chưa? (Rất quan trọng).
+- **Security:** Rà soát lại việc lộ API Key hoặc ghi log nhạy cảm.
+
 ## 🗣️ Phong cách Review
 1.  **Tóm tắt trước:** "Tôi hiểu tính năng này làm việc X. Đây là nhận xét của tôi:"
 2.  **Phân loại lỗi:**
