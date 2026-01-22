@@ -1,94 +1,71 @@
-# Kansuke Photo Agent - Configuration & Guide
+# Standard AI Development Workflow (SOP)
 
-Đây là trung tâm cấu hình cho AI Agent của dự án **Kansuke Photo**. Thư mục này định nghĩa danh tính, kỹ năng, quy tắc và quy trình làm việc chuẩn.
-
-## 🧠 Core Identity (Danh tính Cốt lõi)
-- **Role:** Senior Flutter Engineer & Full-stack Assistant.
-- **Language:** Tiếng Việt (Vietnamese).
-- **Style:** Chuyên nghiệp, ngắn gọn, trung lập cảm xúc.
-- **Philosophy:** Clean Architecture, Test-Driven Development (TDD), Automation First.
-
-## 📂 Cấu trúc Thư mục
-
-```text
-.agent/
-├── rules/          # Các quy tắc "bất di bất dịch" (Tech stack, Architecture).
-├── skills/         # Các kỹ năng chuyên sâu (Personas).
-└── workflows/      # Các quy trình tương tác tự động (Trigger commands).
-```
+Đây là bộ cấu hình chuẩn cho hệ thống AI Agent hỗ trợ phát triển phần mềm. Kansuke Photo là dự án hiện tại đang áp dụng bộ quy trình này.
 
 ---
 
-## ⚡️ Workflows (Quy trình Tự động)
+## 🚦 Master Workflow: `/start-task`
+Đây là cổng giao tiếp duy nhất để bắt đầu mọi tác vụ. AI sẽ thực hiện thảo luận đa vai trò trước khi hành động.
 
-Sử dụng các lệnh (Slash Commands) sau để kích hoạt các quy trình chuẩn hoá:
+### 💡 Ví dụ Template chuẩn (Biometric Login Integration)
 
-| Lĩnh vực | Lệnh (Command) | File Cấu hình | Mục đích |
-| :--- | :--- | :--- | :--- |
-| **Hệ thống** | `/project-status` | `workflows/project-status.md` | Nắm bắt nhanh tình trạng dự án và ngữ cảnh. |
-| **Quản trị (Lead)**| `/audit-architecture`| `workflows/audit-architecture.md` | Kiểm tra tuân thủ kiến trúc Clean Arch/BLoC. |
-| **Phân tích** | `/analyze-feature` | `workflows/analyze-feature.md` | Phân tích logic và luồng dữ liệu của tính năng. |
-| **Sản phẩm** | `/write-spec` | `workflows/write-spec.md` | Viết tài liệu đặc tả (User Stories, Specs). |
-| **Thiết kế** | `/design-feature` | `workflows/design-feature.md` | Thiết kế kiến trúc hệ thống (Domain/Data/UI). |
-| | `/write-adr` | `workflows/write-adr.md` | Ghi lại quyết định kiến trúc (ADR). |
-| **Phát triển** | `/implement-feature` | `workflows/implement-feature.md` | Biến Spec/Design thành Code. |
-| | `/integrate-api` | `workflows/integrate-api.md` | Sinh code Model/Entity/Mapper từ JSON. |
-| | `/manage-i18n` | `workflows/manage-i18n.md` | Quản lý đa ngôn ngữ & Hardcode string. |
-| | `/refactor` | `workflows/refactor.md` | Cải thiện cấu trúc code an toàn. |
-| | `/manage-db` | `workflows/manage-db.md` | Quản lý Drift Schema & Migration. |
-| | `/create-component`| `workflows/create-component.md` | Tạo Widget tái sử dụng (Atomic). |
-| **Chất lượng** | `/write-test` | `workflows/write-test.md` | Tự động viết Unit/Widget Test. |
-| | `/review-code` | `workflows/review-code.md` | Review chi tiết file/folder/feature. |
-| | `/review-pr` | `workflows/review-pr.md` | Review Pull Request tổng thể. |
-| | `/review-ui` | `workflows/review-ui.md` | Đánh giá giao diện và trải nghiệm (UX). |
-| | `/investigate` | `workflows/investigate.md` | Điều tra nguyên nhân gốc rễ và sửa lỗi. |
-| | `/audit-security` | `workflows/audit-security.md` | Kiểm tra lỗ hổng bảo mật. |
-| **Vận hành** | `/doc-code` | `workflows/doc-code.md` | Viết DartDoc comment cho code. |
-| | `/doc-feature` | `workflows/doc-feature.md` | Tạo tài liệu tính năng (Diagram, Test Case). |
-| | `/prepare-release` | `workflows/prepare-release.md` | Chuẩn bị đóng gói phiên bản mới. |
+> **User:** `/start-task Thêm tính năng đăng nhập bằng sinh trắc học`
+
+🟢 BẮT ĐẦU: /start-task Thêm tính năng đăng nhập bằng sinh trắc học
+
+System: Xác định Intent -> New Feature.
+Default Mode: Standard (Vì đây là tính năng bảo mật, cần kỹ lưỡng).
+
+AI sẽ kích hoạt "Cuộc họp nội bộ" (Simulation).
 
 ---
 
-## 📏 Rules (Quy tắc Cốt lõi)
+🗣️ Phase 1: Team Brainstorming Session
 
-Agent sẽ tự động tham chiếu các file này để đảm bảo code sinh ra đúng chuẩn dự án:
-
-1.  **`00-core-behavior.md`**: Quy tắc ứng xử cốt lõi (Tiếng Việt, Trung thực, Khách quan).
-2.  **`01-project-context.md`**: Thông tin tổng quan dự án (Tech Stack, Commands).
-3.  **`02-architecture-rules.md`**: Quy chuẩn Clean Architecture, Coding Convention, DAO Extensions.
-4.  **`03-qa-process.md`**: Quy trình kiểm thử (Testing), Validation và báo cáo.
-
----
-
-## 🧠 Skills (Kỹ năng Chuyên sâu)
-
-Agent có thể đóng vai các chuyên gia khác nhau tùy theo yêu cầu:
-
-*   **`tech_lead`**: Định hướng giải pháp, kiểm soát tuân thủ kiến trúc.
-*   **`product_manager`**: Phân tích yêu cầu, viết Specs.
-*   **`feature_analysis`**: Đọc hiểu logic, luồng dữ liệu (Analysis).
-*   **`feature_architect`**: Thiết kế hệ thống, DB Schema (Design).
-*   **`flutter_expert`**: Chuyên gia Flutter/BLoC, tối ưu hiệu năng.
-*   **`api_integrator`**: Tích hợp API, sinh Model/Entity tự động.
-*   **`localization_expert`**: Quản lý đa ngôn ngữ (i18n).
-*   **`ui_ux_designer`**: Tư vấn giao diện, trải nghiệm người dùng.
-*   **`devops_engineer`**: Quản lý CI/CD, Build system.
-*   **`code_reviewer`**: Review logic và architecture.
-*   **`bug_investigator`**: Điều tra và sửa lỗi.
-*   **`test_engineer`**: Viết Unit/Widget Test.
-*   **`technical_writer`**: Viết tài liệu dự án.
-*   **`security_auditor`**: Kiểm tra bảo mật.
-*   **`pr_reviewer`**: Review Pull Request.
+> **🤖 Moderator (Tech Lead):** "Team, chúng ta có yêu cầu làm Login Biometric (Vân tay/FaceID). Mode: Standard. Mọi người cho ý kiến nhé."
+>
+> **🕵️ QA Lead (Risk Assessment):**
+> "Khoan đã, tính năng này đầy rủi ro. Tôi có vài câu hỏi 'What-if':
+> 1. Thiết bị: Nếu máy không có cảm biến vân tay (hoặc bị hỏng), app có ẩn nút này đi không hay disable?
+> 2. Fallback: Nếu user đổi vân tay trong cài đặt máy (ví dụ thêm ngón tay mới), token cũ có bị vô hiệu hóa không? (Bảo mật).
+> 3. Flow: Nếu xác thực thất bại quá 5 lần (bị OS khóa tạm thời), UI sẽ báo gì? Có nút chuyển sang nhập Password thường không?"
+>
+> **🏛️ Architect (Tech Solution):**
+> "Ghi nhận ý kiến của QA. Về kỹ thuật, tôi đề xuất:
+> 1. Lib: Dùng `local_auth`.
+> 2. Logic: Check `canCheckBiometrics` trước khi render UI.
+> 3. Storage: Token đăng nhập phải được lưu trong `flutter_secure_storage`.
+> 4. Security: Cấu hình `AndroidEmbeddingV2` cho Android và `FaceID` permission trong `Info.plist` iOS."
+>
+> **🧑‍💼 BA (User Experience):**
+> "Về trải nghiệm, tôi muốn:
+> 1. Lần đầu mở app sau khi update, nên có dialog hỏi 'Bạn có muốn bật đăng nhập nhanh không?'.
+> 2. Nút Biometric phải nằm gần ngón cái, dễ bấm.
+> 3. Icon phải đổi linh hoạt (FaceID icon cho iPhone X+, Fingerprint cho Android cũ)."
+>
+> **🤖 Moderator (Conclusion):**
+> "Chốt! Chúng ta cần một Spec chi tiết xử lý 3 vấn đề: Hardware Check, Fallback Flow, và Secure Storage. Chưa đủ điều kiện để Code ngay (DoR Fail)."
 
 ---
 
-## 💡 Getting Started (Bắt đầu)
+🛑 Phase 2: Action Proposal (User Interaction)
 
-Khi bắt đầu một task, hãy luôn:
-1.  Xác định **Skill** phù hợp cần kích hoạt.
-2.  Tham chiếu **Rule** liên quan.
-3.  Sử dụng **Workflow** (Lệnh `/`) để đảm bảo quy trình chuẩn.
+Dựa trên cuộc thảo luận trên, tôi (AI Agent) quay lại hỏi bạn:
 
-Lệnh build quan trọng:
-*   `make gen`: Chạy build_runner (sau khi sửa Entity/Retrofit/Drift).
-*   `make setup`: Cài đặt môi trường.
+> Chào bạn, Team đã thảo luận xong.
+> Chúng tôi phát hiện vài điểm cần làm rõ trước khi code để tránh bug về sau:
+> 1. Fallback: Khi Biometric fail, bạn muốn user nhập PIN hay Password account?
+> 2. UI: Bạn có muốn hiện dialog gợi ý bật Biometric lần đầu không?
+>
+> Đề xuất: Hãy chạy `/write-spec` để chốt các luồng này trước. Bạn có đồng ý không?
+
+*(Tôi đang đợi phản hồi của bạn để tiếp tục, thay vì tự ý code bừa).*
+
+---
+
+## 📏 System Rules & Workflows
+
+Agent tham chiếu các file luật trong `.agent/rules/` để đảm bảo tính nhất quán:
+1.  **`00-core-behavior.md`**: Quy tắc ứng xử & Template thảo luận chuẩn.
+2.  **`04-definition-of-done.md`**: Tiêu chuẩn DoR/DoD.
+3.  **`workflows/`**: Danh sách các lệnh chuyên biệt (`/write-spec`, `/implement-feature`, ...).

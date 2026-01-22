@@ -1,61 +1,54 @@
 ---
-description: "Review code chi tiết cho một File, Thư mục hoặc Tính năng cụ thể (Static Analysis)."
+description: "Review code chi tiết, bắt buộc kiểm tra tuân thủ DoD, Lint và Test."
 trigger: /review-code
 ---
 
-# 🧐 Review Code Chi Tiết (Detailed Code Review)
+# 🧐 Review Code (DoD Enforced)
 
-**Mục tiêu:** Kiểm tra chất lượng code, tuân thủ kiến trúc và tối ưu hiệu năng cho một phạm vi cụ thể (File/Folder/Feature) đang phát triển.
+**Mục tiêu:** Kiểm tra chất lượng code không chỉ bằng mắt (logic) mà còn bằng tiêu chuẩn DoD (Lint, Test, Arch).
 
 ## 🚀 Các bước thực hiện (Execution Steps)
 
-1.  **Xác định Phạm vi (Scope Identification):**
-    *   Nếu input là **File**: Đọc toàn bộ nội dung file.
-    *   Nếu input là **Folder**: Liệt kê (list) và đọc các file quan trọng trong folder (ưu tiên các file logic trước, UI sau).
-    *   Nếu input là **Feature** (vd: "Review Kotei"): Định vị thư mục `lib/features/<feature_name>` và quét toàn bộ 3 layer (Data/Domain/Presentation).
+1.  **Xác định Phạm vi & Chuẩn bị:**
+    *   **Phạm vi:** File, Folder hoặc Feature.
+    *   **Context:** Đọc `04-definition-of-done.md` và `analysis_options.yaml` để hiểu luật chơi.
 
-2.  **Phân tích Chi tiết (Deep Analysis):**
-    *   **Kiến trúc (Kansuke Standard):**
-        *   **Domain:** Có sạch (Pure Dart) không? Có map data từ Data layer không?
-        *   **Data:** Logic DB Drift phức tạp có tách ra `DAO Extension` không?
-        *   **Presentation:** UI có sạch logic không? BLoC có quản lý state immutable không?
-    *   **Code Quality:**
-        *   **Complexity:** Hàm có quá dài (>50 dòng) hoặc lồng nhau quá sâu (nested) không?
-        *   **Safety:** Kiểm tra Null Safety (tránh `!`), xử lý Exception (try-catch).
-        *   **Style:** Naming convention, imports.
-    *   **Performance:**
-        *   Sử dụng `const` cho Widget.
-        *   Tránh tính toán nặng trong hàm `build`.
-        *   Kiểm tra memory leak (StreamSubscription, Controller dispose).
+2.  **Thực thi "QA Simulation" (AI đóng vai CI):**
+    Trước khi đọc logic, hãy thử chạy (hoặc giả lập chạy) các lệnh chất lượng:
+    *   **Lint:** Code có vi phạm rules trong `analysis_options.yaml` không? (Vd: `prefer_single_quotes`, `require_trailing_commas`).
+    *   **Arch:** Có vi phạm Clean Arch (Domain import Flutter, Data gọi UI)?
+    *   **Test:** Tính năng này đã có Unit Test/Widget Test chưa? (Kiểm tra thư mục `test/`).
 
-3.  **Tổng hợp & Đề xuất (Synthesis):**
-    *   Phân loại vấn đề theo mức độ (Critical, Warning, Optimization).
-    *   Cung cấp code refactor mẫu.
+3.  **Phân tích Logic & UX:**
+    *   **State Management:** BLoC/Cubit có xử lý đủ 4 trạng thái (Loading, Error, Success, Empty) không?
+    *   **Safety:** Check Null Safety (`!`), Resource Disposal (Controller, Stream).
+    *   **Performance:** Rebuild không cần thiết? Dùng `const` chưa?
 
-## 📊 Cấu trúc Báo cáo
+## 📊 Mẫu Báo cáo Review (DoD Standard)
 
-### 1. Phạm vi Review (Review Scope)
-*   **Target:** [Đường dẫn file/folder hoặc tên feature]
-*   **Đánh giá chung:** [Tốt / Khá / Cần cải thiện nhiều]
+Kết quả review phải trả về theo định dạng sau:
 
-### 2. Các vấn đề phát hiện (Findings)
+### 1. DoD Checklist (Pass/Fail)
+| Tiêu chí | Trạng thái | Ghi chú |
+| :--- | :--- | :--- |
+| **Lint/Format** | ✅ Pass / 🔴 Fail | (Nếu Fail, chỉ ra lỗi style) |
+| **Clean Arch** | ✅ Pass / 🔴 Fail | (Kiểm tra Dependency Rule) |
+| **Tests** | ✅ Có / ⚠️ Thiếu | (Unit test coverage) |
+| **UI States** | ✅ Đủ / ⚠️ Thiếu | (Check Loading/Error UI) |
 
-| Mức độ | Vị trí (File/Line) | Vấn đề (Issue) | Giải thích & Gợi ý (Suggestion) |
-| :--- | :--- | :--- | :--- |
-| 🔴 **Critical** | `repo_impl.dart:20` | Vi phạm Arch (Gọi UI trong Data) | Inject Service/Event Bus |
-| 🟡 **Warning** | `screen.dart:55` | Rebuild không cần thiết | Dùng `BlocSelector` hoặc tách Widget con |
-| 🔵 **Nitpick** | `utils.dart:10` | Tên biến tối nghĩa | Rename `d` -> `date` |
+### 2. Chi tiết Vấn đề (Findings)
+Phân loại lỗi theo mức độ ảnh hưởng:
 
-### 3. Code Refactoring (Minh hoạ)
-Đưa ra đoạn code so sánh (Before/After) cho vấn đề nghiêm trọng nhất.
+*   🔴 **Critical (Chặn Merge):** Lỗi Logic, Crash, Vi phạm Arch nghiêm trọng.
+*   🟡 **Major (Cần sửa):** Vi phạm Lint, Thiếu Test, Performance kém.
+*   🔵 **Minor (Nên sửa):** Naming, Clean Code, Comment.
 
-```dart
-// ❌ Before
-...
-// ✅ After (Refactored)
-...
-```
+**Ví dụ:**
+> 🔴 **Critical:** `user_repo_impl.dart` import `material.dart`. Vi phạm quy tắc Data Layer.
+> 🟡 **Major:** Chưa có test cho `LoginUseCase`.
 
-## 💡 Lưu ý
-*   Luôn đối chiếu với `02-architecture-rules.md`.
-*   Nếu review **Feature**, hãy kiểm tra sự liên kết giữa các layer (Data -> Domain -> Presentation).
+### 3. Đề xuất Sửa đổi (Refactor Plan)
+Cung cấp code mẫu để fix lỗi Critical/Major.
+
+---
+*Lưu ý: Nếu code quá tệ (nhiều lỗi Critical), hãy đề nghị Reject và Refactor lại thay vì fix lặt vặt.*
