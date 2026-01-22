@@ -17,7 +17,15 @@ AI sẽ tự động xác định hoặc hỏi người dùng chọn một trong
 | **⚖️ Standard** | Phát triển Feature mới, Refactor lớn. | **Full DoR/DoD.** Bắt buộc Spec, Design, Unit Test. |
 | **🧪 Prototype**| Làm nhanh bản thử nghiệm, POC. | **Linh hoạt.** AI tự giả định Spec/Design, tập trung vào UI/UX Flow. |
 
-## 🧠 Quy trình 3 bước (BA -> Lead -> QA)
+## 🧠 Quy trình 3 bước (Memory -> Team -> Action)
+
+1.  **Memory Check (Bước mới):**
+    *   Đọc `.agent/memory/knowledge_base.md`.
+    *   Kiểm tra xem yêu cầu hiện tại có liên quan đến bài học cũ nào không.
+    *   *Ví dụ:* Nếu user yêu cầu làm tính năng liên quan đến `Camera`, hãy nhớ lại lỗi "Camera bị đen trên Samsung" đã lưu trong Memory.
+
+2.  **Internal Simulation (Họp Team):**
+    *   ... (Quy trình cũ giữ nguyên) ...
 
 **BẮT BUỘC:** AI phải in ra nội dung thảo luận giả lập giữa 3 vai trò sau đây trong phản hồi để người dùng theo dõi:
 

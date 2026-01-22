@@ -63,9 +63,35 @@ Dựa trên cuộc thảo luận trên, tôi (AI Agent) quay lại hỏi bạn:
 
 ---
 
-## 📏 System Rules & Workflows
+## 🛠 Detailed Workflows (Quy trình Chi tiết)
+
+AI sẽ tự động điều phối các workflow dưới đây:
+
+| Lĩnh vực | Lệnh (Command) | File Cấu hình | Mục đích |
+| :--- | :--- | :--- | :--- |
+| **Setup** | `/setup-agent` | `workflows/setup-agent.md` | **(Run First)** Tự động quét và cài đặt ngữ cảnh dự án. |
+| **Hệ thống** | `/project-overview`| `workflows/project-overview.md` | Báo cáo tổng quan dự án (Onboarding). |
+| **Sản phẩm** | `/write-spec` | `workflows/write-spec.md` | Viết tài liệu đặc tả (User Stories, Specs). |
+| **Thiết kế** | `/design-feature` | `workflows/design-feature.md` | Thiết kế kiến trúc (Domain/Data/UI). |
+| **Phát triển** | `/implement-feature` | `workflows/implement-feature.md` | **(Gated Check DoR)** Biến Spec thành Code. |
+| **Chất lượng** | `/review-code` | `workflows/review-code.md` | **(DoD Enforced)** Review code theo chuẩn Lint/Test. |
+| **Sửa lỗi** | `/investigate` | `workflows/investigate.md` | Điều tra và sửa lỗi (Root Cause Analysis). |
+
+---
+
+## 📏 System Rules (Bộ Luật)
 
 Agent tham chiếu các file luật trong `.agent/rules/` để đảm bảo tính nhất quán:
 1.  **`00-core-behavior.md`**: Quy tắc ứng xử & Template thảo luận chuẩn.
-2.  **`04-definition-of-done.md`**: Tiêu chuẩn DoR/DoD.
-3.  **`workflows/`**: Danh sách các lệnh chuyên biệt (`/write-spec`, `/implement-feature`, ...).
+2.  **`01-project-context.md`**: Ngữ cảnh riêng của dự án (Tech Stack, Commands).
+3.  **`02-architecture-rules.md`**: Quy chuẩn Clean Architecture.
+4.  **`04-definition-of-done.md`**: Tiêu chuẩn DoR/DoD.
+
+---
+
+## 🚀 Getting Started (Hướng dẫn Cài đặt)
+
+Để áp dụng bộ quy trình này vào dự án mới:
+1.  Copy thư mục `.agent/` vào root dự án.
+2.  Chạy lệnh khởi tạo: **`/setup-agent`** (Để AI tự học dự án của bạn).
+3.  Bắt đầu làm việc: `/start-task`.

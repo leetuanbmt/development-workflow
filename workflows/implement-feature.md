@@ -25,9 +25,18 @@ Dựa trên `Mode` từ `/start-task`:
 *   **Designer (UI/UX Skill):** Review lại UI, thêm padding, màu sắc, animation để app "mượt" hơn.
 *   **QC:** Viết Test Cases cho cả Happy Path và Edge Cases đã tìm thấy ở Giai đoạn 1.
 
-## 🛡 Giai đoạn 4: Quality Assurance (DoD)
-*   Chạy `make lint`, `make test`.
-*   Tự review code dựa trên Checklist DoD.
+## 🛡 Giai đoạn 4: Quality Assurance (DoD & Regression)
 
-## 📦 Giai đoạn 5: Handover
-Xuất báo cáo PR kèm theo các rủi ro đã được xử lý (Risk Mitigation).
+*   **Lint Check:** Chạy `make lint`. Tự động fix lỗi nếu có thể (`dart fix --apply`).
+
+*   **Regression Test:** Chạy `make test` (toàn bộ dự án) để đảm bảo feature mới không làm hỏng tính năng cũ.
+
+*   **Self-Review:** Đối chiếu với checklist DoD.
+
+
+
+## 📦 Giai đoạn 5: Handover (Automation)
+
+1.  **Generate Report:** Sử dụng tool `write_file` để tạo file báo cáo PR tại `docs/prs/PR_[FeatureName].md` thay vì chỉ in ra màn hình.
+
+2.  **User Notification:** Thông báo cho user đường dẫn file báo cáo và hướng dẫn lệnh `git push`.

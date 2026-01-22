@@ -24,6 +24,12 @@ trigger: /setup-agent
         *   Database (VD: Drift, Hive, Room).
     *   **Development Commands:**
         *   Tìm lệnh Build, Run, Test, Gen code trong `Makefile` hoặc `scripts` của `package.json`.
+    *   **Environment Versions:**
+        *   Đọc `android/build.gradle` hoặc `android/app/build.gradle` để tìm `minSdkVersion`, `targetSdkVersion`, `compileSdkVersion`.
+        *   Đọc `android/gradle/wrapper/gradle-wrapper.properties` để tìm Gradle version.
+    *   **Design System Discovery:**
+        *   Tìm các file có tên chứa `color`, `theme`, `typography`, `style` trong `lib/core` hoặc `lib/shared`.
+        *   Ghi chú lại đường dẫn các file này để Designer AI tham khảo sau này.
     *   **Project Structure:**
         *   Kiểm tra xem có dùng Clean Architecture (`data/domain/presentation`) hay MVC không.
 
