@@ -22,15 +22,17 @@ description: Ngữ cảnh kỹ thuật tự động của dự án kansuke_photo
 *   **Local DB:** `Drift` (SQLite)
 *   **Navigation:** `AutoRoute`
 
-## 3. Development Commands (Lệnh thường dùng)
-*   **Setup:** `make setup` hoặc `melos bootstrap`
-*   **Run Dev:** `flutter run` (Cần chỉ định `--dart-define-from-file` tùy môi trường)
-*   **Code Gen:** `make gen` hoặc `melos run build_runner`
-*   **Test:** `make test`
-*   **Lint:** `make lint`
-*   **Build:** `make build-android`, `make build-ios`
+## 4. Development Commands (Lệnh thường dùng)
+*   **Setup:** `[command]`
+*   **Run Dev:** `[command]`
+*   **Code Gen:** `[command]`
+*   **Test:** `[command]`
 
-## 4. Structure Guidelines
+## 5. CI/CD & Pipeline
+*   **Tools:** [GitHub Actions/Fastlane/...]
+*   **Primary Workflows:** [Build APK, Unit Test...]
+
+## 6. Structure Guidelines
 *   **Entry Point:** `lib/main.dart`
 *   **Feature Folder:** `lib/features`
 *   **Core Logic:** `lib/core` (Chứa services, widgets dùng chung, utils)

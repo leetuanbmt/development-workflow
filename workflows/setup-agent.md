@@ -24,6 +24,12 @@ trigger: /setup-agent
         *   Database (VD: Drift, Hive, Room).
     *   **Development Commands:**
         *   Tìm lệnh Build, Run, Test, Gen code trong `Makefile` hoặc `scripts` của `package.json`.
+    *   **CI/CD & Automation Discovery:**
+        *   Tìm thư mục `.github/workflows` (GitHub Actions).
+        *   Tìm `.gitlab-ci.yml` (GitLab CI).
+        *   Tìm `fastlane/` (Fastlane automation).
+        *   Tìm `Jenkinsfile` (Jenkins).
+        *   Tìm `appcenter-post-clone.sh` (AppCenter).
     *   **Environment Versions:**
         *   Đọc `android/build.gradle` hoặc `android/app/build.gradle` để tìm `minSdkVersion`, `targetSdkVersion`, `compileSdkVersion`.
         *   Đọc `android/gradle/wrapper/gradle-wrapper.properties` để tìm Gradle version.

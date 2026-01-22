@@ -49,6 +49,10 @@ trigger: /investigate
 *   [ ] Unit Test đã pass.
 - [ ] Đã kiểm tra các side effects liên quan.
 
+### 5. Bài học Kinh nghiệm (Proactive Memory)
+*   **Hành động AI:** Tự vấn xem lỗi này có đặc thù và đáng lưu lại không.
+*   **Đề xuất:** "Lỗi này do [X], nên lưu vào Knowledge Base để tránh lặp lại."
+
 ## 💡 Hướng dẫn cho Gemini
 *   Đừng vội sửa code ngay khi thấy lỗi. Hãy dành thời gian phân tích tại sao nó xảy ra.
 *   Luôn ưu tiên giải pháp giải quyết tận gốc vấn đề thay vì chỉ fix ở ngọn (UI).
