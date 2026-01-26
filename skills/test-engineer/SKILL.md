@@ -1,5 +1,5 @@
 ---
-name: test_engineer
+name: test-engineer
 description: Chuyên gia kiểm thử tự động. Chuyên viết Unit Test, Widget Test và Integration Test đảm bảo độ phủ (coverage) và chất lượng.
 ---
 
@@ -41,3 +41,12 @@ test('should return data when call is successful', () async {
 - [ ] Test case bao phủ Happy Path.
 - [ ] Test case bao phủ Edge Cases (Lỗi mạng, Null data, Empty list).
 - [ ] Code coverage không bị giảm.
+
+## 🔌 Interface Definition
+
+### Inputs
+- **logic_code** (dart): Business Logic hoặc Widget cần test
+- **test_scenario** (text): Kịch bản test
+
+### Outputs
+- **test_code** (dart): File test executable

@@ -7,21 +7,30 @@ WORKFLOW_DIR = "development-workflow/workflows"
 COMMAND_DIR = ".gemini/commands"
 
 def parse_frontmatter(content):
-    """Trích xuất description từ YAML Frontmatter"""
-    description = "AI Workflow Command"
+    """Trích xuất description, skill và trả về nội dung chính (đã bỏ frontmatter)"""
+    meta = {
+        "description": "AI Workflow Command",
+        "skill": None
+    }
+    body = content
     
     if content.startswith("---"):
         try:
             parts = content.split("---", 2)
             if len(parts) >= 3:
                 header = parts[1]
+                body = parts[2].strip() # Lấy phần nội dung sau frontmatter và xóa khoảng trắng thừa đầu/cuối
+                
                 for line in header.split("\n"):
-                    if line.strip().startswith("description:"):
-                        description = line.split(":", 1)[1].strip().strip('"').strip("'")
+                    line = line.strip()
+                    if line.startswith("description:"):
+                        meta["description"] = line.split(":", 1)[1].strip().strip('"').strip("'")
+                    elif line.startswith("skill:"):
+                        meta["skill"] = line.split(":", 1)[1].strip().strip('"').strip("'")
         except Exception:
             pass
             
-    return description
+    return meta, body
 
 def convert_md_to_toml():
     # Đảm bảo thư mục output tồn tại
@@ -40,14 +49,34 @@ def convert_md_to_toml():
         with open(md_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        description = parse_frontmatter(content)
+        meta, body = parse_frontmatter(content)
         
-        # Escape triple quotes để tránh lỗi cú pháp TOML
-        safe_content = content.replace('"""', '\"\"\"')
+        # --- TOML GENERATION START ---
+        lines = []
         
-        # Tạo nội dung TOML (Dùng phép cộng chuỗi thay vì f-string multiline phức tạp để an toàn)
-        toml_content = 'description = "' + description + '"\n'
-        toml_content += 'prompt = """\n' + safe_content + '\n"""'
+        # 1. Description
+        lines.append(f'description = "{meta["description"]}"')
+        lines.append('') # Empty line
+        
+        # 2. Config Block (Skill)
+        if meta["skill"]:
+            skill_name = meta["skill"] # Keep snake_case for Gemini CLI
+            lines.append('[config.skill]')
+            lines.append(f'name = "{skill_name}"')
+            lines.append(f'path = "skills/{skill_name}"') # Relative path in .gemini
+            lines.append('') # Empty line
+
+        # 3. Prompt
+        # Escape triple quotes in content to avoid TOML syntax errors
+        # Sử dụng body (nội dung đã bỏ frontmatter) thay vì content gốc
+        safe_content = body.replace('"""', '\"\"\"')
+        
+        lines.append('prompt = """')
+        lines.append(safe_content)
+        lines.append('"""')
+        
+        toml_content = "\n".join(lines)
+        # --- TOML GENERATION END ---
         
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(toml_content)

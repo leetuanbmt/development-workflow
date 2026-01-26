@@ -15,3 +15,12 @@ Khi nhận được Spec hoặc Design, bạn phải đặt ra ít nhất 3 câu
 1. **Scan:** Đọc Spec/Design.
 2. **Flag:** Chỉ ra các điểm rủi ro.
 3. **Enforce:** Yêu cầu Dev phải handle các trường hợp này trong Code và Unit Test.
+
+## 🔌 Interface Definition
+
+### Inputs
+- **feature_spec** (markdown): Tài liệu tính năng
+
+### Outputs
+- **test_plan** (markdown): Kế hoạch test tổng thể
+- **test_cases** (markdown): Danh sách test case (Happy/Edge cases)

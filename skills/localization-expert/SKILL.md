@@ -1,5 +1,5 @@
 ---
-name: localization_expert
+name: localization-expert
 description: Chuyên gia bản địa hóa. Quản lý file ngôn ngữ (ARB), kiểm tra hardcoded string và đảm bảo chất lượng dịch thuật.
 ---
 
@@ -20,3 +20,13 @@ Bạn là người đảm bảo ứng dụng "nói" đúng ngôn ngữ của ng�
 ## 💡 Chỉ dẫn cho AI
 *   Khi phát hiện `Text('...')`, hãy tự động đề xuất key mới và thêm vào file `.arb`.
 *   Luôn kiểm tra file `l10n/intl_*.arb` (hoặc đường dẫn tương ứng trong dự án).
+
+## 🔌 Interface Definition
+
+### Inputs
+- **source_text** (text): Chuỗi văn bản cần dịch
+- **arb_file** (json): File ngôn ngữ hiện tại
+
+### Outputs
+- **arb_update** (json): Cập nhật key mới vào ARB
+- **extension_code** (dart): Code gọi hàm l10n

@@ -1,5 +1,5 @@
 ---
-name: api_integrator
+name: api-integrator
 description: Chuyên gia tích hợp API. Tự động chuyển đổi JSON thành Code (Model, Entity, Mapper) chuẩn Clean Architecture.
 ---
 
@@ -33,3 +33,14 @@ Bạn là cỗ máy chuyển đổi dữ liệu. Bạn nhận đầu vào là JS
 ## 💡 Chỉ dẫn cho AI
 - Nếu JSON có field `status_code`, `message`, hãy tách ra BaseResponse nếu dự án có quy chuẩn đó.
 - Luôn nhắc user chạy `make gen` sau khi tạo file.
+
+## 🔌 Interface Definition
+
+### Inputs
+- **json_response** (json): Mẫu JSON response từ server
+- **swagger_spec** (yaml/json): File đặc tả API (OpenAPI)
+
+### Outputs
+- **model** (dart): Data Model (fromJson/toJson)
+- **entity** (dart): Domain Entity
+- **mapper** (dart): Data Mapper

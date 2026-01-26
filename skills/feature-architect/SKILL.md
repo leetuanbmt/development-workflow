@@ -1,5 +1,5 @@
 ---
-name: feature_architect
+name: feature-architect
 description: Chuyên gia thiết kế kiến trúc tính năng. Giúp phân rã yêu cầu thành các layer (Data/Domain/Presentation) và kế hoạch implementation.
 ---
 
@@ -46,3 +46,12 @@ Luôn trả về kế hoạch dưới dạng Markdown danh sách các việc c�
 3. [User Action] Run `make gen` (AI waits here).
 4. [Presentation] Implement Bloc & UI.
 ```
+
+## 🔌 Interface Definition
+
+### Inputs
+- **requirement** (text): Yêu cầu nghiệp vụ (User Story)
+
+### Outputs
+- **architecture_plan** (markdown): Sơ đồ layer và danh sách file cần tạo
+- **data_flow** (markdown): Luồng dữ liệu

@@ -3,9 +3,9 @@ description: "Phân tích, tìm nguyên nhân gốc rễ (Root Cause) của lỗ
 trigger: /investigate
 ---
 
-# 🐛 Điều tra Lỗi (Bug Investigation)
+# 🐛 Điều tra Lỗi (Bug Investigation Only)
 
-**Mục tiêu:** Phân tích, tìm nguyên nhân gốc rễ (Root Cause) của lỗi và đề xuất giải pháp sửa lỗi hiệu quả, tránh phát sinh lỗi mới.
+**Mục tiêu:** Phân tích, tìm nguyên nhân gốc rễ (Root Cause) của lỗi và báo cáo chi tiết. **TUYỆT ĐỐI KHÔNG** tự ý sửa code.
 
 ## 🚀 Các bước thực hiện (Execution Steps)
 
@@ -21,38 +21,34 @@ trigger: /investigate
 3.  **Phân tích Nguyên nhân (Root Cause Analysis):**
     *   Kiểm tra logic tại điểm nghi vấn.
     *   **Common issues:** Null pointer, sai kiểu dữ liệu (parsing error), lỗi bất đồng bộ (async/await), state không được update.
-    *   Xác minh giả thuyết bằng cách đọc code chi tiết.
+    *   Đọc code kỹ lưỡng để xác minh giả thuyết.
 
-4.  **Đề xuất Giải pháp (Proposed Solution):**
-    *   Viết mã sửa lỗi.
-    *   Đảm bảo giải pháp tuân thủ kiến trúc hiện tại.
+4.  **Đánh giá Tác động (Impact Analysis):**
+    *   Xác định lỗi này ảnh hưởng cục bộ (một màn hình) hay toàn cục?
+    *   Có ảnh hưởng đến dữ liệu hay các tính năng liên quan không?
 
-5.  **Xác minh (Verification):**
-    *   Viết Unit Test để tái hiện lỗi (Regression Test).
-    *   Chạy test để đảm bảo lỗi đã được fix.
+5.  **Lập Báo cáo (Report Generation):**
+    *   Tổng hợp thông tin và đưa ra giải pháp đề xuất (nhưng KHÔNG thực thi).
 
-## 📊 Cấu trúc Báo cáo (Investigation Report)
+## 📊 Báo cáo Điều tra (Standard Format)
 
-### 1. Mô tả Lỗi (Bug Summary)
-*   **Vấn đề:** [Mô tả ngắn gọn]
-*   **Mức độ:** [Blocker / Major / Minor]
+Kết quả điều tra **BẮT BUỘC** phải trình bày theo cấu trúc sau:
 
-### 2. Phân tích Nguyên nhân (Root Cause)
-*   **Nguyên nhân:** [Giải thích tại sao lỗi xảy ra]
-*   **Vị trí:** `path/to/file.dart:line_number`
+### 1. Nguyên nhân
+*   Mô tả chi tiết tại sao lỗi xảy ra (Root Cause).
+*   Chỉ rõ file và dòng code gây lỗi (nếu tìm thấy).
 
-### 3. Giải pháp (Solution)
-*   **Cách sửa:** [Mô tả phương án]
-*   **Mã nguồn:** (Code snippet Before/After)
+### 2. Phạm vi ảnh hưởng
+*   Lỗi ảnh hưởng đến những màn hình/tính năng nào?
+*   Mức độ nghiêm trọng (Blocker/Major/Minor).
+*   Rủi ro side-effect nếu sửa.
 
-### 4. Kiểm thử Xác minh (Verification)
-*   [ ] Unit Test đã pass.
-- [ ] Đã kiểm tra các side effects liên quan.
-
-### 5. Bài học Kinh nghiệm (Proactive Memory)
-*   **Hành động AI:** Tự vấn xem lỗi này có đặc thù và đáng lưu lại không.
-*   **Đề xuất:** "Lỗi này do [X], nên lưu vào Knowledge Base để tránh lặp lại."
+### 3. Cách xử lý
+*   Mô tả giải pháp logic để sửa lỗi.
+*   Cung cấp đoạn code gợi ý (Snippet) để Developer tham khảo.
+*   **Lưu ý:** KHÔNG được dùng tool `replace` hay `write_file` để sửa code.
 
 ## 💡 Hướng dẫn cho Gemini
-*   Đừng vội sửa code ngay khi thấy lỗi. Hãy dành thời gian phân tích tại sao nó xảy ra.
-*   Luôn ưu tiên giải pháp giải quyết tận gốc vấn đề thay vì chỉ fix ở ngọn (UI).
+*   Bạn đóng vai trò là "Thám tử" (Detective), không phải "Thợ sửa chữa".
+*   Nhiệm vụ kết thúc sau khi báo cáo được đưa ra.
+*   Nếu người dùng muốn sửa, họ sẽ dùng lệnh `/fix` hoặc yêu cầu cụ thể sau đó.

@@ -25,7 +25,6 @@ link_folder "../development-workflow/CHEAT_SHEET.md" ".gemini/CHEAT_SHEET.md"
 link_folder "../development-workflow/GEMINI.md" ".gemini/GEMINI.md"
 
 # 2. Generate Commands (MD -> TOML)
-# Xóa folder commands cũ để đảm bảo sạch sẽ
 rm -rf .gemini/commands
 mkdir -p .gemini/commands
 
@@ -37,17 +36,47 @@ else
     python development-workflow/scripts/generate_commands.py
 fi
 
-# 3. Cập nhật Submodule (Optional & Safe)
-# Nếu update lỗi thì chỉ warn user, không chặn quá trình sync config
-if [ -d ".git" ]; then
-    echo "📦 Updating development-workflow submodule..."
-    if git submodule update --init --recursive; then
-        echo "   ✅ Submodules updated."
-    else
-        echo "   ⚠️  WARNING: Could not update submodules (dirty working tree?)."
-        echo "   👉 Please check 'git status' inside submodules manually."
-    fi
+# 3. Setup cấu trúc .agent (Google Antigravity Standard)
+echo "🛠  Configuring .agent structure..."
+
+# Xóa .agent/skills cũ để đảm bảo sạch sẽ
+rm -rf .agent/skills
+mkdir -p .agent/skills
+
+# Copy Skills (Source is Native Kebab-case)
+if [ -d "development-workflow/skills" ]; then
+    # Copy toàn bộ folder skills sang .agent
+    cp -R development-workflow/skills/* .agent/skills/
+    echo "   ✨ Synced .agent skills (Strict Google Antigravity Format)"
+    
+    # Đã loại bỏ phần tạo Alias snake_case để tránh duplicate
+else
+    echo "   ⚠️  Warning: development-workflow/skills directory not found!"
 fi
 
-echo "✅ Sync Complete! Your AI is ready."
-echo "👉 Try: /help to see available commands."
+# Sync workflows cho .agent - Chuyển sang kebab-case
+echo "🛠  Configuring .agent workflows..."
+rm -rf .agent/workflows
+mkdir -p .agent/workflows
+
+# Copy rules
+mkdir -p .agent/rules
+if [ -d "development-workflow/rules" ]; then
+    cp -R development-workflow/rules/* .agent/rules/ 2>/dev/null || true
+fi
+
+if [ -d "development-workflow/workflows" ]; then
+    for wf_path in development-workflow/workflows/*.md; do
+        if [ -f "$wf_path" ]; then
+            wf_name=$(basename "$wf_path")
+            # Chuyển sang kebab-case
+            kebab_wf_name=$(echo "$wf_name" | tr '_' '-')
+            cp "$wf_path" ".agent/workflows/$kebab_wf_name"
+        fi
+    done
+    echo "   ✅ Synced .agent workflows"
+fi
+
+cp development-workflow/CHEAT_SHEET.md .agent/ 2>/dev/null || true
+
+echo "✅ Sync Complete! Your AI is ready (Google Antigravity Compliant)."
