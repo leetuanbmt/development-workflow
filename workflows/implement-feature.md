@@ -8,6 +8,24 @@ skills:
 
 # 🔨 Implement Feature (Humanized)
 
+## 🖼️ Quy trình (Process Flow)
+
+```mermaid
+graph TD
+    Start[Request] --> Team[🤝 Team Brainstorming]
+    Team --> Gate{Checking Gates}
+    Gate -->|Standard| SpecReview[Docs Review]
+    Gate -->|Hotfix| Code[Coding]
+    Gate -->|Prototype| Code
+    SpecReview --> Code
+    Code --> Gen{Need Gen?}
+    Gen -->|Yes| Wait[⏸️ User Run Make Gen]
+    Gen -->|No| QA[🛡️ QA Self-Check]
+    Wait --> QA
+    QA --> Report[📝 Generate Report]
+    Report --> End[Handover]
+```
+
 ## 🤝 Giai đoạn 1: Team Refinement (Brainstorming)
 **AI Action:** Đóng vai 3 nhân vật để thảo luận về yêu cầu.
 

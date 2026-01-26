@@ -10,6 +10,26 @@ skills:
 
 **Mục tiêu:** Hướng dẫn quy trình build và deploy ứng dụng an toàn, có kiểm soát version và rollback plan.
 
+## 🖼️ Quy trình (Process Flow)
+
+```mermaid
+graph TD
+    Start[🚀 Deploy Request] --> Check[✅ Pre-Check]
+    Check --> Env{Select Env}
+    Env -->|Dev| BuildDev[Build Dev]
+    Env -->|Staging| BuildStg[Build Staging]
+    Env -->|Prod| Approval{👮 Approval?}
+    Approval -->|Yes| BuildProd[Build Prod]
+    Approval -->|No| Stop[❌ Rejected]
+    BuildDev --> Distribute[📤 Distribute]
+    BuildStg --> Distribute
+    BuildProd --> Upload[Google Play/AppStore]
+    Distribute --> Verify[🕵️ Post-Verify]
+    Upload --> Verify
+    Verify -->|Pass| Success[✅ Done]
+    Verify -->|Fail| Rollback[🔄 Rollback]
+```
+
 ## ⚠️ Điều kiện Tiên quyết (Prerequisites)
 
 > [!IMPORTANT]

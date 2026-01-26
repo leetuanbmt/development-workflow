@@ -11,6 +11,25 @@ skills:
 
 **Mục tiêu:** Phân tích yêu cầu và chọn chế độ vận hành (Mode) phù hợp để cân bằng giữa tốc độ và chất lượng.
 
+## 🖼️ Quy trình (Process Flow)
+
+```mermaid
+graph TD
+    Start[User Request] --> Memory{🧠 Check Memory?}
+    Memory -->|Found| Recall[Recall Lessons]
+    Memory -->|Not Found| Sim[🗣️ Internal Simulation]
+    Recall --> Sim
+    Sim --> Mode{⚙️ Select Mode}
+    Mode -->|Hotfix| Fast[🚀 Hotfix Flow]
+    Mode -->|Standard| Std[⚖️ Standard Flow]
+    Mode -->|Prototype| Proto[🧪 Prototype Flow]
+    Fast --> Execute
+    Std --> Spec[📝 Spec Review]
+    Proto --> Execute
+    Spec --> Design[🏗️ Design Review]
+    Design --> Execute[🔨 Implement]
+```
+
 ## ⚙️ Chế độ Vận hành (Operational Modes)
 
 AI sẽ tự động xác định hoặc hỏi người dùng chọn một trong các chế độ sau:

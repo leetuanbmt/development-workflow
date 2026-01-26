@@ -10,6 +10,26 @@ skills:
 
 **Mục tiêu:** Kiểm tra chất lượng code không chỉ bằng mắt (logic) mà còn bằng tiêu chuẩn DoD (Lint, Test, Arch).
 
+## 🖼️ Quy trình (Process Flow)
+
+```mermaid
+graph TD
+    Start[Review Request] --> Skill{Select Skill}
+    Skill -->|General| CR[Code Reviewer]
+    Skill -->|Deep Tech| FE[Flutter Expert]
+    Skill -->|Security| SA[Security Auditor]
+    CR --> Check[QA Simulation]
+    FE --> Check
+    SA --> Check
+    Check --> Lint{Run Lint?}
+    Lint -->|Pass| Arch{Check Arch?}
+    Lint -->|Fail| Report[🔴 Report Fail]
+    Arch -->|Pass| Logic[Logic & UX Check]
+    Arch -->|Fail| Report
+    Logic -->|Pass| Approve[✅ Approve]
+    Logic -->|Fail| Report
+```
+
 ## 🚀 Các bước thực hiện (Execution Steps)
 
 1.  **MANDATORY: Kích hoạt Skill Chuyên môn (Skill Activation)**
