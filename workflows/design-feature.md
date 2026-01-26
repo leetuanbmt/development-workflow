@@ -1,6 +1,8 @@
 ---
 description: "Chuyển đổi yêu cầu nghiệp vụ thành bản thiết kế kỹ thuật chi tiết theo chuẩn Clean Architecture."
 trigger: /design-feature
+skills:
+  - feature-architect
 ---
 
 # 🏗️ Thiết kế Kiến trúc Tính năng (Feature Architecture Design)

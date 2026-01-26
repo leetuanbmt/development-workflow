@@ -1,6 +1,8 @@
 ---
 description: "Review code chi tiết, bắt buộc kiểm tra tuân thủ DoD, Lint và Test."
 trigger: /review-code
+skills:
+  - code-reviewer
 ---
 
 # 🧐 Review Code (DoD Enforced)
@@ -9,9 +11,19 @@ trigger: /review-code
 
 ## 🚀 Các bước thực hiện (Execution Steps)
 
-1.  **Xác định Phạm vi & Chuẩn bị:**
+1.  **MANDATORY: Kích hoạt Skill Chuyên môn (Skill Activation)**
+    *   Đọc kỹ yêu cầu của user.
+    *   Nếu yêu cầu chứa từ khóa: `memory leak`, `performance`, `slow`, `jank` -> **BẮT BUỘC** gọi skill `flutter-expert`.
+    *   Nếu yêu cầu chứa từ khóa: `security`, `hack`, `token` -> **BẮT BUỘC** gọi skill `security-auditor`.
+    *   Nếu không có từ khóa đặc biệt -> Gọi skill `code-reviewer`.
+    *   *Lưu ý: Không được tự ý review bằng kiến thức chung (general knowledge) mà chưa kích hoạt skill.*
+
+2.  **Xác định Phạm vi & Intent:**
     *   **Phạm vi:** File, Folder hoặc Feature.
-    *   **Context:** Đọc `04-definition-of-done.md` và `analysis_options.yaml` để hiểu luật chơi.
+    *   **Delegation (Quan trọng):**
+        *   Nếu user hỏi về **Memory Leak**, **Performance**, **Jank**: ➡️ Gọi ngay skill `flutter-expert`.
+        *   Nếu user hỏi về **Security**, **Privacy**: ➡️ Gọi skill `security-auditor`.
+        *   Các trường hợp review logic, kiến trúc chung: ➡️ Dùng skill `code-reviewer`.
 
 2.  **Thực thi "QA Simulation" (AI đóng vai CI):**
     Trước khi đọc logic, hãy thử chạy (hoặc giả lập chạy) các lệnh chất lượng:

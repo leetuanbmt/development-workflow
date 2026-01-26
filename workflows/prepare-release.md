@@ -1,6 +1,8 @@
 ---
 description: "Kiểm tra danh sách việc cần làm trước khi phát hành phiên bản mới."
 trigger: /prepare-release
+skills:
+  - devops-engineer
 ---
 
 # 🚀 Chuẩn bị Release (Release Preparation)

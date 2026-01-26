@@ -1,6 +1,8 @@
 ---
 description: "Ghi lại quyết định kiến trúc quan trọng (ADR) để lưu vết lịch sử dự án."
 trigger: /write-adr
+skills:
+  - tech-lead
 ---
 
 # 🏛️ Ghi nhận Quyết định Kiến trúc (Write ADR)

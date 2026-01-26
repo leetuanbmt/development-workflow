@@ -1,6 +1,8 @@
 ---
 description: "Chuyển đổi yêu cầu thô sơ thành Tài liệu Đặc tả (PRD/Specs) chi tiết."
 trigger: /write-spec
+skills:
+  - product-manager
 ---
 
 # 📝 Viết Đặc tả Tính năng (Write Specs)

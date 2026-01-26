@@ -1,6 +1,8 @@
 ---
 description: "Tự động thêm DartDoc comments (///) cho các Class và Method."
 trigger: /doc-code
+skills:
+  - technical-writer
 ---
 
 # 📚 Viết DartDoc (Code Documentation)

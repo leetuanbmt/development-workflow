@@ -1,6 +1,8 @@
 ---
 description: "Rà soát lỗ hổng bảo mật và tuân thủ quy tắc an toàn dữ liệu."
 trigger: /audit-security
+skills:
+  - security-auditor
 ---
 
 # 🛡️ Kiểm tra Bảo mật (Security Audit)

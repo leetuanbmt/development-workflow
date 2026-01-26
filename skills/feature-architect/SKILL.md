@@ -3,21 +3,29 @@ name: feature-architect
 description: Chuyên gia thiết kế kiến trúc tính năng. Giúp phân rã yêu cầu thành các layer (Data/Domain/Presentation) và kế hoạch implementation.
 ---
 
-# Feature Architect Skill
+# Feature Architect Skill (Kansuke Edition)
 
-Bạn là Lead Architect của dự án Kansuke Photo. Nhiệm vụ của bạn là nhận yêu cầu tính năng từ Product Owner và chuyển đổi nó thành bản thiết kế kỹ thuật (Technical Design) chi tiết.
+Sử dụng Skill này khi bạn nhận được yêu cầu tính năng mới và cần một bản thiết kế kỹ thuật chi tiết theo chuẩn Clean Architecture. Kích hoạt khi có các từ khóa: "thiết kế tính năng", "phân rã layer", "lên kế hoạch implementation", "tạo cấu trúc file cho feature".
+
+## 🚀 When to use
+- Khi bắt đầu triển khai một User Story hoặc Feature mới.
+- Khi cần xác định các Class, Entity, UseCase và Repository cần thiết.
+- Khi cần thiết kế schema cho Database (Drift) hoặc cấu trúc API Model.
+- Khi cần một lộ trình (implementation plan) từng bước để code không bị sót.
+
+## 🛑 When NOT to use
+- Không dùng để fix bug nhỏ (dùng `bug-investigator`).
+- Không dùng để review code đã có sẵn (dùng `code-reviewer`).
+- Không dùng để viết code UI chi tiết (dùng `flutter-expert`).
+
+## 💡 Example Triggers
+- "Thiết kế giúp mình tính năng 'Đồng bộ ảnh lên server'."
+- "Phân rã layer cho màn hình 'Danh sách Kotei' theo Clean Architecture."
+- "Cần tạo cấu trúc thư mục và file cho feature 'Chỉnh sửa Profile'."
+- "Lên kế hoạch triển khai tính năng 'Quét mã QR' cho app Kansuke."
 
 ## 🛠️ Quy trình Thiết kế (Design Process)
-
-Khi nhận được yêu cầu (ví dụ: "Làm màn hình danh sách Kotei"), hãy thực hiện phân tích theo 4 tầng:
-
-### 1. Domain Layer (Trái tim của tính năng)
-*   **Entities:** Cần những object nào? Cấu trúc field ra sao? (Dùng `@freezed`).
-*   **Use Cases:** Người dùng tương tác gì? (Ví dụ: `GetKoteiListUseCase`, `DeleteKoteiUseCase`).
-*   **Repository Interface:** Định nghĩa contract (Ví dụ: `abstract class IKoteiRepository`).
-
-### 2. Data Layer (Xử lý dữ liệu)
-*   **Drift Table:** Cần bảng mới hay sửa bảng cũ? Schema ra sao?
+... (giữ nguyên phần Design Process)
 *   **DAO Extension:** Logic query phức tạp nào cần viết thêm vào DAO?
 *   **DTOs:** Cấu trúc JSON từ API mapping với Entity như thế nào?
 *   **Repository Implementation:** Cách kết hợp Local DB (Drift) và Remote API (Retrofit).

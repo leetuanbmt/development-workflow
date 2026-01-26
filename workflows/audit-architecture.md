@@ -1,6 +1,8 @@
 ---
 description: "Kiểm tra tuân thủ Clean Architecture và BLoC Pattern của dự án."
 trigger: /audit-architecture
+skills:
+  - tech-lead
 ---
 
 # 🛡️ Kiểm toán Kiến trúc (Architecture Audit)

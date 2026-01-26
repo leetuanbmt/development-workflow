@@ -1,6 +1,9 @@
 ---
 description: "Kiểm tra tổng thể các thay đổi trong Pull Request, đảm bảo chất lượng và kiến trúc."
 trigger: /review-pr
+skills:
+  - code-reviewer
+  - qa-lead
 ---
 
 # 🏁 Review Pull Request (PR Review)

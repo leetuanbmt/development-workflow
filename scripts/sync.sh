@@ -1,13 +1,8 @@
 #!/bin/bash
 # Script đồng bộ hóa môi trường AI Agent (Vibecoding Edition)
-# Usage: ./development-workflow/scripts/sync.sh
+# Usage: ./development-workflow/scripts/sync.sh [gemini|antigravity]
 
 echo "🚀 Starting AI Environment Sync..."
-
-# 1. Setup cấu trúc .gemini (Gemini CLI) - ƯU TIÊN SỐ 1
-echo "🛠  Configuring .gemini structure..."
-mkdir -p .gemini
-mkdir -p .gemini/memory
 
 # Hàm helper tạo symlink an toàn
 link_folder() {
@@ -18,65 +13,93 @@ link_folder() {
     echo "   🔗 Linked: $dest -> $src"
 }
 
-# Tạo các Symlink logic (Trỏ về development-workflow)
-link_folder "../development-workflow/rules" ".gemini/rules"
-link_folder "../development-workflow/skills" ".gemini/skills"
-link_folder "../development-workflow/CHEAT_SHEET.md" ".gemini/CHEAT_SHEET.md"
-link_folder "../development-workflow/GEMINI.md" ".gemini/GEMINI.md"
+sync_gemini() {
+    # 1. Setup cấu trúc .gemini (Gemini CLI) - ƯU TIÊN SỐ 1
+    echo "🛠  Configuring .gemini structure..."
+    mkdir -p .gemini
+    mkdir -p .gemini/memory
 
-# 2. Generate Commands (MD -> TOML)
-rm -rf .gemini/commands
-mkdir -p .gemini/commands
+    # Tạo các Symlink logic (Trỏ về development-workflow)
+    link_folder "../development-workflow/rules" ".gemini/rules"
+    link_folder "../development-workflow/skills" ".gemini/skills"
+    link_folder "../development-workflow/CHEAT_SHEET.md" ".gemini/CHEAT_SHEET.md"
+    link_folder "../development-workflow/GEMINI.md" ".gemini/GEMINI.md"
 
-echo "🔄 Generating Gemini Commands (.toml)..."
-if command -v python3 &> /dev/null; then
-    python3 development-workflow/scripts/generate_commands.py
-else
-    echo "⚠️  Python3 not found. Trying python..."
-    python development-workflow/scripts/generate_commands.py
-fi
+    # 2. Generate Commands (MD -> TOML)
+    rm -rf .gemini/commands
+    mkdir -p .gemini/commands
 
-# 3. Setup cấu trúc .agent (Google Antigravity Standard)
-echo "🛠  Configuring .agent structure..."
+    echo "🔄 Generating Gemini Commands (.toml)..."
+    if command -v python3 &> /dev/null; then
+        python3 development-workflow/scripts/generate_commands.py
+    else
+        echo "⚠️  Python3 not found. Trying python..."
+        python development-workflow/scripts/generate_commands.py
+    fi
+}
 
-# Xóa .agent/skills cũ để đảm bảo sạch sẽ
-rm -rf .agent/skills
-mkdir -p .agent/skills
+sync_antigravity() {
+    echo "🛠  Configuring .agent structure (Strict Google Antigravity Standard)..."
 
-# Copy Skills (Source is Native Kebab-case)
-if [ -d "development-workflow/skills" ]; then
-    # Copy toàn bộ folder skills sang .agent
-    cp -R development-workflow/skills/* .agent/skills/
-    echo "   ✨ Synced .agent skills (Strict Google Antigravity Format)"
-    
-    # Đã loại bỏ phần tạo Alias snake_case để tránh duplicate
-else
-    echo "   ⚠️  Warning: development-workflow/skills directory not found!"
-fi
+    # Làm sạch và tạo cấu trúc gốc
+    rm -rf .agent
+    mkdir -p .agent/memory
+    mkdir -p .agent/skills
+    mkdir -p .agent/workflows
 
-# Sync workflows cho .agent - Chuyển sang kebab-case
-echo "🛠  Configuring .agent workflows..."
-rm -rf .agent/workflows
-mkdir -p .agent/workflows
+    # 1. README
+    cp development-workflow/README.md .agent/README.md 2>/dev/null || true
 
-# Copy rules
-mkdir -p .agent/rules
-if [ -d "development-workflow/rules" ]; then
-    cp -R development-workflow/rules/* .agent/rules/ 2>/dev/null || true
-fi
+    # 2. Memory (Mapped from Rules)
+    if [ -d "development-workflow/rules" ]; then
+        cp development-workflow/rules/01-project-context.md .agent/memory/PROJECT.md 2>/dev/null || true
+        cp development-workflow/rules/02-architecture-rules.md .agent/memory/ARCHITECTURE.md 2>/dev/null || true
+        cp development-workflow/rules/00-core-behavior.md .agent/memory/CONVENTIONS.md 2>/dev/null || true
+        touch .agent/memory/GLOSSARY.md
+    fi
 
-if [ -d "development-workflow/workflows" ]; then
-    for wf_path in development-workflow/workflows/*.md; do
-        if [ -f "$wf_path" ]; then
-            wf_name=$(basename "$wf_path")
-            # Chuyển sang kebab-case
-            kebab_wf_name=$(echo "$wf_name" | tr '_' '-')
-            cp "$wf_path" ".agent/workflows/$kebab_wf_name"
-        fi
-    done
-    echo "   ✅ Synced .agent workflows"
-fi
+    # 3. Skills Structure (Nested Directory)
+    if [ -d "development-workflow/skills" ]; then
+        cp -R development-workflow/skills/* .agent/skills/
+        
+        # Đảm bảo sub-dirs cho Skills
+        for skill_dir in .agent/skills/*; do
+            if [ -d "$skill_dir" ]; then
+                mkdir -p "$skill_dir/resources" "$skill_dir/examples" "$skill_dir/scripts"
+            fi
+        done
+        
+        echo "   ✨ Synced skills"
+    fi
 
-cp development-workflow/CHEAT_SHEET.md .agent/ 2>/dev/null || true
+    # 4. Workflows Structure (Flat Files)
+    if [ -d "development-workflow/workflows" ]; then
+        for wf_path in development-workflow/workflows/*.md; do
+            if [ -f "$wf_path" ]; then
+                wf_file=$(basename "$wf_path")
+                # Chuyển sang kebab-case
+                wf_name=$(echo "${wf_file%.md}" | tr '_' '-')
+                
+                # Copy thành file phẳng: .agent/workflows/workflow-name.md
+                cp "$wf_path" ".agent/workflows/$wf_name.md"
+            fi
+        done
+        echo "   ✅ Synced workflows (Flat structure)"
+    fi
 
-echo "✅ Sync Complete! Your AI is ready (Google Antigravity Compliant)."
+    cp development-workflow/CHEAT_SHEET.md .agent/ 2>/dev/null || true
+}
+
+case "$1" in
+    gemini)
+        sync_gemini
+        ;;
+    antigravity)
+        sync_antigravity
+        ;;
+    *)
+        sync_gemini
+        sync_antigravity
+        echo "✅ Sync Complete! Your AI is ready (Google Antigravity Compliant)"
+        ;;
+esac

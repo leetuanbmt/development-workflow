@@ -1,6 +1,8 @@
 ---
 description: "Quy trình triển khai tính năng có bước Brainstorming nội bộ (Phase 3)."
 trigger: /implement-feature
+skills:
+  - flutter-expert
 ---
 
 # 🔨 Implement Feature (Humanized)

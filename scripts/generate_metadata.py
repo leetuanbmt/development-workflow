@@ -1,8 +1,11 @@
 import os
 import json
+import sys
 
 # Đường dẫn gốc (Relative to project root)
-SKILLS_DIR = "development-workflow/skills"
+# Mặc định là development-workflow/skills, nhưng có thể override qua tham số CLI
+DEFAULT_SKILLS_DIR = "development-workflow/skills"
+SKILLS_DIR = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_SKILLS_DIR
 
 # Cấu hình Metadata chuẩn cho từng Skill
 # Đây là "Knowledge Base" để định nghĩa rõ Input/Output cho từng agent
@@ -62,10 +65,10 @@ SKILL_DEFINITIONS = {
         ]
     },
     "flutter_expert": {
-        "description": "Tối ưu hóa Flutter, xử lý UI phức tạp và State Management.",
+        "description": "Chuyên gia kỹ thuật Flutter & BLoC. Tối ưu hiệu năng (Performance), xử lý Memory Leak, Concurrency, Jank, và Review Code chuyên sâu.",
         "inputs": [
             {"name": "ui_code", "type": "dart", "desc": "Widget code hiện tại"},
-            {"name": "performance_issue", "type": "text", "desc": "Vấn đề về hiệu năng hoặc render"}
+            {"name": "performance_issue", "type": "text", "desc": "Vấn đề về hiệu năng, memory leak hoặc render"}
         ],
         "outputs": [
             {"name": "optimized_code", "type": "dart", "desc": "Code đã tối ưu"},
@@ -178,12 +181,13 @@ def generate_metadata():
         
         if os.path.isdir(skill_path):
             # Xác định metadata content
-            # Dùng .get() để fallback nếu skill chưa được định nghĩa
-            definition = SKILL_DEFINITIONS.get(skill_name, DEFAULT_METADATA)
+            # Chuẩn hóa key: thử cả tên gốc và snake_case (flutter-expert -> flutter_expert)
+            skill_key_snake = skill_name.replace("-", "_")
+            definition = SKILL_DEFINITIONS.get(skill_name) or SKILL_DEFINITIONS.get(skill_key_snake) or DEFAULT_METADATA
             
             # Cấu trúc JSON chuẩn Google Antigravity / Agent File
             metadata_content = {
-                "name": skill_name.replace("_", "-"), # Kebab-case name
+                "name": skill_name.replace("_", "-"), # Luôn đảm bảo output name là Kebab-case
                 "version": "1.0.0",
                 "description": definition.get("description", ""),
                 "inputs": definition.get("inputs", []),

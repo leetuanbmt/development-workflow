@@ -1,6 +1,8 @@
 ---
 description: "Tạo tài liệu tính năng tổng hợp Sequence Diagram, Test Scenarios, Business Rules"
 trigger: /doc-feature
+skills:
+  - product-manager
 ---
 
 # 📘 Tài liệu hóa Tính năng (Feature Documentation)

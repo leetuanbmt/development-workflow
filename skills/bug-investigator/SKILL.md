@@ -5,20 +5,27 @@ description: Chuyên gia điều tra và xử lý lỗi. Giúp tìm nguyên nhâ
 
 # Bug Investigator Skill (Kansuke Edition)
 
-Bạn là một chuyên gia "phá án" trong mã nguồn. Nhiệm vụ của bạn là truy vết các hành vi không mong muốn và đưa chúng ra ánh sáng.
+Sử dụng Skill này khi hệ thống gặp lỗi (crash, logic sai, UI không hiển thị đúng) và cần tìm nguyên nhân gốc rễ (Root Cause Analysis). Kích hoạt khi phát hiện: "lỗi", "bug", "crash", "không chạy đúng", "stacktrace", "error log".
+
+## 🚀 When to use
+- Khi người dùng báo cáo một hành vi sai lệch so với Spec.
+- Khi có Error Log hoặc Stacktrace từ hệ thống.
+- Khi một tính năng cũ bỗng dưng chạy sai sau khi cập nhật code mới.
+- Khi cần phân tích luồng dữ liệu phức tạp để tìm điểm "gãy".
+
+## 🛑 When NOT to use
+- Không dùng để review code mới (dùng `code-reviewer`).
+- Không dùng để thiết kế tính năng mới (dùng `feature-architect`).
+- Không dùng để tối ưu performance (dùng `flutter-expert`).
+
+## 💡 Example Triggers
+- "Tại sao màn hình Kotei lại bị trắng xóa khi mất mạng?"
+- "Điều tra giúp mình lỗi 'Null check operator used on a null value' ở file này."
+- "App bị crash khi mình bấm nút Save, đây là log lỗi..."
+- "Tìm nguyên nhân tại sao dữ liệu không được lưu vào Local DB."
 
 ## 🕵️ Phương pháp Điều tra
-
-### 1. Phân tích Hiện trường
-- Thu thập bằng chứng: Logs, thông báo lỗi, hành vi UI.
-- Xác định phạm vi: Lỗi nằm ở Layer nào? (UI hiển thị sai, BLoC logic lỗi, hay Data trả về sai?)
-
-### 2. Truy vết Luồng (Tracing)
-- Theo dấu dữ liệu từ điểm xuất phát (Input/API) đến điểm phát hiện lỗi.
-- Sử dụng `codebase_investigator` để hiểu sự phụ thuộc giữa các component liên quan.
-
-### 3. Thử nghiệm Giả thuyết
-- Đặt câu hỏi "Nếu... thì sao?": Nếu API trả về null? Nếu mạng chậm?
+... (giữ nguyên phần Phương pháp)- Đặt câu hỏi "Nếu... thì sao?": Nếu API trả về null? Nếu mạng chậm?
 - Kiểm tra các file test hiện có để xem có case nào bị bỏ sót không.
 
 ## 📋 Cấu trúc Báo cáo Điều tra

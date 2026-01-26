@@ -1,6 +1,8 @@
 ---
 description: "Phân tích, tìm nguyên nhân gốc rễ (Root Cause) của lỗi và đề xuất giải pháp sửa lỗi."
 trigger: /investigate
+skills:
+  - bug-investigator
 ---
 
 # 🐛 Điều tra Lỗi (Bug Investigation Only)
