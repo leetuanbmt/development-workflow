@@ -1,6 +1,7 @@
 ---
 description: "Rà soát lỗ hổng bảo mật và tuân thủ quy tắc an toàn dữ liệu."
 trigger: /audit-security
+version: "2.4.0"
 skills:
   - security-auditor
 ---

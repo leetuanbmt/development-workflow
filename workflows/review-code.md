@@ -1,6 +1,7 @@
 ---
 description: "Review code chi tiết, bắt buộc kiểm tra tuân thủ DoD, Lint và Test."
 trigger: /review-code
+version: "2.4.0"
 skills:
   - code-reviewer
 ---

@@ -1,6 +1,9 @@
 ---
 description: "Tự động quét dự án và cập nhật file cấu hình ngữ cảnh (Auto-Discovery)."
 trigger: /setup-agent
+version: "2.4.0"
+skills:
+  - devops-engineer
 ---
 
 # 🛠 Setup Agent Context (Auto-Discovery)

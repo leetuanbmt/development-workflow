@@ -1,6 +1,10 @@
 ---
 description: "Tạo báo cáo tổng quan dự án (Project Onboarding) dành cho PM/QC/Dev mới."
 trigger: /project-overview
+version: "2.4.0"
+skills:
+  - tech-lead
+  - technical-writer
 ---
 
 # 📋 Báo Cáo Tổng Quan Dự Án (Project Overview)

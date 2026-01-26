@@ -1,6 +1,7 @@
 ---
 description: "Quản lý đa ngôn ngữ: Tìm hardcode string và đồng bộ file ARB."
 trigger: /manage-i18n
+version: "2.4.0"
 skills:
   - localization-expert
 ---

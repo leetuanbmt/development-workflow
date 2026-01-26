@@ -1,6 +1,7 @@
 ---
 description: "Tự động sinh code Model, Entity, Mapper từ JSON API Response."
 trigger: /integrate-api
+version: "2.4.0"
 skills:
   - api-integrator
 ---

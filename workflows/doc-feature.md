@@ -1,6 +1,7 @@
 ---
 description: "Tạo tài liệu tính năng tổng hợp Sequence Diagram, Test Scenarios, Business Rules"
 trigger: /doc-feature
+version: "2.4.0"
 skills:
   - product-manager
 ---

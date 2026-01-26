@@ -1,6 +1,7 @@
 ---
 description: "Tự động tạo Unit Test và Widget Test cho code hiện có."
 trigger: /write-test
+version: "2.4.0"
 skills:
   - test-engineer
 ---

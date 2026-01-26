@@ -1,6 +1,10 @@
 ---
 description: "Master Workflow hỗ trợ đa chế độ (Hotfix/Standard/Prototype) và điều hướng thông minh."
 trigger: /start-task
+version: "2.4.0"
+skills:
+  - tech-lead
+  - product-manager
 ---
 
 # 🚦 Start Task (Phase 3 - Humanized)

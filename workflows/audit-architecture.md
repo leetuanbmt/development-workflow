@@ -1,6 +1,7 @@
 ---
 description: "Kiểm tra tuân thủ Clean Architecture và BLoC Pattern của dự án."
 trigger: /audit-architecture
+version: "2.4.0"
 skills:
   - tech-lead
 ---

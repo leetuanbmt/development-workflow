@@ -2,6 +2,17 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [2.4.0] - 2026-01-26
+### 🚀 Major Improvements (Agent Enhancement)
+- **[NEW]** Thêm `/fix` workflow - hoàn thiện flow Investigate → Fix
+- **[NEW]** Thêm `/deploy` workflow - quy trình deploy với rollback plan
+- **[NEW]** Thêm `/onboard-dev` workflow - hướng dẫn developer mới
+- **[NEW]** Thêm `QUICK_REFERENCE.md` - bảng tra cứu nhanh
+- **[NEW]** Thêm `CONTRIBUTING.md` - hướng dẫn đóng góp
+- **[NEW]** Thêm `scripts/validate.sh` - kiểm tra tính nhất quán
+- **[IMPROVE]** Chuẩn hóa YAML frontmatter với `version` field cho tất cả 27 workflows
+- **[IMPROVE]** Refactor `knowledge_base.md` với Index, Tags system và format chuẩn
+
 ## [2.3.0] - 2026-01-26
 ### 🔧 Bug Fixes & Documentation
 - **[NEW]** Thêm `CHEAT_SHEET.md` - Hướng dẫn nhanh các lệnh thường dùng.

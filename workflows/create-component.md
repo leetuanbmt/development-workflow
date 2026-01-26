@@ -1,6 +1,7 @@
 ---
 description: "Tạo Widget UI tái sử dụng theo chuẩn Atomic Design/Kansuke Style."
 trigger: /create-component
+version: "2.4.0"
 ---
 
 # 🧩 Tạo UI Component

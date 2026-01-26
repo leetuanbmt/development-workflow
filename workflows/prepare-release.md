@@ -1,6 +1,7 @@
 ---
 description: "Kiểm tra danh sách việc cần làm trước khi phát hành phiên bản mới."
 trigger: /prepare-release
+version: "2.4.0"
 skills:
   - devops-engineer
 ---

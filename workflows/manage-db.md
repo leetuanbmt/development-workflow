@@ -1,6 +1,7 @@
 ---
 description: "Quy trình an toàn để thay đổi Schema Database (Drift) và viết Migration."
 trigger: /manage-db
+version: "2.4.0"
 skills:
   - flutter-expert
 ---

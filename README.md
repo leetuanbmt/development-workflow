@@ -1,6 +1,6 @@
-# 🤖 Kansuke Photo - AI Development Workflow (SOP)
+# 🤖 AI Development Workflow (SOP)
 
-Đây là bộ cấu hình chuẩn cho hệ thống AI Agent hỗ trợ phát triển dự án Kansuke Photo. Quy trình này được thiết kế để cân bằng giữa **tốc độ phát triển** và **tính ổn định của hệ thống** (Clean Architecture).
+Đây là bộ cấu hình chuẩn cho hệ thống AI Agent hỗ trợ phát triển dự án. Quy trình này được thiết kế để cân bằng giữa **tốc độ phát triển** và **tính ổn định của hệ thống** (Clean Architecture).
 
 ---
 

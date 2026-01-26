@@ -1,6 +1,7 @@
 ---
 description: "Chuyển đổi yêu cầu nghiệp vụ thành bản thiết kế kỹ thuật chi tiết theo chuẩn Clean Architecture."
 trigger: /design-feature
+version: "2.4.0"
 skills:
   - feature-architect
 ---

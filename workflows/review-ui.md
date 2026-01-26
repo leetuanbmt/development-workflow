@@ -1,6 +1,7 @@
 ---
 description: "Đánh giá giao diện và trải nghiệm người dùng dựa trên Design System."
 trigger: /review-ui
+version: "2.4.0"
 skills:
   - ui-ux-designer
 ---

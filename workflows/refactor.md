@@ -1,6 +1,10 @@
 ---
 description: "Cải thiện cấu trúc, hiệu năng và độ dễ đọc của mã nguồn mà không làm thay đổi hành vi."
 trigger: /refactor
+version: "2.4.0"
+skills:
+  - code-reviewer
+  - flutter-expert
 ---
 
 # ♻️ Refactoring Code

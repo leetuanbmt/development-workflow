@@ -1,6 +1,7 @@
 ---
 description: "Quy trình triển khai tính năng có bước Brainstorming nội bộ (Phase 3)."
 trigger: /implement-feature
+version: "2.4.0"
 skills:
   - flutter-expert
 ---

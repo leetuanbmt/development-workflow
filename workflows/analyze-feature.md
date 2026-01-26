@@ -1,6 +1,7 @@
 ---
 description: "Phân tích sâu logic, luồng dữ liệu và kiến trúc của một tính năng để hiểu rõ ngữ cảnh nghiệp vụ."
 trigger: /analyze-feature
+version: "2.4.0"
 ---
 
 # 🧠 Phân tích Tính năng (Feature Analysis & Understanding)
