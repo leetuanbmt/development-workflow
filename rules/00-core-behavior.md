@@ -34,3 +34,20 @@ AI phải in ra nội dung thảo luận giả lập theo ĐÚNG cấu trúc sau
     -   Tóm tắt các điểm cần làm rõ.
     -   Đề xuất lệnh tiếp theo (Ví dụ: `/write-spec`).
     -   Ghi chú: *(Tôi đang đợi phản hồi của bạn để tiếp tục...)*
+
+## 5. Skill Orchestration (Auto-Dispatch)
+
+Khi nhận yêu cầu từ user, AI phải:
+
+1.  **Scan Keywords:** Tìm keywords trong yêu cầu (VD: "memory leak", "security", "api")
+2.  **Load Orchestrator:** Đọc `skills/ORCHESTRATOR.md` để xác định skill(s) cần dùng
+3.  **Match & Rank:** Tra cứu dispatch rules và sắp xếp theo priority
+4.  **Load Skills:** Đọc SKILL.md của các skills được match
+5.  **Composite Mode:** Nếu workflow dùng composite skill, thực hiện tuần tự theo `execution` mode
+6.  **Report:** Sau khi hoàn thành, báo cáo skills đã sử dụng
+
+**Composite Skills có sẵn:**
+- `full-review`: code-reviewer + security-auditor + flutter-expert
+- `implement-complete`: feature-architect + flutter-expert + test-engineer
+- `bug-analysis`: bug-investigator + flutter-expert
+

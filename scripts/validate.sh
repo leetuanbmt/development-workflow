@@ -31,6 +31,10 @@ echo "  ✅ Workflow frontmatter check complete"
 echo ""
 echo "📋 Checking skill structure..."
 for skill_dir in skills/*/; do
+    # Skip special folders like _composites
+    if [[ "$(basename "$skill_dir")" == _* ]]; then
+        continue
+    fi
     if [ ! -f "${skill_dir}SKILL.md" ]; then
         echo "  ❌ Missing SKILL.md in $skill_dir"
         ((ERRORS++))
