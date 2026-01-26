@@ -2,6 +2,14 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [2.3.0] - 2026-01-26
+### 🔧 Bug Fixes & Documentation
+- **[NEW]** Thêm `CHEAT_SHEET.md` - Hướng dẫn nhanh các lệnh thường dùng.
+- **[NEW]** Thêm `GEMINI.md` - Cấu hình system prompt cho Gemini CLI.
+- **[NEW]** Thêm `scripts/check_arch.sh` - Script kiểm tra vi phạm Clean Architecture.
+- **[FIX]** Sửa đánh số section trong `rules/00-core-behavior.md` (1,2,5,6 → 1,2,3,4).
+- **[FIX]** Sửa đường dẫn workflow sai trong `rules/03-qa-process.md`.
+
 ## [2.2.0] - 2026-01-22
 ### ⚡️ Optimization & Workflow Refinement
 - **Code Gen Checkpoint:** Thêm quy tắc bắt buộc AI dừng lại (Wait Step) khi gặp task cần chạy `build_runner`, chuyển quyền thực thi cho User.

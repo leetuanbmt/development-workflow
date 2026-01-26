@@ -28,8 +28,8 @@ Dự án có sẵn các quy trình tự động hóa cho Agent. Sử dụng các
 
 | Lệnh (Trigger) | Workflow File | Mục đích |
 | :--- | :--- | :--- |
-| `/investigate` | `.agent/workflows/bug_investigation.md` | Phân tích và tìm nguyên nhân Bug (Root Cause Analysis). |
-| `/review_pr` | `.agent/workflows/review_pr.md` | Review code PR từ thành viên khác theo checklist. |
+| `/investigate` | `workflows/investigate.md` | Phân tích và tìm nguyên nhân Bug (Root Cause Analysis). |
+| `/review-pr` | `workflows/review-pr.md` | Review code PR từ thành viên khác theo checklist. |
 
 ## 3. Checklist khi Review Code
 Sử dụng workflow `/review_pr` để tự động hóa, nhưng cần nhớ các điểm chính:
