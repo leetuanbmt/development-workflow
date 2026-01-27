@@ -1,9 +1,10 @@
 import os
 import glob
-import re
 
-# Cấu hình đường dẫn (Relative to Project Root)
-WORKFLOW_DIR = "development-workflow/workflows"
+# 1. Xác định các đường dẫn gốc dựa trên vị trí của script
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+WORKFLOW_ROOT = os.path.dirname(CURRENT_DIR)
+WORKFLOW_DIR = os.path.join(WORKFLOW_ROOT, "workflows")
 COMMAND_DIR = ".gemini/commands"
 
 def parse_frontmatter(content):
@@ -19,7 +20,7 @@ def parse_frontmatter(content):
             parts = content.split("---", 2)
             if len(parts) >= 3:
                 header = parts[1]
-                body = parts[2].strip() # Lấy phần nội dung sau frontmatter và xóa khoảng trắng thừa đầu/cuối
+                body = parts[2].strip()
                 
                 for line in header.split("\n"):
                     line = line.strip()
@@ -33,12 +34,11 @@ def parse_frontmatter(content):
     return meta, body
 
 def convert_md_to_toml():
-    # Đảm bảo thư mục output tồn tại
+    # Đảm bảo thư mục output tồn tại (từ Project Root)
     if not os.path.exists(COMMAND_DIR):
         os.makedirs(COMMAND_DIR)
-        print(f"Created directory: {COMMAND_DIR}")
 
-    print(f"🔄 Converting workflows from {WORKFLOW_DIR} to {COMMAND_DIR}...")
+    print(f"🔄 Converting workflows from {WORKFLOW_DIR}...")
     
     count = 0
     for md_path in glob.glob(f"{WORKFLOW_DIR}/*.md"):
@@ -51,35 +51,25 @@ def convert_md_to_toml():
         
         meta, body = parse_frontmatter(content)
         
-        # --- TOML GENERATION START ---
-        lines = []
+        lines = [
+            f'description = "{meta["description"]}"',
+            ''
+        ]
         
-        # 1. Description
-        lines.append(f'description = "{meta["description"]}"')
-        lines.append('') # Empty line
-        
-        # 2. Config Block (Skill)
         if meta["skill"]:
-            skill_name = meta["skill"] # Keep snake_case for Gemini CLI
+            skill_name = meta["skill"]
             lines.append('[config.skill]')
             lines.append(f'name = "{skill_name}"')
-            lines.append(f'path = "skills/{skill_name}"') # Relative path in .gemini
-            lines.append('') # Empty line
+            lines.append(f'path = "skills/{skill_name}"')
+            lines.append('')
 
-        # 3. Prompt
-        # Escape triple quotes in content to avoid TOML syntax errors
-        # Sử dụng body (nội dung đã bỏ frontmatter) thay vì content gốc
         safe_content = body.replace('"""', '\"\"\"')
-        
         lines.append('prompt = """')
         lines.append(safe_content)
         lines.append('"""')
         
-        toml_content = "\n".join(lines)
-        # --- TOML GENERATION END ---
-        
         with open(output_path, 'w', encoding='utf-8') as f:
-            f.write(toml_content)
+            f.write("\n".join(lines))
             
         print(f"   ✅ Generated: {cmd_name}")
         count += 1
@@ -87,8 +77,7 @@ def convert_md_to_toml():
     print(f"🎉 Done! Converted {count} commands.")
 
 if __name__ == "__main__":
-    # Chạy từ root project
     if not os.path.exists(WORKFLOW_DIR):
-        print(f"❌ Error: Cannot find {WORKFLOW_DIR}. Please run this script from the project root.")
+        print(f"❌ Error: Cannot find workflows directory at {WORKFLOW_DIR}")
     else:
         convert_md_to_toml()

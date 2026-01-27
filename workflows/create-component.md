@@ -1,5 +1,5 @@
 ---
-description: "Tạo Widget UI tái sử dụng theo chuẩn Atomic Design/Kansuke Style."
+description: "Tạo Widget UI tái sử dụng theo chuẩn Atomic Design/the project Style."
 trigger: /create-component
 version: "2.4.0"
 ---
@@ -33,8 +33,8 @@ version: "2.4.0"
 ## 📝 Code Template (Ví dụ)
 
 ```dart
-class KansukeButton extends StatelessWidget {
-  const KansukeButton({
+class the projectButton extends StatelessWidget {
+  const the projectButton({
     super.key,
     required this.label,
     required this.onPressed,

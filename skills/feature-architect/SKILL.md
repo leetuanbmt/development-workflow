@@ -3,7 +3,7 @@ name: feature-architect
 description: Chuyên gia thiết kế kiến trúc tính năng. Giúp phân rã yêu cầu thành các layer (Data/Domain/Presentation) và kế hoạch implementation.
 ---
 
-# Feature Architect Skill (Kansuke Edition)
+# Feature Architect Skill (Standard Edition)
 
 Sử dụng Skill này khi bạn nhận được yêu cầu tính năng mới và cần một bản thiết kế kỹ thuật chi tiết theo chuẩn Clean Architecture. Kích hoạt khi có các từ khóa: "thiết kế tính năng", "phân rã layer", "lên kế hoạch implementation", "tạo cấu trúc file cho feature".
 
@@ -22,7 +22,7 @@ Sử dụng Skill này khi bạn nhận được yêu cầu tính năng mới v�
 - "Thiết kế giúp mình tính năng 'Đồng bộ ảnh lên server'."
 - "Phân rã layer cho màn hình 'Danh sách Kotei' theo Clean Architecture."
 - "Cần tạo cấu trúc thư mục và file cho feature 'Chỉnh sửa Profile'."
-- "Lên kế hoạch triển khai tính năng 'Quét mã QR' cho app Kansuke."
+- "Lên kế hoạch triển khai tính năng 'Quét mã QR' cho app the project."
 
 ## 🛠️ Quy trình Thiết kế (Design Process)
 ... (giữ nguyên phần Design Process)

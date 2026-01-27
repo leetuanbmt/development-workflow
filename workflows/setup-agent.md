@@ -12,9 +12,14 @@ skills:
 
 ## 🚀 Các bước thực hiện (Execution Steps)
 
+0.  **Chọn thư mục dự án (Select Project Directory):**
+    *   **HÀNH ĐỘNG:** Chạy script `development-workflow/scripts/select_project_dir.sh` để xác định thư mục cần quét.
+    *   Nếu script không chạy được trong môi trường hiện tại, hãy hỏi người dùng trực tiếp trong chat: "Bạn muốn quét từ root hay một thư mục con cụ thể?"
+    *   Lưu đường dẫn thư mục đã chọn (ví dụ: `SELECTED_DIR`) để sử dụng cho các bước tiếp theo.
+
 1.  **Quét File Cấu Hình (Scan Signature Files):**
-    *   Tìm và đọc các file sau (nếu tồn tại): `pubspec.yaml`, `package.json`, `Makefile`, `README.md`, `.gitignore`, `melos.yaml`.
-    *   Đọc `lib/main.dart` (hoặc entry point tương đương) để đoán kiến trúc sơ bộ.
+    *   Tìm và đọc các file sau trong `SELECTED_DIR` (nếu tồn tại): `pubspec.yaml`, `package.json`, `Makefile`, `README.md`, `.gitignore`, `melos.yaml`.
+    *   Đọc `SELECTED_DIR/lib/main.dart` (hoặc entry point tương đương) để đoán kiến trúc sơ bộ.
 
 2.  **Phân tích & Trích xuất (Analyze & Extract):**
     Dựa trên nội dung đọc được, hãy xác định:
@@ -43,8 +48,10 @@ skills:
         *   Kiểm tra xem có dùng Clean Architecture (`data/domain/presentation`) hay MVC không.
 
 3.  **Cập nhật Cấu hình (Configuration Update):**
-    *   **HÀNH ĐỘNG:** Ghi đè (Overwrite) toàn bộ nội dung file `.agent/rules/01-project-context.md` theo mẫu chuẩn bên dưới, thay thế các placeholder bằng dữ liệu thực tế vừa quét được.
-
+    *   **HÀNH ĐỘNG:** Ghi đè (Overwrite) toàn bộ nội dung file `.gemini/rules/01-project-context.md` (hoặc `.agent/memory/PROJECT.md`) theo mẫu chuẩn bên dưới, thay thế các placeholder bằng dữ liệu thực tế vừa quét được.
+4.  **Đồng bộ & Kiểm tra (Sync & Verify):**
+    *   **HÀNH ĐỘNG:** Chạy lệnh `make sync` (hoặc `bash development-workflow/scripts/sync.sh`) để đồng bộ ngữ cảnh sang `.agent/` và `.gemini/`.
+    *   **KIỂM TRA:** Đảm bảo file `.agent/memory/PROJECT.md` đã được cập nhật nội dung mới nhất.
 ## 📝 Template chuẩn cho `01-project-context.md` (Output Target)
 
 ```markdown

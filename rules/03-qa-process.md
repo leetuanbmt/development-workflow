@@ -3,7 +3,7 @@ trigger: manual
 description: Quy trình kiểm thử (QA), Validation và Workflows.
 ---
 
-# 🛡️ Kansuke Photo - QA & Validation Process
+# 🛡️ the project - QA & Validation Process
 
 ## 1. Validation Strategy (Chiến lược kiểm thử)
 

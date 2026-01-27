@@ -1,7 +1,7 @@
 import os
 import re
 
-SKILLS_DIR = "development-workflow/skills"
+SKILLS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "skills")
 
 def fix_yaml_name():
     print("🔧 Fixing YAML 'name' in SKILL.md to kebab-case...")

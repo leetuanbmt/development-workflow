@@ -3,7 +3,7 @@ name: bug-investigator
 description: Chuyên gia điều tra và xử lý lỗi. Giúp tìm nguyên nhân gốc rễ và đề xuất giải pháp fix bug bền vững.
 ---
 
-# Bug Investigator Skill (Kansuke Edition)
+# Bug Investigator Skill (Standard Edition)
 
 Sử dụng Skill này khi hệ thống gặp lỗi (crash, logic sai, UI không hiển thị đúng) và cần tìm nguyên nhân gốc rễ (Root Cause Analysis). Kích hoạt khi phát hiện: "lỗi", "bug", "crash", "không chạy đúng", "stacktrace", "error log".
 

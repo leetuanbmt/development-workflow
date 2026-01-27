@@ -3,8 +3,8 @@ import json
 import sys
 
 # Đường dẫn gốc (Relative to project root)
-# Mặc định là development-workflow/skills, nhưng có thể override qua tham số CLI
-DEFAULT_SKILLS_DIR = "development-workflow/skills"
+# Mặc định là thư mục skills của workflow, nhưng có thể override qua tham số CLI
+DEFAULT_SKILLS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "skills")
 SKILLS_DIR = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_SKILLS_DIR
 
 # Cấu hình Metadata chuẩn cho từng Skill

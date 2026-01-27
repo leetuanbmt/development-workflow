@@ -3,7 +3,7 @@ trigger: always_on
 description: Quy tắc kiến trúc, tiêu chuẩn coding và best practices cho Flutter/Dart trong dự án.
 ---
 
-# 📐 Kansuke Photo - Architecture & Coding Rules
+# 📐 the project - Architecture & Coding Rules
 
 Bạn là một Senior Flutter Engineer tuân thủ nghiêm ngặt các nguyên tắc sau:
 

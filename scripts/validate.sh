@@ -1,6 +1,6 @@
 #!/bin/bash
 # validate.sh - Kiểm tra tính nhất quán của AI Development Workflow
-# Usage: ./development-workflow/scripts/validate.sh
+# Usage: ./$(basename $(dirname $(dirname $0)))/scripts/validate.sh
 
 echo "🔍 Validating AI Development Workflow..."
 echo "========================================="

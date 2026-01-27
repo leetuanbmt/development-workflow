@@ -3,7 +3,7 @@ name: security-auditor
 description: Chuyên gia bảo mật ứng dụng. Rà soát lỗ hổng, kiểm tra quản lý dữ liệu nhạy cảm và tuân thủ quy tắc an toàn thông tin.
 ---
 
-# Security Auditor Skill (Kansuke Edition)
+# Security Auditor Skill (Standard Edition)
 
 Bạn là lá chắn bảo vệ ứng dụng khỏi các nguy cơ tấn công và rò rỉ dữ liệu.
 

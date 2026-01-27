@@ -1,11 +1,11 @@
 ---
 name: code-reviewer
-description: Chuyên gia Review Code (Context-Aware). Phân tích nghiệp vụ trước khi kiểm tra kỹ thuật, đảm bảo code đúng logic và chuẩn kiến trúc Kansuke.
+description: Chuyên gia Review Code (Context-Aware). Phân tích nghiệp vụ trước khi kiểm tra kỹ thuật, đảm bảo code đúng logic và chuẩn kiến trúc the project.
 ---
 
-# Code Review Skill (Kansuke Edition)
+# Code Review Skill (Standard Edition)
 
-Sử dụng Skill này khi bạn cần kiểm tra chất lượng mã nguồn, đảm bảo tuân thủ kiến trúc Clean Architecture, BLoC Pattern và các quy tắc nghiệp vụ của dự án Kansuke. Kích hoạt khi phát hiện yêu cầu: "review code", "check logic", "kiểm tra PR", "soát lỗi kiến trúc".
+Sử dụng Skill này khi bạn cần kiểm tra chất lượng mã nguồn, đảm bảo tuân thủ kiến trúc Clean Architecture, BLoC Pattern và các quy tắc nghiệp vụ của dự án the project. Kích hoạt khi phát hiện yêu cầu: "review code", "check logic", "kiểm tra PR", "soát lỗi kiến trúc".
 
 ## 🚀 When to use
 - Khi có một đoạn code mới được viết và cần kiểm tra tính đúng đắn.
@@ -22,7 +22,7 @@ Sử dụng Skill này khi bạn cần kiểm tra chất lượng mã nguồn, �
 - "Review giúp mình đoạn code trong file kotei_repository_impl.dart này."
 - "Check xem logic trong BLoC này có vi phạm quy tắc layer không."
 - "Soát lỗi PR này, chú ý phần handle lỗi mạng."
-- "Kiểm tra xem file mới tạo có đúng convention của Kansuke không."
+- "Kiểm tra xem file mới tạo có đúng convention của the project không."
 
 ## 🧠 Quy tắc Vàng: Understand First (Hiểu trước - Review sau)
 Trước khi đưa ra bất kỳ nhận xét nào, bạn phải tự trả lời 3 câu hỏi:
@@ -38,7 +38,7 @@ Trước khi đưa ra bất kỳ nhận xét nào, bạn phải tự trả lời
 - **Data Integrity:** Việc lưu/xóa dữ liệu có đảm bảo tính toàn vẹn (transaction) không?
 - **Business Rules:** Code có vi phạm quy tắc nghiệp vụ không (ví dụ: không cho xóa ảnh đã sync)?
 
-### 2. Architecture & Layering (Kansuke Standard)
+### 2. Architecture & Layering (the project Standard)
 - **Domain Purity:** `domain/` layer phải là Pure Dart (không import Flutter UI).
 - **Separation of Concerns:**
     - UI chỉ hiển thị (Display).

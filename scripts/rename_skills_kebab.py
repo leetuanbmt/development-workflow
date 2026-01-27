@@ -1,7 +1,7 @@
 import os
 import shutil
 
-SKILLS_DIR = "development-workflow/skills"
+SKILLS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "skills")
 
 def rename_folders_to_kebab():
     print("🔄 Renaming skill folders to kebab-case...")

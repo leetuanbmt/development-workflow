@@ -3,7 +3,7 @@ import json
 import re
 
 # Đường dẫn gốc
-SKILLS_DIR = "development-workflow/skills"
+SKILLS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "skills")
 
 def migrate_skills():
     print("🚀 Starting Skill Migration (Metadata -> SKILL.md)...")

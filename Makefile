@@ -1,12 +1,16 @@
-.PHONY: all init-gemini init-antigravity
+.PHONY: all sync init-gemini init-antigravity
 
 # Default target
-all: init-gemini init-antigravity
+all: sync
+
+sync:
+	@echo "🔄 Syncing AI Environment..."
+	@bash scripts/sync.sh
 
 init-gemini:
 	@echo "Initializing Gemini CLI..."
-	@cd .. && ./development-workflow/scripts/sync.sh gemini
+	@bash scripts/sync.sh gemini
 
 init-antigravity:
 	@echo "Initializing Google Antigravity..."
-	@cd .. && ./development-workflow/scripts/sync.sh antigravity
+	@bash scripts/sync.sh antigravity

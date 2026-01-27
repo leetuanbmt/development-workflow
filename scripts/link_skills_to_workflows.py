@@ -1,7 +1,7 @@
 import os
 import re
 
-WORKFLOW_DIR = "development-workflow/workflows"
+WORKFLOW_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "workflows")
 
 # Mapping: Tên Workflow (kebab-case file name) -> List Skills (kebab-case)
 WORKFLOW_SKILL_MAP = {

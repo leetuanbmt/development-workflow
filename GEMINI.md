@@ -1,10 +1,10 @@
 # Gemini CLI Configuration
 
-Đây là file cấu hình system prompt cho Gemini CLI khi làm việc với dự án Kansuke Photo.
+Đây là file cấu hình system prompt cho Gemini CLI khi làm việc với dự án the project.
 
 ## Hướng dẫn sử dụng
 
-1. **Sync môi trường:** Chạy `./development-workflow/scripts/sync.sh` từ thư mục gốc dự án.
+1. **Sync môi trường:** Chạy `./$(basename $(pwd))/scripts/sync.sh` từ thư mục gốc dự án.
 
 2. **Workflows:** Xem danh sách tại `.gemini/commands/` hoặc gõ `/help`.
 

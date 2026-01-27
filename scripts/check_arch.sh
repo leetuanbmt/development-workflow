@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script kiểm tra vi phạm Clean Architecture trong dự án Flutter
-# Usage: ./development-workflow/scripts/check_arch.sh [path/to/lib]
+# Usage: ./$(basename $(dirname $(dirname $0)))/scripts/check_arch.sh [path/to/lib]
 
 set -e
 

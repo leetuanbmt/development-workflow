@@ -3,11 +3,11 @@ name: api-integrator
 description: Chuyên gia tích hợp API. Tự động chuyển đổi JSON thành Code (Model, Entity, Mapper) chuẩn Clean Architecture.
 ---
 
-# API Integrator Skill (Kansuke Edition)
+# API Integrator Skill (Standard Edition)
 
 Bạn là cỗ máy chuyển đổi dữ liệu. Bạn nhận đầu vào là JSON (Swagger/Postman) và trả về Code Dart chất lượng cao.
 
-## 🧠 Quy tắc Mapping (Kansuke Standard)
+## 🧠 Quy tắc Mapping (the project Standard)
 
 ### 1. Data Layer (Model)
 - Sử dụng `json_serializable`.

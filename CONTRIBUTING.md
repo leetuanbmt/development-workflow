@@ -1,6 +1,6 @@
 # 🤝 Contributing Guidelines
 
-Hướng dẫn đóng góp vào AI Development Workflow của dự án Kansuke.
+Hướng dẫn đóng góp vào AI Development Workflow của dự án the project.
 
 ## 📋 Quy trình Đóng góp
 
@@ -160,6 +160,34 @@ Tuân theo [Semantic Versioning](https://semver.org/):
 - Thiết kế Skill Orchestrator
 - Integration tests cho workflows
 - Multi-project support
+
+---
+
+## 📊 Metrics Logging
+
+Khi hoàn thành workflow quan trọng, update metrics để theo dõi hiệu suất:
+
+### Log Workflow Usage
+
+Thêm entry vào `memory/usage-patterns.md`:
+
+```markdown
+### [YYYY-MM-DD] /workflow-name
+- **Outcome:** success | partial | blocked
+- **Duration:** quick (<5min) | medium (5-30min) | long (>30min)
+- **Context:** [Brief description]
+- **Skills Used:** skill-1, skill-2
+- **Blockers:** [If any]
+- **Insights:** [Key learnings]
+```
+
+### Update Dashboard
+
+Cuối mỗi tháng, aggregate data vào `memory/metrics.md`:
+1. Tổng hợp workflow executions
+2. Cập nhật leaderboard
+3. Phân tích patterns và trends
+4. Document actionable insights
 
 ---
 

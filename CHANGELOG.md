@@ -2,6 +2,26 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [2.5.0] - 2026-01-27
+### 🚀 New Features (Diagnostics & Sync)
+- **[NEW]** Added `/doctor` workflow - comprehensive environment and sync health diagnostic.
+- **[NEW]** Added `scripts/doctor.sh` - automated check for tools (flutter, melos) and sync integrity.
+- **[ENHANCE]** `sync.sh` now supports `--watch` mode for real-time synchronization.
+- **[ENHANCE]** `/setup-agent` now includes an auto-sync step to ensure immediate context availability.
+- **[ENHANCE]** `select_project_dir.sh` now supports non-interactive execution for automated workflows.
+
+## [2.4.1] - 2026-01-26
+### 🔧 Documentation Optimization
+- **[IMPROVE]** Consolidate `QUICK_REFERENCE.md` into `CHEAT_SHEET.md` for single source of truth
+- **[DELETE]** Remove redundant `QUICK_REFERENCE.md` file (~40% content overlap)
+- **[ENHANCE]** Expand `CHEAT_SHEET.md` from 46→135 lines: added full 15 workflows, BLoC patterns, emergency commands
+
+### 📊 Metrics & Analytics
+- **[NEW]** Add `memory/metrics.md` - Workflow performance dashboard with Mermaid charts
+- **[NEW]** Add `memory/usage-patterns.md` - Detailed usage analytics and pattern tracking
+- **[ENHANCE]** Update `CONTRIBUTING.md` with metrics logging guidelines
+- **[ENHANCE]** Update `README.md` to reference metrics dashboard
+
 ## [2.4.0] - 2026-01-26
 ### 🚀 Major Improvements (Agent Enhancement)
 - **[NEW]** Thêm `/fix` workflow - hoàn thiện flow Investigate → Fix

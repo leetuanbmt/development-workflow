@@ -8,7 +8,7 @@ skills:
 
 # 🎨 Đánh giá UI/UX (UI/UX Review)
 
-**Mục tiêu:** Đảm bảo giao diện lập trình đúng thiết kế, tuân thủ Design System của Kansuke và thân thiện với người dùng.
+**Mục tiêu:** Đảm bảo giao diện lập trình đúng thiết kế, tuân thủ Design System của the project và thân thiện với người dùng.
 
 ## 🚀 Các bước thực hiện (Execution Steps)
 

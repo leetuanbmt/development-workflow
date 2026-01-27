@@ -3,7 +3,7 @@ name: flutter-expert
 description: Chuyên gia kỹ thuật Flutter & BLoC. Tối ưu hiệu năng (Performance), xử lý Memory Leak, Concurrency, Jank, và Review Code chuyên sâu.
 ---
 
-# Flutter & BLoC Expert Skill (Kansuke Edition)
+# Flutter & BLoC Expert Skill (Standard Edition)
 
 Sử dụng Skill này khi gặp các vấn đề kỹ thuật sâu (Deep Tech) trong Flutter như: Tối ưu hiệu năng (Performance), rò rỉ bộ nhớ (Memory Leak), xử lý đa luồng (Concurrency), hoặc debug các lỗi phức tạp liên quan đến vòng đời Widget/BLoC. Kích hoạt khi có từ khóa: "leak", "jank", "giật lag", "chậm", "optimize", "tối ưu", "bloc stream", "isolate".
 

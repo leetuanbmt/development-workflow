@@ -1,6 +1,6 @@
 # 🧠 Project Knowledge Base
 
-> **Version:** 2.4.0 | **Last Updated:** 2026-01-26
+> **Version:** 2.4.1 | **Last Updated:** 2026-01-26
 
 File này lưu trữ các bài học kinh nghiệm, lỗi đặc thù (Gotchas), và các quy tắc ngầm của dự án.
 

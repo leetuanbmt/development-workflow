@@ -18,7 +18,7 @@ skills:
 ```bash
 # Clone repository
 git clone [repo-url]
-cd kansuke-photo
+cd {{PROJECT_NAME}}
 
 # Cài đặt dependencies
 make setup
@@ -103,8 +103,8 @@ make test         # Run all tests
 |:--|:--|
 | Architecture Rules | `.agent/memory/ARCHITECTURE.md` |
 | Coding Conventions | `.agent/memory/CONVENTIONS.md` |
-| Knowledge Base | `development-workflow/memory/knowledge_base.md` |
-| Workflow Cheat Sheet | `development-workflow/CHEAT_SHEET.md` |
+| Knowledge Base | `{{WORKFLOW_DIR}}/memory/knowledge_base.md` |
+| Workflow Cheat Sheet | `{{WORKFLOW_DIR}}/CHEAT_SHEET.md` |
 
 ## ✅ Onboarding Checklist
 

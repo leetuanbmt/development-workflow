@@ -1,45 +1,131 @@
-# 🚀 Quick Reference - AI Development Workflow
+# ⚡ Quick Reference - AI Development Workflow
 
-## Lệnh thường dùng
+> Bảng tra cứu nhanh các lệnh và quy tắc thường dùng
 
-| Lệnh | Mục đích |
-|:---|:---|
-| `/start-task [yêu cầu]` | Bắt đầu task mới (Master Workflow) |
-| `/implement-feature` | Triển khai tính năng |
-| `/investigate` | Điều tra và fix bug |
-| `/review-code` | Review code theo DoD |
+## 🎯 Workflow Commands
+
+### Core Workflows
+| Command | Mục đích | Mode |
+|:--|:--|:--:|
+| `/start-task [desc]` | Bắt đầu mọi task | All |
+| `/implement-feature` | Thêm tính năng | Standard |
+| `/investigate` | Điều tra bug | - |
+| `/fix` | Sửa bug sau investigate | Hotfix |
+| `/review-code` | Review code | - |
+
+### Specification & Design
+| Command | Mục đích |
+|:--|:--|
+| `/write-spec` | Viết User Stories |
+| `/design-feature` | Thiết kế kiến trúc |
+| `/write-adr` | Ghi quyết định kiến trúc |
+
+### Quality & Testing
+| Command | Mục đích |
+|:--|:--|
 | `/review-pr` | Review Pull Request |
+| `/write-test` | Tạo unit/widget tests |
+| `/audit-architecture` | Kiểm tra Clean Arch |
 
-## Chế độ vận hành
+### Operations
+| Command | Mục đích |
+|:--|:--|
+| `/deploy` | Build & Deploy app |
+| `/prepare-release` | Checklist trước release |
+| `/setup-agent` | Cấu hình AI context |
+| `/onboard-dev` | Hướng dẫn dev mới |
 
-```
-/start-task [yêu cầu] --mode hotfix      # Sửa lỗi gấp
-/start-task [yêu cầu] --mode standard    # Full quy trình
-/start-task [yêu cầu] --mode prototype   # POC nhanh
-```
+---
 
-## Code Generation
+## 🛠️ Make Commands
 
 ```bash
-make gen        # Build một lần
-make gen-watch  # Watch mode
-make lint       # Kiểm tra lint
-make test       # Chạy test
+make setup        # Cài đặt môi trường
+make run-dev      # Chạy app development
+make gen          # Generate code (Freezed, Drift)
+make lint         # Check code style
+make test         # Run all tests
+make build-dev    # Build APK/IPA dev
 ```
 
-## Cấu trúc Feature (Clean Architecture)
+---
+
+## 🏗️ Clean Architecture Layers
 
 ```
-lib/features/[feature_name]/
-├── domain/          # Pure Dart: Entities, UseCases
-├── data/            # DTOs, Repository Impl
-└── presentation/    # UI, BLoC
+lib/features/{feature}/
+├── domain/          # Business Logic (Pure Dart)
+│   ├── entities/
+│   ├── repositories/  # Interfaces only
+│   └── usecases/
+├── data/            # Data Access
+│   ├── models/
+│   ├── datasources/
+│   └── repositories/  # Implementation
+└── presentation/    # UI
+    ├── bloc/
+    ├── pages/
+    └── widgets/
 ```
 
-## DoD Checklist
+**Rules:**
+- ❌ Domain KHÔNG import Flutter/Data
+- ❌ Presentation KHÔNG import Data
+- ✅ Data implements Domain interfaces
 
-- [ ] Clean Architecture: 3 layers
-- [ ] Lint pass: `make lint`
-- [ ] Tests: Unit + Bloc
-- [ ] UI States: Loading/Error/Success/Empty
-- [ ] I18n: Không hardcode string
+---
+
+## 📋 BLoC State Pattern
+
+```dart
+// ✅ Unified State (Recommended)
+@freezed
+class FeatureState with _$FeatureState {
+  const factory FeatureState({
+    @Default(Status.initial) Status status,
+    @Default([]) List<Item> items,
+    String? errorMessage,
+  }) = _FeatureState;
+}
+
+enum Status { initial, loading, success, error }
+```
+
+---
+
+## 🔢 Key Rules
+
+| Rule | Value |
+|:--|:--|
+| Max lines per file | 150 |
+| Code Gen trigger | Entity, Model, Route changes |
+| Test coverage target | 80% |
+
+---
+
+## 🏷️ Commit Convention
+
+```
+feat: Add new feature
+fix: Bug fix
+refactor: Code cleanup
+docs: Documentation
+test: Add tests
+chore: Maintenance
+```
+
+---
+
+## 📞 Emergency Commands
+
+```bash
+# Khi build fail
+make clean && make gen
+
+# Khi code gen conflict
+rm -rf **/*.g.dart **/*.freezed.dart
+make gen
+
+# Reset to clean state
+git stash && git checkout develop
+```

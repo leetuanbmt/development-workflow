@@ -8,7 +8,7 @@ skills:
 
 # 🏗️ Thiết kế Kiến trúc Tính năng (Feature Architecture Design)
 
-**Mục tiêu:** Chuyển đổi yêu cầu nghiệp vụ thành bản thiết kế kỹ thuật chi tiết theo chuẩn Clean Architecture của dự án Kansuke. Đảm bảo tính nhất quán giữa các layer Data, Domain, và Presentation.
+**Mục tiêu:** Chuyển đổi yêu cầu nghiệp vụ thành bản thiết kế kỹ thuật chi tiết theo chuẩn Clean Architecture của dự án the project. Đảm bảo tính nhất quán giữa các layer Data, Domain, và Presentation.
 
 ## 🚀 Các bước thực hiện (Execution Steps)
 
