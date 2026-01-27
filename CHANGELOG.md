@@ -2,6 +2,16 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [2.5.1] - 2026-01-27
+### 🔌 New Integrations (Awesome Skills)
+- **[NEW]** Integrated 5 new external skills from `antigravity-awesome-skills`:
+    - `/pentest` (Ethical Hacking Methodology)
+    - `/evaluate-agent` (Agent Evaluation Framework)
+    - `/audit-analytics` (Analytics Tracking & Measurement)
+    - `/gen-api-docs` (API Documentation Generator)
+    - `/aso` (App Store Optimization)
+- **[UPDATE]** All new workflows are fully synced and ready to use.
+
 ## [2.5.0] - 2026-01-27
 ### 🚀 New Features (Diagnostics & Sync)
 - **[NEW]** Added `/doctor` workflow - comprehensive environment and sync health diagnostic.
