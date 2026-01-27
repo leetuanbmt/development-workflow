@@ -2,6 +2,18 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [3.0.0] - 2026-01-27
+### 🚀 Antigravity Revolution (AI-Native Shift)
+- **[BREAKING]** Removed "Atomic Execution" (150 lines limit). System now operates in **High Velocity Mode**.
+- **[NEW]** **Vibecoder Skill:** The Ultimate Polyglot Agent for massive code generation and self-correction.
+- **[NEW]** **`/vibe` Workflow:** One-touch command for end-to-end feature implementation (`Absorb` -> `Build` -> `Verify`).
+- **[ENHANCE]** **Unified Workflows:** Consolidated fragmented commands into powerful tools:
+    - `/review`: Combines Code Review, PR Review, and Git Diff Analysis.
+    - `/fix`: Combines Investigation and Execution.
+    - `/document`: Combines Code Docs and Feature Docs.
+    - `/security`: Combines Audit and Pentest.
+- **[CLEANUP]** Moved legacy workflows (`implement-feature`, `analyze`, `investigate`...) to `workflows/legacy/`.
+
 ## [2.5.2] - 2026-01-27
 ### 🎨 Mobile & Quality Standards
 - **[NEW]** Added `/mobile-design` skill (Mobile Architect Strategy).
