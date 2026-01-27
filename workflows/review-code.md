@@ -55,7 +55,9 @@ graph TD
 3.  **Phân tích Logic & UX:**
     *   **State Management:** BLoC/Cubit có xử lý đủ 4 trạng thái (Loading, Error, Success, Empty) không?
     *   **Safety:** Check Null Safety (`!`), Resource Disposal (Controller, Stream).
+    *   **Safety:** Check Null Safety (`!`), Resource Disposal (Controller, Stream).
     *   **Performance:** Rebuild không cần thiết? Dùng `const` chưa?
+    *   **Comprehensive Checklist:** Đối chiếu với `rules/05-code-review-checklist.md` để đảm bảo không bỏ sót Security & Edge Cases.
 
 ## 📊 Mẫu Báo cáo Review (DoD Standard)
 

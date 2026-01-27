@@ -15,6 +15,7 @@ skills:
 
 1.  **Đánh giá & Lập kế hoạch (Assessment):**
     *   Xác định "Code Smell": Hàm quá dài, lặp code, đặt tên khó hiểu, vi phạm Architecture.
+    *   **Tham chiếu:** Tuân thủ `rules/06-clean-code.md` (Naming, Function Size, SRP).
     *   Đảm bảo khu vực cần refactor đã có Unit Test bao phủ (Test Coverage). Nếu chưa, phải viết Test trước.
 
 2.  **Thực hiện Refactor (Execution):**

@@ -2,6 +2,14 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [2.5.2] - 2026-01-27
+### 🎨 Mobile & Quality Standards
+- **[NEW]** Added `/mobile-design` skill (Mobile Architect Strategy).
+- **[NEW]** Added `mobile_audit.py` script for automated mobile best practice checks.
+- **[NEW]** Integrated **Code Review Checklist** (`rules/05-code-review-checklist.md`) into `/review-code`.
+- **[NEW]** Integrated **Clean Code Standards** (`rules/06-clean-code.md`) into `/refactor`.
+- **[UPDATE]** All skills updated to reference new rules.
+
 ## [2.5.1] - 2026-01-27
 ### 🔌 New Integrations (Awesome Skills)
 - **[NEW]** Integrated 5 new external skills from `antigravity-awesome-skills`:

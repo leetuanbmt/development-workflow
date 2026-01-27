@@ -38,7 +38,21 @@ Trước khi đưa ra bất kỳ nhận xét nào, bạn phải tự trả lời
 - **Data Integrity:** Việc lưu/xóa dữ liệu có đảm bảo tính toàn vẹn (transaction) không?
 - **Business Rules:** Code có vi phạm quy tắc nghiệp vụ không (ví dụ: không cho xóa ảnh đã sync)?
 
-### 2. Architecture & Layering (the project Standard)
+### 2. Comprehensive Checklist (Must Follow)
+Tham khảo chi tiết tại `rules/05-code-review-checklist.md` cho từng hạng mục:
+- [ ] Functionality & Edge Cases
+- [ ] Security (Injection, Secrets)
+- [ ] Performance (Rebuilds, Memory)
+- [ ] Code Quality (DRY, Naming)
+- [ ] Clean Architecture Compliance
+
+### 3. Clean Code Standards (Pragmatic AI)
+Tham khảo `rules/06-clean-code.md` để đảm bảo code gọn gàng, dễ đọc:
+- [ ] Naming Rules (Verb+Noun, Intent)
+- [ ] Function Rules (Small, One Thing)
+- [ ] Code Structure (Guard Clauses, No Deep Nesting)
+
+### 4. Architecture & Layering (the project Standard)
 - **Domain Purity:** `domain/` layer phải là Pure Dart (không import Flutter UI).
 - **Separation of Concerns:**
     - UI chỉ hiển thị (Display).
