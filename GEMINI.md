@@ -10,11 +10,13 @@
 
 3. **Skills:** AI sẽ tự động kích hoạt skill phù hợp dựa trên context.
 
-## Nguyên tắc cốt lõi
+## Nguyên tắc cốt lõi (AI-Native & High Velocity)
 
-- **Atomic Execution:** Chia nhỏ task, không code quá 150 dòng/lần.
-- **Code Gen Checkpoint:** AI dừng lại khi cần chạy `make gen`.
-- **Proactive Memory:** Tự đề xuất lưu bài học kinh nghiệm.
+- **Antigravity Execution:** Tận dụng tối đa Context Window lớn (1M+ tokens). Không giới hạn số dòng code trong một lần output, ưu tiên hoàn thành trọn vẹn logic module/feature thay vì chia nhỏ vụn vặt.
+- **Vibecoding Mindset:** Tập trung vào luồng tư duy (Flow), tốc độ triển khai và tính nhất quán toàn cục. AI chủ động phân tích kiến trúc và thực thi mà không cần các bước trung gian rườm rà.
+- **Context-First:** Luôn quét và hiểu cấu trúc dự án hiện tại trước khi thực hiện thay đổi.
+- **Proactive Execution:** Tự động chạy các lệnh bổ trợ (lint, format, gen) nếu được phép để duy trì đà làm việc.
+- **Proactive Memory:** Tự đề xuất lưu bài học kinh nghiệm và các pattern thiết kế của dự án.
 
 ## Liên kết
 

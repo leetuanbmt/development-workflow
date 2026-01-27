@@ -12,6 +12,13 @@ Hệ thống tự động dispatch và kết hợp skills dựa trên keywords v
 
 ## 📋 Keyword Dispatch Rules
 
+### High-Velocity & Construction
+| Keywords | Primary Skill | Secondary | Priority |
+|:--|:--|:--|:--:|
+| `vibe`, `build`, `implement`, `tạo`, `mới` | vibecoder | - | 0 |
+| `complete`, `trọn vẹn`, `full-stack` | vibecoder | - | 0 |
+| `fast`, `nhanh`, `gấp` | vibecoder | - | 1 |
+
 ### Performance & Memory
 | Keywords | Primary Skill | Secondary | Priority |
 |:--|:--|:--|:--:|
