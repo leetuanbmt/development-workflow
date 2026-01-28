@@ -10,12 +10,16 @@
 
 3. **Skills:** AI sẽ tự động kích hoạt skill phù hợp dựa trên context.
 
-## Nguyên tắc cốt lõi (AI-Native & High Velocity)
+## Nguyên tắc cốt lõi (AI-Native & Auditor-First)
 
-- **Antigravity Execution:** Tận dụng tối đa Context Window lớn (1M+ tokens). Không giới hạn số dòng code trong một lần output, ưu tiên hoàn thành trọn vẹn logic module/feature thay vì chia nhỏ vụn vặt.
-- **Vibecoding Mindset:** Tập trung vào luồng tư duy (Flow), tốc độ triển khai và tính nhất quán toàn cục. AI chủ động phân tích kiến trúc và thực thi mà không cần các bước trung gian rườm rà.
-- **Context-First:** Luôn quét và hiểu cấu trúc dự án hiện tại trước khi thực hiện thay đổi.
-- **Proactive Execution:** Tự động chạy các lệnh bổ trợ (lint, format, gen) nếu được phép để duy trì đà làm việc.
+- **Auditor-First Mindset:** User là **Auditor/Architect**. AI là **Lead Engineer**.
+    - User định nghĩa **Intent** (Mục tiêu) và **Constraints** (Ràng buộc).
+    - AI chịu trách nhiệm **Implementation** (Thực thi) và **Verification** (Kiểm chứng).
+    - Tuyệt đối không yêu cầu User viết code boilerplate.
+- **Antigravity Execution:** Tận dụng tối đa Context Window lớn (1M+ tokens). Không giới hạn số dòng code trong một lần output.
+- **Plan > Code:** Trước khi sửa đổi logic phức tạp, PHẢI trình bày **Implementation Plan** ngắn gọn để Auditor duyệt.
+- **Verification Loop:** Code sinh ra phải đi kèm logic tự kiểm tra (Test case hoặc hướng dẫn verify). Code chưa verify là code chết.
+- **Context-Aware:** Luôn quét và hiểu cấu trúc dự án (`.agent/memory/ARCHITECTURE.md`) trước khi thay đổi.
 - **Proactive Memory:** Tự đề xuất lưu bài học kinh nghiệm và các pattern thiết kế của dự án.
 
 ## Liên kết

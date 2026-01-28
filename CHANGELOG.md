@@ -2,6 +2,19 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [3.1.0] - 2026-01-27
+### 👮 Auditor Edition (Safety & Control)
+- **[BREAKING]** Restructured `workflows/` directory into categorized folders:
+    - `core/`: Daily commands (`start-task`, `fix`, `audit`...).
+    - `tech/`: Technical operations (`manage-db`, `integrate-api`...).
+    - `ops/`: Operations (`release`, `document`...).
+- **[NEW]** **Rule 07 (Auditor Mode):** Enforces "Plan -> Approve -> Execute" protocol.
+- **[NEW]** **`/audit` Workflow:** Dedicated workflow for code/architecture inspection without auto-fixing.
+- **[NEW]** **`/investigate` Workflow:** Specialized in Root Cause Analysis with strict reporting template.
+- **[UPDATE]** **`/start-task`:** Removed "Internal Simulation" role-play, replaced with "Strategic Planning".
+- **[UPDATE]** **`sync.sh` & `generate_commands.py`:** Added recursive directory support.
+- **[DOCS]** Updated `README.md` to reflect the "Auditor-First" philosophy.
+
 ## [3.0.0] - 2026-01-27
 ### 🚀 Antigravity Revolution (AI-Native Shift)
 - **[BREAKING]** Removed "Atomic Execution" (150 lines limit). System now operates in **High Velocity Mode**.

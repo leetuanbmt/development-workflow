@@ -70,11 +70,8 @@ sync_antigravity() {
         cp -R "$WORKFLOW_DIR_NAME/skills/"* .agent/skills/
     fi
     if [ -d "$WORKFLOW_DIR_NAME/workflows" ]; then
-        for wf_path in "$WORKFLOW_DIR_NAME/workflows"/*.md; do
-            wf_file=$(basename "$wf_path")
-            wf_name=$(echo "${wf_file%.md}" | tr '_' '-')
-            cp "$wf_path" ".agent/workflows/$wf_name.md"
-        done
+        # Copy recursive toàn bộ cấu trúc folder
+        cp -R "$WORKFLOW_DIR_NAME/workflows/"* .agent/workflows/
     fi
 }
 

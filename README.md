@@ -1,69 +1,73 @@
-# ⚡ AI-Native Development Workflow
+# ⚡ AI-Native Development Workflow (Auditor Edition)
 
-> **Vibecoding Edition:** Powered by Google Antigravity & Large Context Models.
+> **Auditor-First Mindset:** Powered by **Gemini CLI** & **Google Antigravity** (Context-Aware AI).
 
-Chào mừng đến với môi trường phát triển tốc độ cao. Workflow này được thiết kế lại hoàn toàn để tận dụng **Context Window khổng lồ** (1M+ tokens) của các mô hình AI thế hệ mới (Gemini 1.5 Pro, Flash).
+Chào mừng đến với môi trường phát triển tốc độ cao. Workflow này đã được chuyển đổi từ việc AI "viết hộ" sang việc AI **"thực thi dưới sự giám sát"**. User đóng vai trò là **Kiến trúc sư trưởng (Auditor)**, AI là **Lead Engineer** thực hiện các lệnh kỹ thuật.
 
-Chúng tôi đã loại bỏ tư duy "Atomic" (chia nhỏ task vụn vặt) để chuyển sang **"Antigravity Execution"**: Code trọn vẹn, hiểu toàn cục và giảm thiểu ma sát.
+## 🏗️ Triết lý Auditor-First
 
-## 🚀 Triết lý Cốt lõi
+1.  **Intent & Constraints:** User cung cấp **Ý định** (Mục tiêu) và **Ràng buộc** (Kiến trúc, Bảo mật).
+2.  **Implementation Plan:** Với các thay đổi phức tạp, AI phải trình bày **Kế hoạch** trước khi chạm vào mã nguồn (Rule 07).
+3.  **Verification Loop:** Mọi dòng code sinh ra phải có cơ chế kiểm chứng (Test case hoặc Audit report). Code chưa được verify là code chưa hoàn thiện.
 
-1.  **Antigravity Execution:** Không còn giới hạn "150 dòng/lần". AI đọc toàn bộ dự án, hiểu kiến trúc và triển khai trọn vẹn tính năng (Full Feature Implementation) trong một lượt.
-2.  **Context-First:** AI tự động quét codebase (`tree`, `grep`, `read`) để học phong cách code (Style) và Framework của bạn trước khi hành động.
-3.  **Vibecoding:** Tập trung vào dòng chảy (Flow). Giảm thiểu các câu hỏi thừa, các bước role-play giả lập. Input -> Output chất lượng cao.
+## 🛠️ Command Center (Categorized)
 
-## 🛠️ Command Center
+Hệ thống được tổ chức thành 3 nhóm chức năng chính để tối ưu hóa sự tập trung:
 
-Hệ thống đã được hợp nhất từ hàng chục lệnh nhỏ thành 5 lệnh quyền năng:
-
-### 🌟 The "God Mode"
+### 🔴 Core Loop (Hàng ngày)
 | Command | Chức năng | Mô tả |
 | :--- | :--- | :--- |
-| **/vibe** | **Build & Refactor** | **Lệnh quan trọng nhất.** Tự động: Phân tích -> Thiết kế -> Code -> Verify. Dùng cho mọi việc từ tạo feature mới đến refactor lớn. |
+| **/start-task** | **Initialize** | Phân tích yêu cầu, chọn Mode (Hotfix/Feature) và lập kế hoạch thực hiện. |
+| **/audit** | **Inspect** | Soi lỗi logic, kiến trúc và rủi ro tiềm ẩn của một file/folder bất kỳ. |
+| **/investigate**| **Analyze** | Điều tra nguyên nhân gốc rễ (Root Cause) và xuất báo cáo theo Template chuẩn. |
+| **/fix** | **Repair** | Sửa lỗi dựa trên kết quả điều tra, đảm bảo không gây side-effects. |
+| **/refactor** | **Clean Up** | Tái cấu trúc mã nguồn an toàn (có Safety Net) mà không đổi hành vi. |
 
-### 🛡️ Quality & Operations
+### 🟡 Technical Services (Chuyên sâu)
 | Command | Chức năng | Mô tả |
 | :--- | :--- | :--- |
-| **/fix** | **Debug & Repair** | Hợp nhất điều tra (`/investigate`) và sửa lỗi. Tìm root cause và fix ngay lập tức. |
-| **/review** | **Audit & PR** | Review đa chiều: Logic, Kiến trúc, Clean Code và Git Diff trong một bước. |
-| **/document**| **Docs & Specs** | Viết tài liệu từ cấp độ Code (DartDoc/JSDoc) đến cấp độ Feature (Sequence Diagram). |
-| **/security**| **SecOps** | Rà quét lỗ hổng bảo mật, hardcoded keys và mô phỏng tấn công (Pentest). |
+| **/audit-arch** | **Structure** | Kiểm tra độ tuân thủ kiến trúc động (Dependency Rule) dựa trên context module. |
+| **/manage-db** | **Database** | Quản lý Schema, Migration Drift an toàn và Data Integrity. |
+| **/integrate-api**| **API Client** | Sinh code Data Layer (Model/Entity/Mapper) chuẩn Clean Arch từ JSON specs. |
+| **/write-test** | **Quality** | Viết kịch bản kiểm thử chiến lược (AAA Pattern) cho các luồng quan trọng. |
 
-## 🧠 The Brain: `vibecoder`
+### 🔵 Operations & Docs (Vận hành)
+| Command | Chức năng | Mô tả |
+| :--- | :--- | :--- |
+| **/prepare-release**| **Publish** | Pipeline rà soát cuối: Versioning, Lint, Test và Smoke Test trước khi Release. |
+| **/document** | **Knowledge** | Tạo tài liệu "sống" (Living Docs), vẽ sơ đồ Mermaid mô tả logic nghiệp vụ. |
+| **/onboard-dev** | **Onboarding** | Tích hợp thành viên mới vào dự án trong vòng 24h với Checklist tự động. |
 
-Hệ thống được vận hành bởi siêu Agent **`vibecoder`** (thay thế cho việc gọi lẻ tẻ `flutter-expert`, `tech-lead`...):
-- **Polyglot:** Thích ứng tự động với Flutter, React, Python, Go, v.v.
-- **Full-Stack Mindset:** Có thể code từ Database Layer lên UI Layer cùng lúc.
-- **Self-Correcting:** Tự nhận biết lỗi và sửa chữa trong quá trình generate.
-
-## 📂 Cấu trúc Mới
+## 📂 Cấu trúc Dự án
 
 ```text
-.gemini/
-├── GEMINI.md           # Core System Prompt (High Velocity Mode)
-├── workflows/
-│   ├── vibecode.md     # The Fast Track (Main)
-│   ├── fix.md          # Unified Fix
-│   ├── review.md       # Unified Review
-│   └── legacy/         # Các workflow cũ (đã lưu trữ)
-└── skills/
-    ├── vibecoder/      # The Antigravity Agent
-    └── ...             # Các skill chuyên môn khác (Plugin)
+development-workflow/
+├── rules/               # 📜 Bộ quy tắc (07-auditor-mode.md...)
+├── workflows/           # 🚀 Quy trình thực thi (Core/Tech/Ops)
+│   ├── core/            # Hàng ngày (start-task, fix, audit...)
+│   ├── tech/            # Kỹ thuật (db, api, test...)
+│   └── ops/             # Vận hành (release, document...)
+├── skills/              # 🧠 Kỹ năng chuyên môn (code-reviewer, tech-lead...)
+└── scripts/             # 🛠 Công cụ hỗ trợ (sync.sh, generate_commands.py)
 ```
 
-## ⚡ Hướng dẫn Nhanh
+## ⚡ Bắt đầu sử dụng
 
-1.  **Đồng bộ hóa:**
+1.  **Đồng bộ hóa môi trường:**
     ```bash
-    ./scripts/sync.sh
+    ./development-workflow/scripts/sync.sh
     ```
-2.  **Bắt đầu "Bay" (Vibing):**
-    ```text
-    /vibe Tạo màn hình Dashboard hiển thị biểu đồ Crypto dùng Clean Arch.
-    ```
-    ```text
-    /fix Lỗi crash khi user logout nhanh quá.
-    ```
+2.  **Vận hành theo chuẩn Auditor:**
+    - Bước 1: `/start-task [yêu cầu]` để lên kế hoạch.
+    - Bước 2: Duyệt kế hoạch và ra lệnh thực thi.
+    - Bước 3: `/audit` hoặc `/review` kết quả cuối cùng.
+
+## 🔧 Công nghệ Hỗ trợ (Powered By)
+
+Workflow này được xây dựng dựa trên nền tảng công nghệ AI tiên tiến:
+
+*   **Gemini CLI:** Giao diện dòng lệnh thông minh giúp tương tác trực tiếp với LLM ngay trong Terminal.
+*   **Google Antigravity:** Hệ thống quản lý Context Window khổng lồ, cho phép AI hiểu toàn bộ dự án mà không cần RAG phức tạp.
 
 ---
-*Lưu ý: Các workflow cũ (`implement-feature`, `analyze`...) đã được chuyển vào thư mục `workflows/legacy/` để tham khảo.*
+*Lưu ý: Mọi quy tắc và quy trình đều tập trung vào việc duy trì độ bền vững của mã nguồn trong dài hạn.*
