@@ -1,65 +1,71 @@
 ---
 name: feature-architect
-description: Chuyên gia thiết kế kiến trúc tính năng. Giúp phân rã yêu cầu thành các layer (Data/Domain/Presentation) và kế hoạch implementation.
+description: Feature architecture design expert. Break down requirements into layers (Data/Domain/Presentation) and create implementation plans.
 ---
 
-# Feature Architect Skill (Standard Edition)
+# Feature Architect Skill
 
-Sử dụng Skill này khi bạn nhận được yêu cầu tính năng mới và cần một bản thiết kế kỹ thuật chi tiết theo chuẩn Clean Architecture. Kích hoạt khi có các từ khóa: "thiết kế tính năng", "phân rã layer", "lên kế hoạch implementation", "tạo cấu trúc file cho feature".
+Design feature architecture following Clean Architecture principles. Transform vague requirements into clear technical specifications.
 
 ## 🚀 When to use
-- Khi bắt đầu triển khai một User Story hoặc Feature mới.
-- Khi cần xác định các Class, Entity, UseCase và Repository cần thiết.
-- Khi cần thiết kế schema cho Database (Drift) hoặc cấu trúc API Model.
-- Khi cần một lộ trình (implementation plan) từng bước để code không bị sót.
+- New feature development
+- Refactoring existing features
+- Architecture decision needed
+- API integration planning
 
 ## 🛑 When NOT to use
-- Không dùng để fix bug nhỏ (dùng `bug-investigator`).
-- Không dùng để review code đã có sẵn (dùng `code-reviewer`).
-- Không dùng để viết code UI chi tiết (dùng `flutter-expert`).
+- Bug fixing (use `bug-investigator`)
+- Code review (use `code-reviewer`)
+- Performance tuning (use `flutter-expert`)
 
-## 💡 Example Triggers
-- "Thiết kế giúp mình tính năng 'Đồng bộ ảnh lên server'."
-- "Phân rã layer cho màn hình 'Danh sách Kotei' theo Clean Architecture."
-- "Cần tạo cấu trúc thư mục và file cho feature 'Chỉnh sửa Profile'."
-- "Lên kế hoạch triển khai tính năng 'Quét mã QR' cho app the project."
+## 💡 Core Capabilities
 
-## 🛠️ Quy trình Thiết kế (Design Process)
-... (giữ nguyên phần Design Process)
-*   **DAO Extension:** Logic query phức tạp nào cần viết thêm vào DAO?
-*   **DTOs:** Cấu trúc JSON từ API mapping với Entity như thế nào?
-*   **Repository Implementation:** Cách kết hợp Local DB (Drift) và Remote API (Retrofit).
+### 1. Requirements Analysis
+- Break down user stories into technical tasks
+- Identify data models and entities
+- Plan API contracts
 
-### 3. Presentation Layer (Giao diện & State)
-*   **BLoC/Cubit:** Định nghĩa các State (`Initial`, `Loading`, `Success`, `Failure`) và Events.
-*   **Screens/Widgets:** Chia nhỏ màn hình thành các Widget con nào? Sử dụng component nào của thư viện `Cupertino`?
-*   **Navigation:** Đăng ký route nào trong `AutoRouter`?
+### 2. Layer Design
+- **Data Layer:** Models, Repositories, Data Sources
+- **Domain Layer:** Entities, Use Cases, Business Logic
+- **Presentation Layer:** BLoC, UI, Widgets
 
-### 4. Dependency Injection (DI)
-*   Cần đăng ký module nào vào `GetIt`/`Injectable`?
+### 3. Dependency Planning
+- Define interfaces between layers
+- Plan dependency injection
+- Design error handling strategy
 
-## 📝 Định dạng Output
-Luôn trả về kế hoạch dưới dạng Markdown danh sách các việc cần làm (Todo List) và cấu trúc cây thư mục dự kiến:
+## 📋 Deliverables
 
-**Ví dụ:**
+### Implementation Plan
 ```markdown
-## 📂 File Structure Plan
-- `lib/features/kotei/domain/entities/kotei.dart`
-- `lib/features/kotei/data/repos/kotei_repo_impl.dart`
-- ...
+## Feature: [Name]
 
-## 📋 Implementation Steps
-1. [Domain] Define Entity & Repository Interface.
-2. [Data] Implement Drift Table & DAO.
-3. [User Action] Run `make gen` (AI waits here).
-4. [Presentation] Implement Bloc & UI.
+### Data Layer
+- Models: [List]
+- Repository: [Interface]
+- Data Sources: [Local/Remote]
+
+### Domain Layer
+- Entities: [List]
+- Use Cases: [List]
+
+### Presentation Layer
+- BLoC: [Events/States]
+- UI: [Screens/Widgets]
+
+### Dependencies
+- [Package requirements]
+
+### Testing Strategy
+- [Test approach]
 ```
 
-## 🔌 Interface Definition
+## 💡 AI Guidelines
 
-### Inputs
-- **requirement** (text): Yêu cầu nghiệp vụ (User Story)
+**Language:** All architectural designs and plans must be in **Vietnamese**, even though this skill documentation is in English.
 
-### Outputs
-- **architecture_plan** (markdown): Sơ đồ layer và danh sách file cần tạo
-- **data_flow** (markdown): Luồng dữ liệu
+- **Clean Architecture first:** Always follow dependency rule
+- **SOLID principles:** Apply in design decisions
+- **Testability:** Design for easy testing
+- **Scalability:** Consider future extensions

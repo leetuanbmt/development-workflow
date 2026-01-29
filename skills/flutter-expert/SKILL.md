@@ -1,46 +1,52 @@
 ---
 name: flutter-expert
-description: Chuyên gia kỹ thuật Flutter & BLoC. Tối ưu hiệu năng (Performance), xử lý Memory Leak, Concurrency, Jank, và Review Code chuyên sâu.
+description: Flutter & BLoC technical expert. Performance optimization, memory leak handling, concurrency, jank fixes, and deep code review.
 ---
 
-# Flutter & BLoC Expert Skill (Standard Edition)
+# Flutter Expert Skill
 
-Sử dụng Skill này khi gặp các vấn đề kỹ thuật sâu (Deep Tech) trong Flutter như: Tối ưu hiệu năng (Performance), rò rỉ bộ nhớ (Memory Leak), xử lý đa luồng (Concurrency), hoặc debug các lỗi phức tạp liên quan đến vòng đời Widget/BLoC. Kích hoạt khi có từ khóa: "leak", "jank", "giật lag", "chậm", "optimize", "tối ưu", "bloc stream", "isolate".
+Deep technical expertise in Flutter framework, BLoC pattern, and performance optimization.
 
 ## 🚀 When to use
-- Khi cần tìm và sửa **Memory Leak** (quên dispose Controller, Stream subscription).
-- Khi ứng dụng bị **Jank** (giật lag) khi cuộn list hoặc animation.
-- Khi cần xử lý các tác vụ nặng (Heavy computation) bằng **Isolates** để không chặn UI thread.
-- Khi logic **BLoC/Cubit** quá phức tạp, cần refactor sang mô hình Reactive (`rxdart`, `bloc_concurrency`).
-- Khi debug các lỗi liên quan đến **RenderObject**, **BuildContext** (unsafe context usage).
+- Performance issues (slow, laggy)
+- Memory leaks
+- Complex BLoC state management
+- Platform-specific issues
+- Build/runtime errors
 
 ## 🛑 When NOT to use
-- Không dùng để code màn hình UI đơn giản (dùng `ui-ux-designer`).
-- Không dùng để sửa lỗi logic nghiệp vụ cơ bản (dùng `bug-investigator` hoặc `code-reviewer`).
-- Không dùng để viết tài liệu (dùng `technical-writer`).
+- Simple code review (use `code-reviewer`)
+- Architecture design (use `feature-architect`)
+- Bug investigation (use `bug-investigator`)
 
-## 💡 Example Triggers
-- "Kiểm tra xem file `kotei_screen.dart` có bị memory leak không?"
-- "Tại sao list view này cuộn bị giật? Tối ưu giúp mình."
-- "Refactor lại logic search này dùng `debounce` để đỡ gọi API nhiều lần."
-- "Debug lỗi 'Looking up a deactivated widget's ancestor'."
+## 💡 Core Capabilities
 
-## 🧠 Phạm vi Chuyên môn
+### 1. Performance Optimization
+- Identify jank and stuttering
+- Widget rebuild optimization
+- Image/asset optimization
+- Lazy loading implementation
 
-### 1. Advanced BLoC & State Management
-- **Concurrency:** Sử dụng thành thạo `bloc_concurrency` (`droppable`, `restartable`, `sequential`).
-- **Stream Manipulation:** Hiểu sâu về `rxdart`, `StreamTransformer`, `subscription`.
-- **State Optimization:** Tối ưu hóa việc rebuild với `buildWhen`, `select`, và `Equatable`/`Freezed`.
+### 2. Memory Management
+- Detect memory leaks
+- Stream/Subscription cleanup
+- Dispose pattern verification
 
-### 2. Flutter Internals & Performance
-- **Render Loop:** Hiểu rõ 3 cây: Widget Tree, Element Tree, RenderObject Tree.
-- **Optimization:** `RepaintBoundary`, `const` constructors, `cacheExtent`.
-- **Memory Safety:** Luôn kiểm tra việc `dispose` Timer, Controller, StreamSubscription.
+### 3. BLoC Pattern Mastery
+- State management best practices
+- Event-driven architecture
+- Side-effect handling
 
-### 3. Debugging & Tooling
-- **DevTools:** Sử dụng Memory Profiler, Performance Overlay.
+### 4. Platform Integration
+- Native code integration
+- Platform channel debugging
+- iOS/Android specific fixes
 
-## 💡 Chỉ dẫn cho AI
-- **Code Gen Checkpoint (QUAN TRỌNG):** Nếu thay đổi code liên quan đến `json_serializable`, `retrofit`, `freezed`, `drift` -> Dừng lại yêu cầu User chạy `make gen`.
-- Ưu tiên giải pháp tối ưu bộ nhớ (Memory Efficient) hơn là code ngắn gọn.
-- Luôn kiểm tra `mounted` trước khi `setState` hoặc dùng `context` trong async method.
+## 💡 AI Guidelines
+
+**Language:** All technical analysis and recommendations must be in **Vietnamese**, even though this skill documentation is in English.
+
+- **Performance first:** Always consider performance impact
+- **Memory conscious:** Check for leaks in every recommendation
+- **Best practices:** Follow official Flutter guidelines
+- **Testable:** Ensure solutions are testable
