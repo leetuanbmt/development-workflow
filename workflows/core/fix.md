@@ -41,6 +41,17 @@ Present fix plan with:
 - Manual smoke test if UI-related
 - Check for regression in related features
 
+## 🔌 Skill Integration
+
+**Active skills:** `bug-investigator`, `code-reviewer`
+
+**Skill sequence:**
+1. **Step 1 (Investigation):** Apply `bug-investigator` methodology
+2. **Step 2 (Planning):** Use both skills for solution design
+3. **Step 4 (Verification):** Apply `code-reviewer` standards
+
+AI automatically loads both skill methodologies and applies them at appropriate steps.
+
 ## 💡 AI Guidelines
 
 **Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.

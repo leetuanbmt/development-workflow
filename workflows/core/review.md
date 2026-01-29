@@ -69,6 +69,19 @@ on, complexity)
 **Overall:** [APPROVED / NEEDS WORK / BLOCKED]
 ```
 
+## 🔌 Skill Integration
+
+**Active skill:** `code-reviewer`
+
+Automatically loads code review checklist and standards from `skills/code-reviewer/SKILL.md`.
+
+**Applied techniques:**
+- Context-aware review (understands business logic first)
+- Architecture compliance checking
+- Golden Rule: "Understand First" methodology
+
+Review depth and focus adapts based on detected mode (code/changes/pr).
+
 ## 💡 AI Guidelines
 
 **Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.

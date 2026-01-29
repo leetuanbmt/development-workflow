@@ -30,6 +30,16 @@ AI must generate code in dependency order:
 ### 3. Verification
 - User verifies type mapping matches business logic (e.g., does `status` return `int` or `String`?)
 
+## 🔌 Skill Integration
+
+**Active skill:** `code-reviewer`
+
+Applied during **Step 3 (Verification):**
+- Validates generated code follows Clean Architecture
+- Checks naming conventions (snake_case → camelCase)
+- Ensures proper null safety handling
+- Reviews mapper pattern implementation
+
 ## 💡 AI Guidelines
 
 **Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.

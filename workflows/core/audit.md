@@ -73,6 +73,18 @@ Run aspect-specific checks:
 **Decision:** [PROCEED / NEEDS REVISION / BLOCKED]
 ```
 
+## 🔌 Skill Integration
+
+**Active skills:** `code-reviewer`, `tech-lead`
+
+**Skill assignment by aspect:**
+- **Architecture audit:** `tech-lead` (primary) + `code-reviewer` (validation)
+- **Security audit:** `code-reviewer` with security focus
+- **Analytics audit:** `code-reviewer` with tracking focus
+- **General audit:** Both skills collaborate
+
+AI selects and applies appropriate skill(s) based on detected audit aspect.
+
 ## 💡 AI Guidelines
 
 **Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.

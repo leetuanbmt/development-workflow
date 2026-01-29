@@ -36,7 +36,21 @@ constraints:
 ### 4. Final Review
 - Use `/review` or `code-reviewer` skill to ensure new code follows Clean Code standards
 
-## 💡 AI Guidelines
+## � Skill Integration
+
+**Active skills:** `tech-lead`, `code-reviewer`
+
+**Skill roles:**
+- **tech-lead:** Strategic refactoring decisions, architecture guidance
+- **code-reviewer:** Code quality validation, Clean Code compliance
+
+**Step mapping:**
+1. Analysis → `tech-lead` (dependency analysis, smell detection)
+2. Safety Net → `code-reviewer` (test coverage check)
+3. Execution → `tech-lead` (incremental approach)
+4. Review → `code-reviewer` (final quality check)
+
+## �💡 AI Guidelines
 
 **Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **Respect conventions:** Name variables/functions according to project standards (`.agent/memory/CONVENTIONS.md`)

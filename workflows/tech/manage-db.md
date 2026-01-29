@@ -34,6 +34,19 @@ constraints:
 - **Sanity Check:**
   - Run app to ensure no crash when opening Database
 
+## 🔌 Skill Integration
+
+**Active skills:** `flutter-expert`, `test-engineer`
+
+**Skill roles:**
+- **flutter-expert:** Database schema expertise, Drift-specific knowledge
+- **test-engineer:** Migration testing strategy, data integrity verification
+
+**Application:**
+- Step 1: `flutter-expert` analyzes impact
+- Step 2: `flutter-expert` guides implementation
+- Step 3: `test-engineer` designs verification tests
+
 ## 💡 AI Guidelines
 
 **Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.

@@ -32,6 +32,17 @@ Before coding, AI must list test cases:
 - **Act:** Call function under test
 - **Assert:** Verify output AND side-effects (verify mock was called X times)
 
+## 🔌 Skill Integration
+
+**Active skills:** `test-engineer`, `code-reviewer`
+
+**Skill sequence:**
+1. **test-engineer:** Defines test strategy, identifies test cases
+2. **test-engineer:** Implements tests using AAA pattern
+3. **code-reviewer:** Validates test quality and readability
+
+Both skills work together to ensure tests are effective and maintainable.
+
 ## 💡 AI Guidelines
 
 **Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
