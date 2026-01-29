@@ -2,6 +2,55 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [4.0.0] - 2026-01-29
+### 🔧 System Refactoring (Anti-Loop & Consolidation)
+
+**BREAKING CHANGES:**
+- **Workflows reduced:** 40 → 13 (-67%)
+- **Skills reduced:** 22 → 8 (-63%)
+- **Archived:** 27 legacy workflows, 14 deprecated skills
+
+#### Consolidated Workflows
+| Before | After |
+|:---|:---|
+| `/review`, `/review-code`, `/review-pr`, `/review-changes` | `/review` (unified, auto-detect mode) |
+| `/audit`, `/audit-architecture`, `/audit-security`, `/audit-analytics` | `/audit` (unified, aspect detection) |
+| `/investigate` + `/fix` overlap | Clear separation: investigate=report only, fix=full flow |
+
+#### Archived (moved to `_archived_legacy/` and `_deprecated/`)
+- **Workflows:** `legacy/*`, `vibecode`, `review-ui`, `brainstorm`, `aso`, `evaluate-agent`, `gen-api-docs`, `onboard-dev`, `project-overview`, `setup-agent`, `create-component`, `write-adr`, `write-spec`, `manage-i18n`, `audit-architecture`, `audit-analytics`, `security`
+- **Skills:** `technical-writer`, `localization-expert`, `ui-ux-designer`, `product-manager`, `devops-engineer`, `app-store-optimization`, `analytics-tracking`, `api-documentation-generator`, `ethical-hacking-methodology`, `mobile-design`, `agent-evaluation`, `qa-lead`, `api-integrator`, `_composites`
+
+#### Anti-Loop Guardrails
+- **[NEW]** Added `constraints` section to all core workflows (`max_iterations`, `timeout_minutes`, `exit_on`)
+- **[FIX]** Removed hallucinated `codebase_investigator` skill reference from `/investigate`
+- **[UPDATE]** Simplified `ORCHESTRATOR.md` dispatch rules (first-match wins)
+
+#### Scripts Updated
+- **[UPDATE]** `sync.sh`: Uses `rsync --exclude='_*'` to skip archived folders
+- **[UPDATE]** `generate_commands.py`: Skips folders starting with `_`
+- **[UPDATE]** `doctor.sh`: Updated workflow suggestions to new names
+
+#### Active Components (13 workflows, 8 skills)
+**Workflows:**
+- Core: `/start-task`, `/investigate`, `/fix`, `/review`, `/audit`, `/refactor`
+- Tech: `/manage-db`, `/integrate-api`, `/write-test`
+- Ops: `/doctor`, `/deploy`, `/document`, `/prepare-release`
+
+**Skills:**
+- `bug-investigator`, `code-reviewer`, `flutter-expert`, `feature-architect`
+- `tech-lead`, `test-engineer`, `security-auditor`, `vibecoder`
+
+---
+
+## [3.2.0] - 2026-01-28
+### 📊 Metrics & Documentation Enhancement
+- **[NEW]** **Smart Workflow Suggestions:** `/doctor` now analyzes git history and project patterns to suggest relevant workflows.
+- **[NEW]** **Case Study:** Added real-world case study from kansuke-photo project with 3 bug investigation examples.
+- **[NEW]** **Visual Flow Diagram:** README.md now includes Mermaid diagram showing workflow decision tree.
+- **[UPDATE]** **Metrics Dashboard:** Updated with real usage data (20+ sessions, 90% success rate).
+- **[UPDATE]** **Workflow Leaderboard:** `/investigate` and `/review-code` now top the usage charts.
+
 ## [3.1.0] - 2026-01-27
 ### 👮 Auditor Edition (Safety & Control)
 - **[BREAKING]** Restructured `workflows/` directory into categorized folders:

@@ -28,6 +28,14 @@ skills:
     *   Nếu lỗi là "Out of Sync", hỏi người dùng có muốn chạy Sync ngay không.
     *   Nếu đồng ý, chạy `make sync`.
 
+4.  **Smart Workflow Suggestions:**
+    *   Script tự động phân tích context và suggest workflow phù hợp:
+        *   BLoC/Cubit changes → `/write-test`
+        *   Data layer changes → `/audit-architecture`
+        *   Presentation changes → `/review-ui`
+        *   Recent bug fixes → `/write-test` (regression tests)
+        *   Uncommitted changes → `/review-code`
+
 ## 📝 Script Logic (Tham khảo)
 
 Script `doctor.sh` thực hiện các kiểm tra sau:
@@ -40,7 +48,11 @@ check_tool "melos"
 # 2. Check Sync
 compare_dirs "development-workflow/rules" ".agent/memory"
 compare_dirs "development-workflow/skills" ".agent/skills"
+
+# 3. Smart Suggestions
+suggest_workflow  # Analyze git history & project patterns
 ```
 
 ## ⚠️ Lưu ý
 *   Luôn ưu tiên chạy `make sync` nếu có bất kỳ nghi ngờ nào về sự không đồng nhất.
+*   Suggestions dựa trên 5 commits gần nhất - cần có git history.

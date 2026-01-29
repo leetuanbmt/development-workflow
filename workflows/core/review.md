@@ -1,34 +1,65 @@
 ---
-description: "Review code, thay đổi Git hoặc Pull Request một cách toàn diện. Hợp nhất từ các quy trình cũ."
+description: "Review code, PR hoặc Git changes. Tự động detect context và mode."
 trigger: /review
-version: "1.0.0"
+version: "2.0.0"
 skills:
   - code-reviewer
-  - tech-lead
+constraints:
+  max_iterations: 3
+  timeout_minutes: 20
+  exit_on: ["Report generated"]
 ---
 
-# 🧐 Unified Review (Logic, Arch, Git)
+# 🧐 Unified Code Review
 
-**Mục tiêu:** Kiểm tra chất lượng code, kiến trúc và tác động của các thay đổi trong một bước duy nhất.
+**Mục tiêu:** Kiểm tra chất lượng code trong một bước duy nhất. Tự động phát hiện context.
 
-## 🚀 Các bước thực hiện (Execution Steps)
+## 🎯 Mode Detection (Tự động)
 
-1.  **Identify Change Source:**
-    *   Tự động xác định nguồn review: File hiện tại, `git diff HEAD`, hoặc một commit cụ thể.
-    *   Sử dụng `git status` và `git diff` để hiểu ngữ cảnh thay đổi.
+| Context | Mode | Trigger |
+|:---|:---|:---|
+| File path được chỉ định | `code` | Review file cụ thể |
+| Có uncommitted changes | `changes` | `git diff HEAD` |
+| Có branch/PR reference | `pr` | `git diff origin/main` |
 
-2.  **Multidimensional Audit:**
-    *   **Logic:** Kiểm tra tính đúng đắn, edge cases và hiệu năng.
-    *   **Architecture:** Đảm bảo tuân thủ Layering (Clean Arch) và Dependency Rule.
-    *   **Style:** Kiểm tra Lint/Format theo tiêu chuẩn dự án.
-    *   **Impact:** Sử dụng `codebase_investigator` để tìm các vùng bị ảnh hưởng gián tiếp.
+## 🚀 Execution Steps
 
-3.  **Synthesis Report:**
-    *   🔴 **Critical:** Lỗi logic, crash, vi phạm kiến trúc nghiêm trọng.
-    *   🟡 **Major:** Thiếu test, code quá phức tạp, vi phạm style.
-    *   🔵 **Minor:** Gợi ý tối ưu, đặt tên, comments.
+### 1. Identify Change Source
+```bash
+# AI tự chạy để xác định context
+git status --short
+git diff --stat HEAD
+```
 
-## 💡 Hướng dẫn cho AI
-- Nếu thay đổi nhỏ, hãy đưa ra báo cáo ngắn gọn.
-- Nếu là PR lớn, hãy phân tích theo từng module.
-- Luôn cung cấp giải pháp (Code snippet) cho các vấn đề Critical/Major.
+### 2. Multidimensional Check
+- **Logic:** Tính đúng đắn, edge cases, null safety
+- **Architecture:** Clean Arch compliance, Dependency Rule
+- **Style:** Lint/Format theo `analysis_options.yaml`
+- **Impact:** Files bị ảnh hưởng gián tiếp
+
+### 3. Generate Report
+
+```markdown
+## Review Report
+
+### DoD Checklist
+| Criteria | Status |
+|:---|:---|
+| Lint/Format | ✅/🔴 |
+| Clean Arch | ✅/🔴 |
+| Tests | ✅/⚠️ |
+
+### Findings
+- 🔴 **Critical:** [Lỗi logic, crash]
+- 🟡 **Major:** [Vi phạm arch, thiếu test]
+- 🔵 **Minor:** [Naming, style]
+
+### Suggested Fixes
+[Code snippets for Critical/Major issues]
+```
+
+## 💡 AI Guidelines
+- Thay đổi nhỏ → Báo cáo ngắn gọn
+- PR lớn → Phân tích theo từng module
+- Luôn cung cấp code snippet cho Critical/Major
+- KHÔNG tự sửa code, chỉ report

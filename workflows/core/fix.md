@@ -1,37 +1,47 @@
 ---
-description: "Quy trình điều tra và sửa lỗi theo chuẩn Auditor (Investigate -> Plan -> Fix -> Verify)."
+description: "Sửa lỗi triệt để theo flow: Quick Investigate → Plan → Fix → Verify."
 trigger: /fix
-version: "2.0.0"
+version: "2.1.0"
 skills:
   - bug-investigator
   - code-reviewer
+constraints:
+  max_iterations: 5
+  timeout_minutes: 30
+  exit_on: ["Fix applied and verified", "User rejected plan"]
 ---
 
 # 🔧 Systematic Bug Fix
 
-**Mục tiêu:** Sửa lỗi triệt để (Root Cause Fix) thay vì chỉ vá tạm thời (Patching).
+**Mục tiêu:** Sửa lỗi triệt để (Root Cause Fix) thay vì vá tạm thời (Patching).
 
-## 🔄 Quy trình (Execution Flow)
+## 🚀 Execution Flow
 
-### 1. Investigation (Điều tra)
-*   **Reproduction:** Xác định các bước để tái hiện lỗi.
-*   **Trace:** Sử dụng `codebase_investigator` hoặc `grep` để tìm điểm gãy trong luồng dữ liệu.
-*   **Root Cause Analysis:** Tại sao lỗi xảy ra? (Logic sai? Null safety? API đổi contract?).
+### Step 1: Quick Investigation (5 min max)
+- Xác định reproduction steps
+- Trace luồng dữ liệu để tìm điểm gãy
+- Root Cause Analysis: Logic sai? Null safety? API contract changed?
 
-### 2. Solution Audit (Thẩm định giải pháp)
-Trước khi sửa, AI phải tự trả lời:
-*   Fix này có an toàn không? (Có try-catch, null check chưa?).
-*   Fix này có đúng kiến trúc không? (Không gọi DB từ UI).
-*   Có cách nào sửa sạch hơn không?
+### Step 2: Solution Audit
+Trước khi sửa, tự trả lời:
+- [ ] Fix có an toàn? (try-catch, null check)
+- [ ] Fix đúng kiến trúc? (không gọi DB từ UI)
+- [ ] Có cách sửa sạch hơn?
 
-### 3. Execution (Thực thi)
-*   Sử dụng `replace` hoặc `write_file` để áp dụng fix.
-*   Tuân thủ quy tắc `07-auditor-mode.md`.
+### Step 3: Execute Fix
+- Sử dụng `replace_file_content` để áp dụng
+- Một file tại một thời điểm
+- Commit message format: `fix: [short description]`
 
-### 4. Verification (Kiểm chứng)
-*   **Automated:** Viết test case tái hiện lỗi -> Fix -> Test case pass.
-*   **Manual:** Hướng dẫn User cách verify lỗi đã hết.
+### Step 4: Verification
+```bash
+# Chạy test liên quan
+flutter test test/features/[feature]/ --name "[test_name]"
+```
+- Nếu không có test → Đề xuất viết test mới
+- Hướng dẫn user manual verify
 
-## 💡 Hướng dẫn cho AI
-*   **Tránh "Shotgun Debugging":** Không sửa loạn xạ nhiều file cùng lúc với hy vọng nó sẽ chạy.
-*   **Log:** Nếu không tìm ra nguyên nhân, hãy đề xuất thêm Log để debug.
+## 💡 AI Guidelines
+- **No Shotgun Debugging:** Không sửa loạn xạ nhiều file
+- **Focused:** Một bug = một fix commit
+- **Traceable:** Mọi thay đổi phải reference root cause

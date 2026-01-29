@@ -43,8 +43,10 @@ def convert_md_to_toml():
     count = 0
     # Sử dụng recursive=True để quét tất cả thư mục con
     for md_path in glob.glob(f"{WORKFLOW_DIR}/**/*.md", recursive=True):
-        if os.path.basename(os.path.dirname(md_path)) == "legacy":
-             continue # Bỏ qua thư mục legacy nếu cần, hoặc giữ lại tùy ý. Ở đây ta cứ gen hết.
+        # Skip archived folders
+        parent_folder = os.path.basename(os.path.dirname(md_path))
+        if parent_folder.startswith("_"):
+            continue
 
         filename = os.path.basename(md_path)
         cmd_name = filename.replace(".md", ".toml")

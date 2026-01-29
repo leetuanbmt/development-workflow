@@ -32,6 +32,7 @@ sync_gemini() {
     # Tạo các Symlink logic (Trỏ về thư mục workflow)
     link_folder "$WORKFLOW_DIR_NAME/rules" ".gemini/rules"
     link_folder "$WORKFLOW_DIR_NAME/skills" ".gemini/skills"
+    link_folder "$WORKFLOW_DIR_NAME/memory" ".gemini/memory"
     link_folder "$WORKFLOW_DIR_NAME/CHEAT_SHEET.md" ".gemini/CHEAT_SHEET.md"
     link_folder "$WORKFLOW_DIR_NAME/GEMINI.md" ".gemini/GEMINI.md"
 
@@ -57,21 +58,25 @@ sync_antigravity() {
     # 1. README
     cp "$WORKFLOW_DIR_NAME/README.md" .agent/README.md 2>/dev/null || true
 
-    # 2. Memory (Mapped from Rules)
+    # 2. Memory (Mapped from Rules + Actual Memory)
     if [ -d "$WORKFLOW_DIR_NAME/rules" ]; then
         cp "$WORKFLOW_DIR_NAME/rules/01-project-context.md" .agent/memory/PROJECT.md 2>/dev/null || true
         cp "$WORKFLOW_DIR_NAME/rules/02-architecture-rules.md" .agent/memory/ARCHITECTURE.md 2>/dev/null || true
         cp "$WORKFLOW_DIR_NAME/rules/00-core-behavior.md" .agent/memory/CONVENTIONS.md 2>/dev/null || true
         touch .agent/memory/GLOSSARY.md
     fi
+    
+    # Copy user memory (Knowledge Base, Preferences, History)
+    if [ -d "$WORKFLOW_DIR_NAME/memory" ]; then
+        cp -R "$WORKFLOW_DIR_NAME/memory/"* .agent/memory/ 2>/dev/null || true
+    fi
 
-    # 3. Skills & Workflows (Recursive Copy)
+    # 3. Skills & Workflows (Exclude archived/deprecated folders)
     if [ -d "$WORKFLOW_DIR_NAME/skills" ]; then
-        cp -R "$WORKFLOW_DIR_NAME/skills/"* .agent/skills/
+        rsync -a --exclude='_*' "$WORKFLOW_DIR_NAME/skills/" .agent/skills/
     fi
     if [ -d "$WORKFLOW_DIR_NAME/workflows" ]; then
-        # Copy recursive toàn bộ cấu trúc folder
-        cp -R "$WORKFLOW_DIR_NAME/workflows/"* .agent/workflows/
+        rsync -a --exclude='_*' "$WORKFLOW_DIR_NAME/workflows/" .agent/workflows/
     fi
 }
 

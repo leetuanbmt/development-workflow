@@ -99,6 +99,65 @@ else
 fi
 
 echo ""
+
+# 4. Smart Workflow Suggestions
+suggest_workflow() {
+    echo "💡 Smart Workflow Suggestions:"
+    
+    SUGGESTIONS=0
+    
+    # Check recent git changes
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        RECENT_FILES=$(git diff --name-only HEAD~5 2>/dev/null | head -10)
+        
+        # BLoC/Cubit changes → suggest testing
+        if echo "$RECENT_FILES" | grep -qE "(bloc|cubit)\.dart$"; then
+            echo "   → /write-test (BLoC/Cubit changes detected)"
+            ((SUGGESTIONS++))
+        fi
+        
+        # Data layer changes → suggest architecture audit
+        if echo "$RECENT_FILES" | grep -qE "(entity|model|mapper|repository)\.dart$"; then
+            echo "   → /audit (Data layer changes)"
+            ((SUGGESTIONS++))
+        fi
+        
+        # Presentation changes → suggest review
+        if echo "$RECENT_FILES" | grep -qE "presentation/.+\.dart$"; then
+            echo "   → /review (Presentation layer changes)"
+            ((SUGGESTIONS++))
+        fi
+        
+        # Bug fix patterns
+        if git log --oneline -5 2>/dev/null | grep -qiE "(fix|bug|issue)"; then
+            echo "   → /write-test (Recent bug fixes - add regression tests)"
+            ((SUGGESTIONS++))
+        fi
+    fi
+    
+    # Check for common project patterns
+    if [ -f "pubspec.yaml" ]; then
+        # Flutter project
+        if grep -q "flutter_bloc" pubspec.yaml 2>/dev/null; then
+            echo "   → /vibecode (Flutter + BLoC project ready)"
+            ((SUGGESTIONS++))
+        fi
+    fi
+    
+    # Check for uncommitted changes
+    if git status --porcelain 2>/dev/null | grep -q "^M"; then
+        echo "   → /review (Uncommitted changes detected)"
+        ((SUGGESTIONS++))
+    fi
+    
+    if [ $SUGGESTIONS -eq 0 ]; then
+        echo "   → /start-task (No specific context - use master workflow)"
+    fi
+}
+
+suggest_workflow
+
+echo ""
 echo "=============================="
 if [ $ERRORS -eq 0 ]; then
     echo -e "${GREEN}🎉 All systems operational! You are ready to code.${NC}"
@@ -106,3 +165,4 @@ else
     echo -e "${RED}⚠️  Found $ERRORS issues. Please review above.${NC}"
     exit 1
 fi
+

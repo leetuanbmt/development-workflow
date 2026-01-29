@@ -1,37 +1,77 @@
 ---
-description: "Chế độ Auditor: Phân tích sâu, kiểm tra kiến trúc và logic trước khi thực hiện thay đổi."
+description: "Audit code theo nhiều góc độ. Tự động chọn aspect phù hợp dựa trên context."
 trigger: /audit
-version: "1.1.0"
+version: "2.0.0"
 skills:
   - code-reviewer
-  - feature-architect
   - tech-lead
+constraints:
+  max_iterations: 3
+  timeout_minutes: 25
+  exit_on: ["Audit report generated", "Plan approved"]
 ---
 
-# 🕵️ Auditor Mode Workflow
+# 🕵️ Unified Audit Mode
 
-**Mục tiêu:** Chuyển đổi AI sang chế độ hỗ trợ chuyên sâu, tập trung vào việc phân tích và lập kế hoạch cho Auditor duyệt.
+**Mục tiêu:** Phân tích sâu code/feature theo nhiều góc độ trước khi thực hiện thay đổi.
 
-## 🚀 Các bước thực hiện (Execution Steps)
+## 🎯 Aspect Detection (Tự động)
 
-1.  **Deep Investigation:**
-    *   Sử dụng `codebase_investigator` hoặc `search_file_content` để quét toàn bộ logic liên quan đến yêu cầu.
-    *   Xác định các ràng buộc (Constraints) hiện có trong codebase.
+| Keywords | Aspect | Focus |
+|:---|:---|:---|
+| `architecture`, `layer`, `dependency` | `architecture` | Clean Arch compliance |
+| `security`, `token`, `api key` | `security` | Vulnerabilities |
+| `tracking`, `analytics`, `event` | `analytics` | Event tracking |
+| (default) | `general` | Logic, edge cases |
 
-2.  **Architecture & Security Audit:**
-    *   Đối chiếu với `02-architecture-rules.md` để đảm bảo không vi phạm Layering.
-    *   Kiểm tra các vấn đề về tài nguyên (Memory leaks, Resource disposal, Deadlocks).
+## 🚀 Execution Steps
 
-3.  **Strategic Planning:**
-    *   Trình bày 1 Implementation Plan rõ ràng dưới dạng bullet points.
-    *   Liệt kê các file sẽ bị thay đổi và lý do.
+### 1. Context Discovery
+- Đọc `.agent/memory/ARCHITECTURE.md` nếu có
+- Xác định module/feature đang audit
+- Phân tích pattern đang dùng (Clean Arch, MVC, etc.)
 
-4.  **Auditor Verification:**
-    *   Chờ phản hồi từ User.
-    *   Nếu được duyệt, tiến hành thực thi bằng các tool `replace`/`write_file`.
-    *   Nếu không, điều chỉnh kế hoạch dựa trên feedback.
+### 2. Deep Investigation
+- Quét logic liên quan đến yêu cầu
+- Xác định constraints hiện có
+- Check resource management (memory, streams)
 
-## 💡 Hướng dẫn cho AI
-- Tuyệt đối không tự ý ghi đè file mà không giải thích logic trước.
-- Luôn ưu tiên tính an toàn và bền vững của hệ thống hơn là tốc độ triển khai tức thời.
-- Nếu phát hiện lỗi trong yêu cầu của Auditor, phải lịch sự chỉ ra và đề xuất phương án tốt hơn.
+### 3. Aspect-Specific Checks
+
+#### Architecture Aspect
+- [ ] Dependency Rule: Domain không import UI/Data
+- [ ] Separation of Concerns: UI chỉ render, Logic trong BLoC
+- [ ] Coupling: Không import chéo giữa features
+
+#### Security Aspect
+- [ ] Secrets: Không hardcode API keys
+- [ ] Logging: Không log sensitive data
+- [ ] Input validation: Sanitize user input
+
+#### Analytics Aspect
+- [ ] Event naming convention
+- [ ] Required parameters present
+- [ ] No PII in tracking
+
+### 4. Generate Report
+
+```markdown
+## Audit Report
+
+### Aspect: [architecture/security/analytics/general]
+
+### Findings
+- ✅ **Good:** [Điểm tuân thủ tốt]
+- ⚠️ **Warning:** [Technical debt tiềm ẩn]
+- 🔴 **Violation:** [Vi phạm nghiêm trọng]
+
+### Implementation Plan (nếu cần thay đổi)
+1. [Step 1]
+2. [Step 2]
+Files affected: [list]
+```
+
+## 💡 AI Guidelines
+- Không giáo điều: Simple widget không cần full Clean Arch
+- Giải thích "Why": Tại sao vi phạm này nguy hiểm
+- Chờ approval trước khi thực thi plan
