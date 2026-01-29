@@ -13,7 +13,7 @@ constraints:
 
 # 🔧 Systematic Bug Fix
 
-**Mục tiêu:** Sửa lỗi triệt để (Root Cause Fix) thay vì vá tạm thời (Patching).
+**Objective:** Sửa lỗi triệt để (Root Cause Fix) thay vì vá tạm thời (Patching).
 
 ## 🚀 Execution Flow
 

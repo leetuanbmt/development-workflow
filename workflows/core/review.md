@@ -12,7 +12,7 @@ constraints:
 
 # 🧐 Unified Code Review
 
-**Mục tiêu:** Kiểm tra chất lượng code trong một bước duy nhất. Tự động phát hiện context.
+**Objective:** Kiểm tra chất lượng code trong một bước duy nhất. Tự động phát hiện context.
 
 ## 🎯 Mode Detection (Tự động)
 

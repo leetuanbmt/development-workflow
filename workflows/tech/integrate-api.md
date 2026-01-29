@@ -12,9 +12,9 @@ constraints:
 
 # 🔌 Robust API Integration
 
-**Mục tiêu:** Sinh code Data Layer chuẩn Clean Architecture, xử lý Null Safety triệt để.
+**Objective:** Sinh code Data Layer chuẩn Clean Architecture, xử lý Null Safety triệt để.
 
-## 🔄 Quy trình (Execution Flow)
+## 🔄 Execution Flow
 
 ### 1. Spec Analysis
 *   Đọc JSON Response.
@@ -30,6 +30,6 @@ AI phải sinh code theo thứ tự phụ thuộc:
 ### 3. Verification
 *   User kiểm tra xem type mapping có đúng nghiệp vụ không (Ví dụ: `status` trả về `int` hay `String`?).
 
-## 💡 Hướng dẫn cho AI
+## 💡 AI Guidelines
 *   **Mapper Pattern:** Logic biến đổi data (Data Transformation) phải nằm trong Mapper, tuyệt đối không nằm trong UI hay Repository.
 *   **Fallback:** Nếu trường `String?` bị null, Mapper nên map về `""` hay giữ nguyên `null`? (Hỏi User hoặc theo Convention).

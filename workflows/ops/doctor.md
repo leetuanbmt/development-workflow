@@ -11,9 +11,9 @@ constraints:
 
 # 🏥 Doctor Check (Environment & Sync Diagnostic)
 
-**Mục tiêu:** Kiểm tra tính toàn vẹn của môi trường Agent, trạng thái đồng bộ (Sync Status) và các công cụ cần thiết. Giúp phát hiện lỗi "Out of Sync" hoặc thiếu dependencies.
+**Objective:** Kiểm tra tính toàn vẹn của môi trường Agent, trạng thái đồng bộ (Sync Status) và các công cụ cần thiết. Giúp phát hiện lỗi "Out of Sync" hoặc thiếu dependencies.
 
-## 🚀 Các bước thực hiện (Execution Steps)
+## 🚀 Steps thực hiện (Execution Steps)
 
 1.  **Chạy Diagnostic Script:**
     *   **HÀNH ĐỘNG:** Chạy script `development-workflow/scripts/doctor.sh`.
@@ -56,6 +56,6 @@ compare_dirs "development-workflow/skills" ".agent/skills"
 suggest_workflow  # Analyze git history & project patterns
 ```
 
-## ⚠️ Lưu ý
+## ⚠️ Important Notes
 *   Luôn ưu tiên chạy `make sync` nếu có bất kỳ nghi ngờ nào về sự không đồng nhất.
 *   Suggestions dựa trên 5 commits gần nhất - cần có git history.

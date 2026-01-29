@@ -13,9 +13,9 @@ constraints:
 
 # ♻️ Safe Refactoring
 
-**Mục tiêu:** Code sạch hơn, dễ đọc hơn, nhưng chức năng phải giữ nguyên (Behavior Preserving).
+**Objective:** Code sạch hơn, dễ đọc hơn, nhưng chức năng phải giữ nguyên (Behavior Preserving).
 
-## 🔄 Quy trình (Execution Flow)
+## 🔄 Execution Flow
 
 ### 1. Analysis & Mapping
 *   **Dependency Graph:** File này được gọi bởi ai? Sửa nó thì ảnh hưởng đến module nào?
@@ -36,6 +36,6 @@ constraints:
 ### 4. Final Review
 *   Sử dụng `/review` hoặc skill `code-reviewer` để đảm bảo code mới tuân thủ Clean Code.
 
-## 💡 Hướng dẫn cho AI
+## 💡 AI Guidelines
 *   **Tôn trọng Convention:** Đặt tên biến/hàm theo đúng quy chuẩn dự án (`.agent/memory/CONVENTIONS.md`).
 *   **Không thay đổi Logic:** Refactor != Fix Bug. Đừng cố sửa lỗi trong lúc refactor (trừ khi lỗi quá hiển nhiên và nhỏ).

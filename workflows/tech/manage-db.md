@@ -1,5 +1,5 @@
 ---
-description: "Quy trình quản lý Schema Database Drift an toàn, tập trung vào Migration và Data Integrity."
+description: "quản lý Schema Database Drift an toàn, tập trung vào Migration và Data Integrity."
 trigger: /manage-db
 version: "3.0.0"
 skills:
@@ -13,9 +13,9 @@ constraints:
 
 # 🗄️ Safe Database Management
 
-**Mục tiêu:** Thay đổi Schema DB mà không làm mất dữ liệu người dùng.
+**Objective:** Thay đổi Schema DB mà không làm mất dữ liệu người dùng.
 
-## 🔄 Quy trình (Execution Flow)
+## 🔄 Execution Flow
 
 ### 1. Schema Impact Analysis
 *   **Audit:** Trước khi thêm cột/bảng, kiểm tra xem nó có ảnh hưởng đến các Query hiện tại (`DAOs`) không?
@@ -34,6 +34,6 @@ constraints:
 *   **Sanity Check:**
     *   Chạy thử app để đảm bảo không crash khi mở Database.
 
-## 💡 Hướng dẫn cho AI
+## 💡 AI Guidelines
 *   **Cảnh báo:** Nếu User định xóa cột (Delete Column), hãy cảnh báo 3 lần về việc mất dữ liệu.
 *   **Version Control:** Luôn nhắc user tăng `schemaVersion`.

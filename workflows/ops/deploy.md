@@ -1,5 +1,5 @@
 ---
-description: "Quy trình build và deploy ứng dụng lên các môi trường (Dev/Staging/Production)."
+description: "build và deploy ứng dụng lên các môi trường (Dev/Staging/Production)."
 trigger: /deploy
 version: "2.4.0"
 skills: []
@@ -11,9 +11,9 @@ constraints:
 
 # 🚀 Deploy Application
 
-**Mục tiêu:** Hướng dẫn quy trình build và deploy ứng dụng an toàn, có kiểm soát version và rollback plan.
+**Objective:** Hướng dẫn quy trình build và deploy ứng dụng an toàn, có kiểm soát version và rollback plan.
 
-## 🖼️ Quy trình (Process Flow)
+## ��️ Process Flow
 
 ```mermaid
 graph TD
@@ -33,7 +33,7 @@ graph TD
     Verify -->|Fail| Rollback[🔄 Rollback]
 ```
 
-## ⚠️ Điều kiện Tiên quyết (Prerequisites)
+## ⚠️ Prerequisites
 
 > [!IMPORTANT]
 > Trước khi deploy, đảm bảo đã hoàn thành checklist `/prepare-release`
@@ -44,7 +44,7 @@ graph TD
 - [ ] Version đã được bump (pubspec.yaml)
 - [ ] CHANGELOG.md đã cập nhật
 
-## 🎯 Chọn Môi Trường (Environment Selection)
+## 🎯 Environment Selection
 
 | Môi trường | Branch | Mục đích | Auto/Manual |
 |:--|:--|:--|:--:|
@@ -52,7 +52,7 @@ graph TD
 | **Staging** | `release/*` | UAT, Client review | Manual |
 | **Production** | `main` | End users | Manual + Approval |
 
-## 🚀 Các bước Deploy
+## 🚀 Steps Deploy
 
 ### 1. Build Application
 
@@ -129,7 +129,7 @@ make upload-playstore TRACK=production --rollout=100
 - [ ] No spike in crash rate
 - [ ] Tag release in Git
 
-## 💡 Hướng dẫn cho AI
+## 💡 AI Guidelines
 
 - Không tự động deploy Production - chỉ hướng dẫn steps
 - Luôn nhắc user về rollback plan

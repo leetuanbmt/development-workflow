@@ -13,9 +13,9 @@ constraints:
 
 # 🧪 Strategic Testing
 
-**Mục tiêu:** Viết test để bắt lỗi (Catch bugs), không phải viết test để đủ số lượng (Not just coverage).
+**Objective:** Viết test để bắt lỗi (Catch bugs), không phải viết test để đủ số lượng (Not just coverage).
 
-## 🔄 Quy trình (Execution Flow)
+## 🔄 Execution Flow
 
 ### 1. Test Strategy (Lập chiến lược)
 Trước khi code, AI phải liệt kê các trường hợp cần test:
@@ -32,6 +32,6 @@ Trước khi code, AI phải liệt kê các trường hợp cần test:
 *   **Act:** Gọi hàm cần test.
 *   **Assert:** Kiểm tra kết quả output VÀ side-effects (verify hàm mock được gọi mấy lần).
 
-## 💡 Hướng dẫn cho AI
+## 💡 AI Guidelines
 *   **Không Hardcode:** Sử dụng thư viện `faker` (nếu có) hoặc factory để tạo data test.
 *   **Readable Names:** Tên test case phải như một câu văn (VD: `should return Error when API fails`).

@@ -13,7 +13,7 @@ constraints:
 
 # 🕵️ Bug Investigation Protocol
 
-**Mục tiêu:** Tìm ra nguyên nhân gốc rễ (Root Cause) và đánh giá tác động. **KHÔNG tự động sửa code.**
+**Objective:** Tìm ra nguyên nhân gốc rễ (Root Cause) và đánh giá tác động. **KHÔNG tự động sửa code.**
 
 ## 🚀 Execution Steps
 

@@ -13,7 +13,7 @@ constraints:
 
 # 🕵️ Unified Audit Mode
 
-**Mục tiêu:** Phân tích sâu code/feature theo nhiều góc độ trước khi thực hiện thay đổi.
+**Objective:** Phân tích sâu code/feature theo nhiều góc độ trước khi thực hiện thay đổi.
 
 ## 🎯 Aspect Detection (Tự động)
 

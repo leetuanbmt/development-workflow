@@ -1,5 +1,5 @@
 ---
-description: "Quy trình Release Engineering: Build, Test, và Audit trước khi lên Production."
+description: "Release Engineering: Build, Test, và Audit trước khi lên Production."
 trigger: /prepare-release
 version: "3.0.0"
 skills: []
@@ -11,9 +11,9 @@ constraints:
 
 # 🚀 Production Release Protocol
 
-**Mục tiêu:** "Zero Critical Bugs" trên môi trường Production.
+**Objective:** "Zero Critical Bugs" trên môi trường Production.
 
-## 🔄 Quy trình (Execution Flow)
+## 🔄 Execution Flow
 
 ### 1. Pre-Flight Check (Kiểm tra trước cất cánh)
 *   **Version Audit:** So sánh `pubspec.yaml` với git tag gần nhất.
@@ -40,6 +40,6 @@ constraints:
 *   Đề xuất lệnh build: `flutter build apk/ipa --release --obfuscate`.
 *   Đề xuất lệnh git tag: `git tag -a v1.0.0 -m "Release v1.0.0"`.
 
-## 💡 Hướng dẫn cho AI
+## 💡 AI Guidelines
 *   **Bảo mật:** Nhắc user kiểm tra lại `proguard-rules.pro` (Android) nếu có dùng code obfuscation.
 *   **Assets:** Nhắc user tối ưu ảnh/icon để giảm dung lượng app.
