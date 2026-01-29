@@ -1,5 +1,5 @@
 ---
-description: "Kiểm tra sức khỏe môi trường Agent & Sync Status."
+description: "Check Agent environment health & sync status."
 trigger: /doctor
 version: "1.0.0"
 skills: []
@@ -11,37 +11,37 @@ constraints:
 
 # 🏥 Doctor Check (Environment & Sync Diagnostic)
 
-**Objective:** Kiểm tra tính toàn vẹn của môi trường Agent, trạng thái đồng bộ (Sync Status) và các công cụ cần thiết. Giúp phát hiện lỗi "Out of Sync" hoặc thiếu dependencies.
+**Objective:** Verify Agent environment integrity, sync status, and required tools. Detect "Out of Sync" or missing dependencies.
 
-## 🚀 Steps thực hiện (Execution Steps)
+## 🚀 Execution Steps
 
-1.  **Chạy Diagnostic Script:**
-    *   **HÀNH ĐỘNG:** Chạy script `development-workflow/scripts/doctor.sh`.
-    *   Script này sẽ kiểm tra:
-        *   Các tool bắt buộc: `python3`, `melos`, `flutter`.
-        *   Trạng thái đồng bộ: So sánh checksum/timestamp giữa `development-workflow/rules` và `.agent/memory`.
-        *   Cấu trúc thư mục: Kiểm tra sự tồn tại của `.gemini`, `.agent` và các symlink.
+1. **Run Diagnostic Script:**
+   - **ACTION:** Execute `development-workflow/scripts/doctor.sh`
+   - Script checks:
+     - Required tools: `python3`, `melos`, `flutter`
+     - Sync status: Compare checksum/timestamp between `development-workflow/rules` and `.agent/memory`
+     - Directory structure: Verify `.gemini`, `.agent` and symlinks exist
 
-2.  **Phân tích kết quả:**
-    *   Đọc output từ script.
-    *   Nếu phát hiện lỗi (❌), hãy giải thích nguyên nhân cho người dùng.
-    *   Đề xuất lệnh sửa lỗi (ví dụ: `make sync`, `flutter pub get`).
+2. **Analyze Results:**
+   - Read script output
+   - If errors found (❌), explain root cause to user
+   - Suggest fix commands (e.g., `make sync`, `flutter pub get`)
 
-3.  **Tự động sửa lỗi (Auto-Fix - Optional):**
-    *   Nếu lỗi là "Out of Sync", hỏi người dùng có muốn chạy Sync ngay không.
-    *   Nếu đồng ý, chạy `make sync`.
+3. **Auto-Fix (Optional):**
+   - If error is "Out of Sync", ask user if they want to run Sync now
+   - If agreed, execute `make sync`
 
-4.  **Smart Workflow Suggestions:**
-    *   Script tự động phân tích context và suggest workflow phù hợp:
-        *   BLoC/Cubit changes → `/write-test`
-        *   Data layer changes → `/audit-architecture`
-        *   Presentation changes → `/review-ui`
-        *   Recent bug fixes → `/write-test` (regression tests)
-        *   Uncommitted changes → `/review-code`
+4. **Smart Workflow Suggestions:**
+   - Script auto-analyzes context and suggests relevant workflows:
+     - BLoC/Cubit changes → `/write-test`
+     - Data layer changes → `/audit`
+     - Presentation changes → `/review`
+     - Recent bug fixes → `/write-test` (regression tests)
+     - Uncommitted changes → `/review`
 
-## 📝 Script Logic (Tham khảo)
+## 📝 Script Logic (Reference)
 
-Script `doctor.sh` thực hiện các kiểm tra sau:
+Script `doctor.sh` performs these checks:
 
 ```bash
 # 1. Check Tools
@@ -57,5 +57,5 @@ suggest_workflow  # Analyze git history & project patterns
 ```
 
 ## ⚠️ Important Notes
-*   Luôn ưu tiên chạy `make sync` nếu có bất kỳ nghi ngờ nào về sự không đồng nhất.
-*   Suggestions dựa trên 5 commits gần nhất - cần có git history.
+- Always prefer running `make sync` if there's any doubt about consistency
+- Suggestions based on last 5 commits - requires git history

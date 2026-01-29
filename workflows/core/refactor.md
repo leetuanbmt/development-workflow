@@ -1,5 +1,5 @@
 ---
-description: "Tái cấu trúc mã nguồn an toàn, đảm bảo không làm hỏng logic hiện tại."
+description: "Safe code refactoring without breaking existing functionality."
 trigger: /refactor
 version: "3.0.0"
 skills:
@@ -13,29 +13,29 @@ constraints:
 
 # ♻️ Safe Refactoring
 
-**Objective:** Code sạch hơn, dễ đọc hơn, nhưng chức năng phải giữ nguyên (Behavior Preserving).
+**Objective:** Cleaner, more readable code while preserving behavior (Behavior Preserving).
 
 ## 🔄 Execution Flow
 
 ### 1. Analysis & Mapping
-*   **Dependency Graph:** File này được gọi bởi ai? Sửa nó thì ảnh hưởng đến module nào?
-*   **Smell Detection:** Chỉ ra chính xác vấn đề (Code lặp, Long method, God class...).
+- **Dependency Graph:** Who calls this file? Which modules are affected by changes?
+- **Smell Detection:** Identify specific issues (Code duplication, Long method, God class...).
 
-### 2. Safety Net Strategy (Lưới an toàn)
-*   Kiểm tra xem đã có Unit Test chưa?
-*   Nếu chưa, đề xuất:
-    *   Option A: Viết Test trước (Khuyên dùng).
-    *   Option B: Tạo Golden Master (Lưu output hiện tại để so sánh).
-    *   Option C: Manual Checklist (Nếu code UI khó test).
+### 2. Safety Net Strategy
+- Check if Unit Tests exist
+- If not, suggest:
+  - Option A: Write tests first (Recommended).
+  - Option B: Create Golden Master (Save current output for comparison).
+  - Option C: Manual Checklist (If UI code is hard to test).
 
-### 3. Incremental Execution (Thực hiện từng bước)
-*   Không refactor toàn bộ file 1000 dòng một lúc.
-*   Chia nhỏ: Rename trước -> Extract Method sau -> Move Class cuối cùng.
-*   Sau mỗi bước nhỏ, verify lại ngay.
+### 3. Incremental Execution
+- Don't refactor an entire 1000-line file at once
+- Break it down: Rename first → Extract Method next → Move Class last
+- Verify after each small step
 
 ### 4. Final Review
-*   Sử dụng `/review` hoặc skill `code-reviewer` để đảm bảo code mới tuân thủ Clean Code.
+- Use `/review` or `code-reviewer` skill to ensure new code follows Clean Code standards
 
 ## 💡 AI Guidelines
-*   **Tôn trọng Convention:** Đặt tên biến/hàm theo đúng quy chuẩn dự án (`.agent/memory/CONVENTIONS.md`).
-*   **Không thay đổi Logic:** Refactor != Fix Bug. Đừng cố sửa lỗi trong lúc refactor (trừ khi lỗi quá hiển nhiên và nhỏ).
+- **Respect conventions:** Name variables/functions according to project standards (`.agent/memory/CONVENTIONS.md`)
+- **Don't change logic:** Refactor != Bug Fix. Don't try to fix bugs while refactoring (unless trivial and obvious)

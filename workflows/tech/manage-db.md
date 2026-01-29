@@ -1,5 +1,5 @@
 ---
-description: "quản lý Schema Database Drift an toàn, tập trung vào Migration và Data Integrity."
+description: "Manage Database schema with Drift safely, focusing on Migration and Data Integrity."
 trigger: /manage-db
 version: "3.0.0"
 skills:
@@ -13,27 +13,27 @@ constraints:
 
 # 🗄️ Safe Database Management
 
-**Objective:** Thay đổi Schema DB mà không làm mất dữ liệu người dùng.
+**Objective:** Change DB schema without losing user data.
 
 ## 🔄 Execution Flow
 
 ### 1. Schema Impact Analysis
-*   **Audit:** Trước khi thêm cột/bảng, kiểm tra xem nó có ảnh hưởng đến các Query hiện tại (`DAOs`) không?
-*   **Constraint Check:** Cột mới có `NOT NULL` không? Nếu có, `defaultValue` là gì?
+- **Audit:** Before adding columns/tables, check if it affects existing Queries (`DAOs`)?
+- **Constraint Check:** New column has `NOT NULL`? If yes, what's the `defaultValue`?
 
 ### 2. Implementation Steps
-1.  **Modify Table:** Sửa file `.dart` định nghĩa bảng.
-2.  **Generate:** Chạy `make gen` (hoặc lệnh tương ứng của dự án).
-3.  **Migration Logic:**
-    *   Viết code trong `migration` block của `AppDatabase`.
-    *   **BẮT BUỘC:** Phải dùng lệnh `addColumn`, `createTable` của Drift, không viết Raw SQL trừ khi bất khả kháng.
+1. **Modify Table:** Edit `.dart` file defining the table
+2. **Generate:** Run `make gen` (or project equivalent)
+3. **Migration Logic:**
+   - Write code in `migration` block of `AppDatabase`
+   - **REQUIRED:** Must use Drift's `addColumn`, `createTable` commands, NOT raw SQL unless absolutely necessary
 
 ### 3. Verification (Safety First)
-*   **Test Migration:**
-    *   AI phải đề xuất viết (hoặc tự viết) một test case nhỏ để verify migration từ version N lên N+1.
-*   **Sanity Check:**
-    *   Chạy thử app để đảm bảo không crash khi mở Database.
+- **Test Migration:**
+  - AI must suggest (or write) a small test case to verify migration from version N to N+1
+- **Sanity Check:**
+  - Run app to ensure no crash when opening Database
 
 ## 💡 AI Guidelines
-*   **Cảnh báo:** Nếu User định xóa cột (Delete Column), hãy cảnh báo 3 lần về việc mất dữ liệu.
-*   **Version Control:** Luôn nhắc user tăng `schemaVersion`.
+- **Warning:** If User plans to delete column (Delete Column), warn 3 times about data loss
+- **Version Control:** Always remind user to increment `schemaVersion`

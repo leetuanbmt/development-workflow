@@ -1,5 +1,5 @@
 ---
-description: "build và deploy ứng dụng lên các môi trường (Dev/Staging/Production)."
+description: "Build and deploy application to environments (Dev/Staging/Production)."
 trigger: /deploy
 version: "2.4.0"
 skills: []
@@ -11,9 +11,9 @@ constraints:
 
 # 🚀 Deploy Application
 
-**Objective:** Hướng dẫn quy trình build và deploy ứng dụng an toàn, có kiểm soát version và rollback plan.
+**Objective:** Guide safe build and deploy process with version control and rollback plan.
 
-## ��️ Process Flow
+## 🖼️ Process Flow
 
 ```mermaid
 graph TD
@@ -36,23 +36,23 @@ graph TD
 ## ⚠️ Prerequisites
 
 > [!IMPORTANT]
-> Trước khi deploy, đảm bảo đã hoàn thành checklist `/prepare-release`
+> Before deploying, ensure `/prepare-release` checklist is complete
 
-**Kiểm tra bắt buộc:**
-- [ ] Code đã merge vào branch target (develop/main)
-- [ ] Tất cả tests passed (`make test`)
-- [ ] Version đã được bump (pubspec.yaml)
-- [ ] CHANGELOG.md đã cập nhật
+**Required checks:**
+- [ ] Code merged to target branch (develop/main)
+- [ ] All tests passed (`make test`)
+- [ ] Version bumped (pubspec.yaml)
+- [ ] CHANGELOG.md updated
 
 ## 🎯 Environment Selection
 
-| Môi trường | Branch | Mục đích | Auto/Manual |
+| Environment | Branch | Purpose | Auto/Manual |
 |:--|:--|:--|:--:|
 | **Development** | `develop` | Internal testing | Auto |
-| **Staging** | `release/*` | UAT, Client review | Manual |
+| **Staging** | `release/*` | UAT, Client preview | Manual |
 | **Production** | `main` | End users | Manual + Approval |
 
-## 🚀 Steps Deploy
+## 🚀 Deployment Steps
 
 ### 1. Build Application
 
@@ -68,9 +68,9 @@ make build-prod
 ```
 
 ### 2. Verify Build Artifacts
-- [ ] APK/IPA size hợp lý (không tăng đột biến)
-- [ ] Version number đúng
-- [ ] Bundle ID/Package name đúng môi trường
+- [ ] APK/IPA size reasonable (no sudden increase)
+- [ ] Version number correct
+- [ ] Bundle ID/Package name matches environment
 
 ### 3. Upload & Distribute
 
@@ -93,19 +93,19 @@ make upload-appstore
 ```
 
 ### 4. Post-Deploy Verification
-- [ ] App có thể download và cài đặt
-- [ ] Smoke test các tính năng chính
-- [ ] Kiểm tra crash logs (Firebase Crashlytics)
+- [ ] App downloadable and installable
+- [ ] Smoke test main features
+- [ ] Check crash logs (Firebase Crashlytics)
 - [ ] Monitor API errors
 
 ## 🔄 Rollback Plan
 
-Nếu phát hiện lỗi nghiêm trọng sau deploy:
+If critical issues found after deploy:
 
 ### Immediate Actions
-1. **Halt Distribution:** Tạm dừng phân phối bản mới
-2. **Notify Team:** Alert về incident
-3. **Assess Impact:** Đánh giá số users bị ảnh hưởng
+1. **Halt Distribution:** Stop distributing new version
+2. **Notify Team:** Alert about incident
+3. **Assess Impact:** Evaluate affected users
 
 ### Rollback Steps
 ```bash
@@ -115,10 +115,10 @@ make build-prod
 make upload-playstore TRACK=production --rollout=100
 ```
 
-## 📊 Deployment Checklist
+## 📋 Deployment Checklist
 
 ### Pre-Deploy
-- [ ] Feature complete và tested
+- [ ] Feature complete and tested
 - [ ] No blocking bugs
 - [ ] Release notes prepared
 - [ ] Stakeholder approval (Production only)
@@ -131,7 +131,7 @@ make upload-playstore TRACK=production --rollout=100
 
 ## 💡 AI Guidelines
 
-- Không tự động deploy Production - chỉ hướng dẫn steps
-- Luôn nhắc user về rollback plan
-- Kiểm tra version mismatch trước khi proceed
-- Log mọi deployment vào CHANGELOG
+- Don't auto-deploy Production - guide steps only
+- Always remind user about rollback plan
+- Check for version mismatches before proceeding
+- Log all deployments to CHANGELOG

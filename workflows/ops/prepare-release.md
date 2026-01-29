@@ -1,5 +1,5 @@
 ---
-description: "Release Engineering: Build, Test, và Audit trước khi lên Production."
+description: "Release Engineering: Build, Test, and Audit before Production."
 trigger: /prepare-release
 version: "3.0.0"
 skills: []
@@ -11,35 +11,35 @@ constraints:
 
 # 🚀 Production Release Protocol
 
-**Objective:** "Zero Critical Bugs" trên môi trường Production.
+**Objective:** "Zero Critical Bugs" in Production environment.
 
 ## 🔄 Execution Flow
 
-### 1. Pre-Flight Check (Kiểm tra trước cất cánh)
-*   **Version Audit:** So sánh `pubspec.yaml` với git tag gần nhất.
-*   **Changelog Audit:** Đảm bảo mọi tính năng mới đều đã được ghi lại.
-*   **Environment Audit:** File `.env` production có chứa key thật chưa? (Tuyệt đối không commit key lên git).
+### 1. Pre-Flight Check
+- **Version Audit:** Compare `pubspec.yaml` with latest git tag
+ **Changelog Audit:** Ensure all new features are documented
+- **Environment Audit:** Does production `.env` contain real keys? (NEVER commit keys to git)
 
 ### 2. Automated Validation
-*   Chạy pipeline kiểm tra:
-    ```bash
-    make clean && make gen
-    flutter analyze --no-fatal-infos
-    flutter test
-    ```
-*   Nếu bất kỳ lệnh nào fail -> **ABORT RELEASE**.
+- Run validation pipeline:
+  ```bash
+  make clean && make gen
+  flutter analyze --no-fatal-infos
+  flutter test
+  ```
+- If any command fails → **ABORT RELEASE**
 
 ### 3. Manual Sanity Check (Smoke Test)
-*   Auditor (User) phải xác nhận đã test thủ công trên thiết bị thật:
-    *   [ ] App cài đặt được (Installable).
-    *   [ ] Mở lên không crash (Launch check).
-    *   [ ] Login thành công.
-    *   [ ] Feature quan trọng nhất hoạt động đúng.
+- Auditor (User) must confirm manual testing on real device:
+  - [ ] App installable
+  - [ ] Launches without crash
+  - [ ] Login successful
+  - [ ] Most critical feature works correctly
 
 ### 4. Build & Tag
-*   Đề xuất lệnh build: `flutter build apk/ipa --release --obfuscate`.
-*   Đề xuất lệnh git tag: `git tag -a v1.0.0 -m "Release v1.0.0"`.
+- Suggest build command: `flutter build apk/ipa --release --obfuscate`
+- Suggest git tag command: `git tag -a v1.0.0 -m "Release v1.0.0"`
 
 ## 💡 AI Guidelines
-*   **Bảo mật:** Nhắc user kiểm tra lại `proguard-rules.pro` (Android) nếu có dùng code obfuscation.
-*   **Assets:** Nhắc user tối ưu ảnh/icon để giảm dung lượng app.
+- **Security:** Remind user to verify `proguard-rules.pro` (Android) if using code obfuscation
+- **Assets:** Remind user to optimize images/icons to reduce app size

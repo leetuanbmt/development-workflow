@@ -1,5 +1,5 @@
 ---
-description: "Phân tích sâu nguyên nhân lỗi và xuất báo cáo điều tra. CHỈ report, KHÔNG sửa code."
+description: "Analyze root cause of bugs and generate investigation report. Report ONLY, NO code fixes."
 trigger: /investigate
 version: "3.1.0"
 skills:
@@ -13,45 +13,52 @@ constraints:
 
 # 🕵️ Bug Investigation Protocol
 
-**Objective:** Tìm ra nguyên nhân gốc rễ (Root Cause) và đánh giá tác động. **KHÔNG tự động sửa code.**
+**Objective:** Find root cause and assess impact. **DO NOT auto-fix code.**
 
 ## 🚀 Execution Steps
 
 ### 1. Context Gathering
-- Đọc log lỗi (nếu có)
-- Đọc code tại vị trí nghi ngờ
-- Trace luồng dữ liệu: UI → BLoC → UseCase → Repository
+- Read error logs (if available)
+- Read code at suspected location
+- Trace data flow: UI → BLoC → UseCase → Repository
 
 ### 2. Root Cause Analysis
-- Tại sao lỗi xảy ra? (Logic sai, Null pointer, Race condition, API change?)
-- Xác minh giả thuyết bằng bằng chứng trong code
+- Why did the error occur? (Logic error, Null pointer, Race condition, API change?)
+- Verify hypothesis with evidence in code
 
 ### 3. Impact Analysis
-- Lỗi ảnh hưởng đến file/feature nào?
-- Mức độ nghiêm trọng (Blocker/Major/Minor)
+- Which files/features are affected?
+- Is data integrity compromised?
+- How many users are impacted?
 
-### 4. Generate Report
-
-## 📝 Report Template (BẮT BUỘC)
+### 4. Report Generation
+Follow this template:
 
 ```markdown
-**Tên Vấn đề**
-[Mô tả ngắn gọn lỗi]
+## 🐛 Bug Investigation Report
 
-***Nguyên nhân***
-[Giải thích kỹ thuật chi tiết với file:line reference]
+**Issue:** [Brief description]
 
-***Phạm vi ảnh hưởng***
-- File chính: `path/to/file.dart:line`
-- Module liên quan: [list]
-- Mức độ: [Blocker/Major/Minor]
+**Root Cause:**
+[Detailed explanation with code references]
 
-***Cách xử lý***
-1. [Bước cụ thể với code snippet]
-2. [Bước tiếp theo]
+**Affected Components:**
+- File: `path/to/file.dart` (Line X-Y)
+- Feature: [Feature name]
+
+**Impact:**
+- Severity: [Critical/High/Medium/Low]
+- Users affected: [Estimate]
+
+**Recommended Fix:**
+[High-level approach - DO NOT implement]
+
+**Next Steps:**
+- [ ] User approves fix approach
+- [ ] Execute via `/fix` workflow
 ```
 
 ## 💡 AI Guidelines
-- **Fact-Check:** Nguyên nhân phải dựa trên bằng chứng, không đoán
-- **NO CODE EDIT:** Chỉ đọc và report
-- **Next Step:** Báo cho user dùng `/fix` nếu muốn sửa
+- **No auto-fix:** This workflow is investigation ONLY
+- **Evidence-based:** All claims must reference code/logs
+- **Neutral tone:** Report facts, not speculation

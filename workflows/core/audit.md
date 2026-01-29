@@ -1,5 +1,5 @@
 ---
-description: "Audit code theo nhiều góc độ. Tự động chọn aspect phù hợp dựa trên context."
+description: "Audit code from multiple perspectives. Auto-select aspect based on context."
 trigger: /audit
 version: "2.0.0"
 skills:
@@ -13,9 +13,9 @@ constraints:
 
 # 🕵️ Unified Audit Mode
 
-**Objective:** Phân tích sâu code/feature theo nhiều góc độ trước khi thực hiện thay đổi.
+**Objective:** Deep analysis of code/feature from multiple angles before making changes.
 
-## 🎯 Aspect Detection (Tự động)
+## 🎯 Aspect Detection (Automatic)
 
 | Keywords | Aspect | Focus |
 |:---|:---|:---|
@@ -24,54 +24,56 @@ constraints:
 | `tracking`, `analytics`, `event` | `analytics` | Event tracking |
 | (default) | `general` | Logic, edge cases |
 
-## 🚀 Execution Steps
+## 🚀 Execution Flow
 
-### 1. Context Discovery
-- Đọc `.agent/memory/ARCHITECTURE.md` nếu có
-- Xác định module/feature đang audit
-- Phân tích pattern đang dùng (Clean Arch, MVC, etc.)
+### 1. Aspect Selection
+- Analyze user request for keywords
+- Select primary audit aspect
+- May combine multiple aspects if needed
 
 ### 2. Deep Investigation
-- Quét logic liên quan đến yêu cầu
-- Xác định constraints hiện có
-- Check resource management (memory, streams)
+Run aspect-specific checks:
 
-### 3. Aspect-Specific Checks
+**Architecture Audit:**
+- Layer separation (Data/Domain/Presentation)
+- Dependency rule violations
+- Circular dependencies
 
-#### Architecture Aspect
-- [ ] Dependency Rule: Domain không import UI/Data
-- [ ] Separation of Concerns: UI chỉ render, Logic trong BLoC
-- [ ] Coupling: Không import chéo giữa features
+**Security Audit:**
+- Hardcoded secrets
+- Insecure data handling
+- Authentication/authorization issues
 
-#### Security Aspect
-- [ ] Secrets: Không hardcode API keys
-- [ ] Logging: Không log sensitive data
-- [ ] Input validation: Sanitize user input
+**Analytics Audit:**
+- Missing tracking events
+- Inconsistent event naming
+- Privacy compliance
 
-#### Analytics Aspect
-- [ ] Event naming convention
-- [ ] Required parameters present
-- [ ] No PII in tracking
+**General Audit:**
+- Business logic correctness
+- Edge case handling
+- Performance bottlenecks
 
-### 4. Generate Report
-
+### 3. Report & Recommendations
 ```markdown
-## Audit Report
+## 🔍 Audit Report
 
-### Aspect: [architecture/security/analytics/general]
+**Aspect:** [architecture/security/analytics/general]
+**Scope:** [Files/features audited]
 
-### Findings
-- ✅ **Good:** [Điểm tuân thủ tốt]
-- ⚠️ **Warning:** [Technical debt tiềm ẩn]
-- 🔴 **Violation:** [Vi phạm nghiêm trọng]
+### 🚨 Critical Issues
+- [Issues that must be fixed]
 
-### Implementation Plan (nếu cần thay đổi)
-1. [Step 1]
-2. [Step 2]
-Files affected: [list]
+### ⚠️ Warnings
+- [Issues that should be addressed]
+
+### 💡 Recommendations
+- [Improvement suggestions]
+
+**Decision:** [PROCEED / NEEDS REVISION / BLOCKED]
 ```
 
 ## 💡 AI Guidelines
-- Không giáo điều: Simple widget không cần full Clean Arch
-- Giải thích "Why": Tại sao vi phạm này nguy hiểm
-- Chờ approval trước khi thực thi plan
+- **No auto-fix:** Audit mode is analysis only
+- **Evidence-based:** Reference specific code locations
+- **Risk assessment:** Categorize by severity

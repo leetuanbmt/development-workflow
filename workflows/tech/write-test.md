@@ -1,5 +1,5 @@
 ---
-description: "Viết Unit/Widget Test có chiến lược (Strategy-based Testing)."
+description: "Write Unit/Widget Tests with strategy (Strategy-based Testing)."
 trigger: /write-test
 version: "3.0.0"
 skills:
@@ -13,25 +13,25 @@ constraints:
 
 # 🧪 Strategic Testing
 
-**Objective:** Viết test để bắt lỗi (Catch bugs), không phải viết test để đủ số lượng (Not just coverage).
+**Objective:** Write tests to catch bugs, not just for coverage numbers.
 
 ## 🔄 Execution Flow
 
-### 1. Test Strategy (Lập chiến lược)
-Trước khi code, AI phải liệt kê các trường hợp cần test:
-*   ✅ **Happy Path:** Luồng chính phải chạy đúng.
-*   ⚠️ **Edge Cases:** Null input, Empty List, Network Error, Timeout.
-*   🛡️ **Security:** Test quyền truy cập (nếu có).
+### 1. Test Strategy
+Before coding, AI must list test cases:
+- ✅ **Happy Path:** Main flow must work correctly
+- ⚠️ **Edge Cases:** Null input, Empty List, Network Error, Timeout
+- 🛡️ **Security:** Test access permissions (if applicable)
 
 ### 2. Mocking Setup
-*   Xác định dependencies cần mock.
-*   Đảm bảo `mocktail` hoặc `mockito` được cấu hình đúng `setUp` và `tearDown`.
+- Identify dependencies that need mocking
+- Ensure `mocktail` or `mockito` is configured properly in `setUp` and `tearDown`
 
 ### 3. Implementation (AAA Pattern)
-*   **Arrange:** Chuẩn bị dữ liệu giả.
-*   **Act:** Gọi hàm cần test.
-*   **Assert:** Kiểm tra kết quả output VÀ side-effects (verify hàm mock được gọi mấy lần).
+- **Arrange:** Prepare test data
+- **Act:** Call function under test
+- **Assert:** Verify output AND side-effects (verify mock was called X times)
 
 ## 💡 AI Guidelines
-*   **Không Hardcode:** Sử dụng thư viện `faker` (nếu có) hoặc factory để tạo data test.
-*   **Readable Names:** Tên test case phải như một câu văn (VD: `should return Error when API fails`).
+- **No Hardcode:** Use `faker` library (if available) or factories to generate test data
+- **Readable Names:** Test case names should read like sentences (e.g., `should return Error when API fails`)
