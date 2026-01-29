@@ -35,5 +35,7 @@ constraints:
   - Run app to ensure no crash when opening Database
 
 ## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **Warning:** If User plans to delete column (Delete Column), warn 3 times about data loss
 - **Version Control:** Always remind user to increment `schemaVersion`

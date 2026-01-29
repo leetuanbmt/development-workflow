@@ -33,5 +33,7 @@ Before coding, AI must list test cases:
 - **Assert:** Verify output AND side-effects (verify mock was called X times)
 
 ## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **No Hardcode:** Use `faker` library (if available) or factories to generate test data
 - **Readable Names:** Test case names should read like sentences (e.g., `should return Error when API fails`)

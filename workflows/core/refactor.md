@@ -37,5 +37,7 @@ constraints:
 - Use `/review` or `code-reviewer` skill to ensure new code follows Clean Code standards
 
 ## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **Respect conventions:** Name variables/functions according to project standards (`.agent/memory/CONVENTIONS.md`)
 - **Don't change logic:** Refactor != Bug Fix. Don't try to fix bugs while refactoring (unless trivial and obvious)

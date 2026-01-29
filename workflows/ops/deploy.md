@@ -131,6 +131,8 @@ make upload-playstore TRACK=production --rollout=100
 
 ## 💡 AI Guidelines
 
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
+
 - Don't auto-deploy Production - guide steps only
 - Always remind user about rollback plan
 - Check for version mismatches before proceeding

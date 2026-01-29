@@ -59,6 +59,8 @@ Follow this template:
 ```
 
 ## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **No auto-fix:** This workflow is investigation ONLY
 - **Evidence-based:** All claims must reference code/logs
 - **Neutral tone:** Report facts, not speculation

@@ -59,3 +59,10 @@ suggest_workflow  # Analyze git history & project patterns
 ## ⚠️ Important Notes
 - Always prefer running `make sync` if there's any doubt about consistency
 - Suggestions based on last 5 commits - requires git history
+
+## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
+- Provide clear diagnostics in Vietnamese
+- Suggest fixes in user-friendly language
+- Explain script output in detail

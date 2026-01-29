@@ -74,6 +74,8 @@ Run aspect-specific checks:
 ```
 
 ## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **No auto-fix:** Audit mode is analysis only
 - **Evidence-based:** Reference specific code locations
 - **Risk assessment:** Categorize by severity

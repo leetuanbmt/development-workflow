@@ -41,5 +41,7 @@ constraints:
 - Suggest git tag command: `git tag -a v1.0.0 -m "Release v1.0.0"`
 
 ## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **Security:** Remind user to verify `proguard-rules.pro` (Android) if using code obfuscation
 - **Assets:** Remind user to optimize images/icons to reduce app size

@@ -42,6 +42,8 @@ Present fix plan with:
 - Check for regression in related features
 
 ## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **Plan first:** Never fix without approval
 - **Minimal changes:** Touch only what's necessary
 - **Add tests:** If bug had no test coverage, add one

@@ -31,5 +31,7 @@ AI must generate code in dependency order:
 - User verifies type mapping matches business logic (e.g., does `status` return `int` or `String`?)
 
 ## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **Mapper Pattern:** Data transformation logic must be in Mapper, NEVER in UI or Repository
 - **Fallback:** If `String?` field is null, should Mapper map to `""` or keep `null`? (Ask User or follow Convention)

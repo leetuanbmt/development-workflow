@@ -70,6 +70,8 @@ on, complexity)
 ```
 
 ## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **Context-aware:** Adjust depth based on mode
 - **Constructive:** Suggest improvements, not just criticisms
 - **Prioritize:** Flag critical issues first

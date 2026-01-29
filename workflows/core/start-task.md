@@ -38,5 +38,7 @@ AI must present a plan with 3 parts:
 - If approved → Move to execution (using `/fix`, `/implement`, etc.)
 
 ## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **No role-playing:** Skip the "Team Meeting Simulation". Act as a senior technical assistant reporting directly to the CTO.
 - **Critical thinking:** If user's request is vague, ask clarifying questions instead of guessing.
