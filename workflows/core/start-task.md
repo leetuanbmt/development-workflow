@@ -37,6 +37,18 @@ AI must present a plan with 3 parts:
 - Wait for Auditor (User) to approve the plan
 - If approved → Move to execution (using `/fix`, `/implement`, etc.)
 
+## 🔌 Skill Integration
+
+This workflow automatically activates these skills based on task type:
+
+- **tech-lead:** Strategic decisions, architecture guidance
+- **feature-architect:** Feature design, layer breakdown
+
+**Auto-activation rules:**
+- If task involves "new feature" → Use `feature-architect` for design
+- If task involves "refactoring" or "architecture" → Use `tech-lead` for guidance
+- If task is "bug fix" → Delegate to `/fix` workflow with `bug-investigator`
+
 ## 💡 AI Guidelines
 
 **Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.

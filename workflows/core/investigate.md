@@ -58,7 +58,19 @@ Follow this template:
 - [ ] Execute via `/fix` workflow
 ```
 
-## 💡 AI Guidelines
+## � Skill Integration
+
+**Active skill:** `bug-investigator`
+
+When this workflow is executed, AI automatically:
+1. Loads `skills/bug-investigator/SKILL.md` methodology
+2. Applies root cause analysis techniques from the skill
+3. Generates report following skill's output format
+4. Enforces "READ ONLY" constraints from skill documentation
+
+No separate skill invocation needed - skill is applied inline.
+
+## �💡 AI Guidelines
 
 **Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
 - **No auto-fix:** This workflow is investigation ONLY
