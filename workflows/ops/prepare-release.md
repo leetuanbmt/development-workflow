@@ -2,9 +2,11 @@
 description: "Quy trình Release Engineering: Build, Test, và Audit trước khi lên Production."
 trigger: /prepare-release
 version: "3.0.0"
-skills:
-  - devops-engineer
-  - qa-lead
+skills: []
+constraints:
+  max_iterations: 3
+  timeout_minutes: 20
+  exit_on: ["Release ready", "Validation failed"]
 ---
 
 # 🚀 Production Release Protocol

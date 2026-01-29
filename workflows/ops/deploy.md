@@ -2,8 +2,11 @@
 description: "Quy trình build và deploy ứng dụng lên các môi trường (Dev/Staging/Production)."
 trigger: /deploy
 version: "2.4.0"
-skills:
-  - devops-engineer
+skills: []
+constraints:
+  max_iterations: 3
+  timeout_minutes: 15
+  exit_on: ["Deploy complete", "Rollback executed", "User cancelled"]
 ---
 
 # 🚀 Deploy Application

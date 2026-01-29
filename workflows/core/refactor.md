@@ -5,6 +5,10 @@ version: "3.0.0"
 skills:
   - tech-lead
   - code-reviewer
+constraints:
+  max_iterations: 5
+  timeout_minutes: 30
+  exit_on: ["Refactor complete", "Tests passed"]
 ---
 
 # ♻️ Safe Refactoring

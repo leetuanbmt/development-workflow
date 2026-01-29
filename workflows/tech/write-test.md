@@ -5,6 +5,10 @@ version: "3.0.0"
 skills:
   - test-engineer
   - code-reviewer
+constraints:
+  max_iterations: 4
+  timeout_minutes: 25
+  exit_on: ["Tests written", "Tests passed"]
 ---
 
 # 🧪 Strategic Testing

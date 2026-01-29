@@ -2,8 +2,11 @@
 description: "Kiểm tra sức khỏe môi trường Agent & Sync Status."
 trigger: /doctor
 version: "1.0.0"
-skills:
-  - devops-engineer
+skills: []
+constraints:
+  max_iterations: 2
+  timeout_minutes: 10
+  exit_on: ["Check complete", "Auto-fix executed"]
 ---
 
 # 🏥 Doctor Check (Environment & Sync Diagnostic)

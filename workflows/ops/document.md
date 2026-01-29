@@ -2,9 +2,11 @@
 description: "Tạo và bảo trì tài liệu dự án (Architecture, Flow, API)."
 trigger: /document
 version: "3.0.0"
-skills:
-  - technical-writer
-  - codebase_investigator
+skills: []
+constraints:
+  max_iterations: 3
+  timeout_minutes: 20
+  exit_on: ["Documentation updated"]
 ---
 
 # 📚 Living Documentation

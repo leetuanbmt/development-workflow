@@ -3,8 +3,11 @@ description: "Tự động sinh Data Layer (Model, Entity, Mapper) từ JSON spe
 trigger: /integrate-api
 version: "3.0.0"
 skills:
-  - api-integrator
   - code-reviewer
+constraints:
+  max_iterations: 3
+  timeout_minutes: 15
+  exit_on: ["Code generated", "Verification complete"]
 ---
 
 # 🔌 Robust API Integration

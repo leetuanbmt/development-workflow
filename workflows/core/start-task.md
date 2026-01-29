@@ -5,7 +5,10 @@ version: "3.0.0"
 skills:
   - tech-lead
   - feature-architect
-  - product-manager
+constraints:
+  max_iterations: 3
+  timeout_minutes: 20
+  exit_on: ["Plan approved", "User declined"]
 ---
 
 # 🚀 Start Task (Auditor Edition)

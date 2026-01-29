@@ -5,6 +5,10 @@ version: "3.0.0"
 skills:
   - flutter-expert
   - test-engineer
+constraints:
+  max_iterations: 4
+  timeout_minutes: 25
+  exit_on: ["Migration complete", "Tests passed"]
 ---
 
 # 🗄️ Safe Database Management
