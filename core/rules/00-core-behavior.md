@@ -47,9 +47,9 @@ Khi nhận yêu cầu từ user, AI phải:
 6.  **Report:** Sau khi hoàn thành, báo cáo skills đã sử dụng
 
 **Composite Skills có sẵn:**
-- `full-review`: code-reviewer + security-auditor + flutter-expert
-- `implement-complete`: feature-architect + flutter-expert + test-engineer
-- `bug-analysis`: bug-investigator + flutter-expert
+- `full-review`: code-reviewer + security-auditor + tech-lead
+- `implement-complete`: tech-lead + test-engineer
+- `bug-analysis`: bug-investigator + tech-lead
 
 ## 6. Markdown-based RAG & Long-term Memory
 
@@ -57,6 +57,6 @@ Khi nhận yêu cầu từ user, AI phải:
 
 *   **Truy xuất (Retrieval):** Khi người dùng nhắc đến "trước đây", "bug cũ", hoặc "sở thích của tôi", AI phải chủ động dùng `search_file_content` trong `memory/chat_history/` và đọc `memory/user_preferences.md`.
 *   **Ghi nhớ (Storage):** Kết thúc mỗi phiên làm việc quan trọng, AI phải tóm tắt nội dung vào một file markdown mới trong `memory/chat_history/session_{YYYYMMDD}_{task_name}.md`.
-*   **Cập nhật sở thích:** Nếu người dùng yêu cầu thay đổi phong cách (VD: "Từ nay hãy dùng Provider thay vì BLoC"), AI phải cập nhật ngay vào `memory/user_preferences.md`.
+*   **Cập nhật sở thích:** Nếu người dùng yêu cầu thay đổi phong cách (VD: "Từ nay hãy dùng Library A thay vì Library B"), AI phải cập nhật ngay vào `memory/user_preferences.md`.
 *   **Phân tích quá khứ:** Khi gặp lại một lỗi tương tự trong lịch sử, AI phải nhắc lại giải pháp cũ để đảm bảo tính nhất quán.
 

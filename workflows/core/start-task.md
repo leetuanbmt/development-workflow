@@ -4,7 +4,6 @@ trigger: /start-task
 version: "3.0.0"
 skills:
   - tech-lead
-  - feature-architect
 constraints:
   max_iterations: 3
   timeout_minutes: 20

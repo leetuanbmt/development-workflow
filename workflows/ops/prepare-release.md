@@ -2,7 +2,9 @@
 description: "Release Engineering: Build, Test, and Audit before Production."
 trigger: /prepare-release
 version: "3.0.0"
-skills: []
+skills:
+  - tech-lead
+  - security-auditor
 constraints:
   max_iterations: 3
   timeout_minutes: 20

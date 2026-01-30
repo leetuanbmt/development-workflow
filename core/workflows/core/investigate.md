@@ -21,7 +21,7 @@ skill: bug-investigator
 ### 1. Context Gathering
 - Read error logs (if available)
 - Read code at suspected location
-- Trace data flow: UI → BLoC → UseCase → Repository
+- Trace data flow: UI → State Logic → UseCase → Repository
 
 ### 2. Root Cause Analysis
 - Why did the error occur? (Logic error, Null pointer, Race condition, API change?)
@@ -44,7 +44,7 @@ Follow this template:
 [Detailed explanation with code references]
 
 **Affected Components:**
-- File: `path/to/file.dart` (Line X-Y)
+- File: `path/to/file.ext` (Line X-Y)
 - Feature: [Feature name]
 
 **Impact:**

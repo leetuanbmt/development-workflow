@@ -24,9 +24,9 @@ graph TD
     Env -->|Prod| Approval{👮 Approval?}
     Approval -->|Yes| BuildProd[Build Prod]
     Approval -->|No| Stop[❌ Rejected]
-    BuildDev --> Distribute[📤 Distribute]
+    BuildDev --> Distribute[📤 Deploy/Distribute]
     BuildStg --> Distribute
-    BuildProd --> Upload[Google Play/AppStore]
+    BuildProd --> Upload[Release to Prod]
     Distribute --> Verify[🕵️ Post-Verify]
     Upload --> Verify
     Verify -->|Pass| Success[✅ Done]
@@ -40,8 +40,8 @@ graph TD
 
 **Required checks:**
 - [ ] Code merged to target branch (develop/main)
-- [ ] All tests passed (`make test`)
-- [ ] Version bumped (pubspec.yaml)
+- [ ] All tests passed (`[Test Command]`)
+- [ ] Version bumped (Manifest file)
 - [ ] CHANGELOG.md updated
 
 ## 🎯 Environment Selection
@@ -68,7 +68,7 @@ make build-prod
 ```
 
 ### 2. Verify Build Artifacts
-- [ ] APK/IPA size reasonable (no sudden increase)
+- [ ] Artifact size reasonable (no sudden increase)
 - [ ] Version number correct
 - [ ] Bundle ID/Package name matches environment
 
@@ -93,9 +93,9 @@ make upload-appstore
 ```
 
 ### 4. Post-Deploy Verification
-- [ ] App downloadable and installable
+- [ ] App accessible/installable
 - [ ] Smoke test main features
-- [ ] Check crash logs (Firebase Crashlytics)
+- [ ] Check logs (Error Reporting Tool)
 - [ ] Monitor API errors
 
 ## 🔄 Rollback Plan
@@ -112,7 +112,7 @@ If critical issues found after deploy:
 # Revert to previous version
 git checkout tags/v{PREVIOUS_VERSION}
 make build-prod
-make upload-playstore TRACK=production --rollout=100
+make deploy-prod --rollback
 ```
 
 ## 📋 Deployment Checklist

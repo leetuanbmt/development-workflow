@@ -16,9 +16,9 @@ Dispatch skill dựa trên keyword đơn giản. Không composite mặc định.
 |:---|:---|:---:|
 | `bug`, `lỗi`, `crash`, `error`, `stacktrace` | `bug-investigator` | 1 |
 | `review`, `check`, `kiểm tra`, `PR` | `code-reviewer` | 1 |
-| `performance`, `slow`, `leak`, `memory`, `jank` | `flutter-expert` | 1 |
+| `performance`, `slow`, `leak`, `memory` | `tech-lead` | 1 |
 | `security`, `hack`, `token`, `secret`, `api key` | `security-auditor` | 1 |
-| `design`, `thiết kế`, `feature`, `architecture` | `feature-architect` | 2 |
+| `design`, `thiết kế`, `feature`, `architecture` | `tech-lead` | 2 |
 | `test`, `coverage`, `mock` | `test-engineer` | 2 |
 | `vibe`, `fast`, `nhanh`, `implement` | `vibecoder` | 1 |
 | (default - no match) | `code-reviewer` | 3 |
@@ -116,10 +116,8 @@ Skills inherit context from:
 |:---|:---|
 | `bug-investigator` | Root cause analysis, debugging |
 | `code-reviewer` | Code quality, architecture check |
-| `flutter-expert` | Performance, memory, Flutter specifics |
-| `feature-architect` | Feature design, layer breakdown |
-| `tech-lead` | Architecture decisions, mentoring |
-| `test-engineer` | Unit/Widget/Integration tests |
+| `tech-lead` | Architecture decisions, mentoring, optimization |
+| `test-engineer` | Unit/Integration tests |
 | `security-auditor` | Vulnerabilities, secrets scan |
 | `vibecoder` | Fast implementation, full-stack |
 

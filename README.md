@@ -22,41 +22,53 @@ development-workflow/
 └── scripts/                # Automation tools
 ```
 
-## Quick Start
+## 🚀 Usage Scenarios
 
-### 1. Add to Your Project
+### Scenario A: Existing Project (Brownfield)
+*You have an active codebase (Flutter, Node, etc.) and want to add AI agents.*
 
-**Option A: Git Submodule (Recommended)**
+**1. Add Framework**
 ```bash
-cd your-project/
 git submodule add https://github.com/your-org/development-workflow.git
 ./development-workflow/init-submodule.sh
 ```
 
-**Option B: Symlink (Local Development)**
+**2. Auto-Detect Stack**
 ```bash
-cd your-project/
-ln -s /path/to/development-workflow ./development-workflow
 ./development-workflow/scripts/sync.sh
+# System scans pubspec.yaml/package.json to configure AI skills
 ```
 
-### 2. Initialize
-
+**3. Initialize Context**
 ```bash
-# Auto-detect stack and sync
-./development-workflow/scripts/sync.sh
-
-# Or specify stack explicitly
-./development-workflow/scripts/sync.sh --stack=flutter
-./development-workflow/scripts/sync.sh --stack=nodejs
-./development-workflow/scripts/sync.sh --stack=python
-```
-
-### 3. Setup Project Context
-
-In Gemini CLI or Antigravity:
-```
 /setup
+# AI analyzes your specific architecture (BLoC/GetX/NestJS...) and generates tailored rules.
+```
+
+### Scenario B: New Project (Greenfield)
+*You are starting from scratch and want AI to guide the setup.*
+
+**1. Prepare Directory**
+```bash
+mkdir my-new-project && cd my-new-project
+git init
+git submodule add https://github.com/your-org/development-workflow.git
+./development-workflow/init-submodule.sh
+```
+
+**2. Consult Tech Lead**
+```bash
+/setup
+```
+*   **AI:** "What system do you want to build?"
+*   **You:** "A real-time chat app for iOS/Android."
+*   **AI:** "Recommended Stack: Flutter + Firebase + Riverpod. Proceed?"
+
+**3. Initialize & Create**
+```bash
+# After AI suggests the stack:
+./development-workflow/scripts/sync.sh --stack=flutter
+flutter create .
 ```
 
 This will:

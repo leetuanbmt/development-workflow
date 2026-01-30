@@ -8,7 +8,7 @@ constraints:
   max_iterations: 3
   timeout_minutes: 15
   exit_on: ["Code generated", "Verification complete"]
-skill: feature-architect
+skill: tech-lead
 ---
 
 # 🔌 Robust API Integration
@@ -19,14 +19,14 @@ skill: feature-architect
 
 ### 1. Spec Analysis
 - Read JSON Response
-- **Naming Audit:** JSON is `snake_case` → Dart must be `camelCase`. Must use `@JsonKey(name: '...')`.
+- **Naming Audit:** JSON is `snake_case` → Code must follow language convention (e.g. `camelCase`).
 - **Type Audit:** Which fields can be `null`? Which are `List`?
 
 ### 2. Code Generation Plan
 AI must generate code in dependency order:
-1. **Model (Data):** Contains `fromJson`/`toJson`
-2. **Entity (Domain):** Pure Dart class, no serialization annotations (except Freezed)
-3. **Mapper:** Extension method `toEntity()` (Handle null fallback here)
+1. **Model (Data):** Contains Serialization logic (`fromJson`/`toJson`)
+2. **Entity (Domain):** Pure Class, no serialization annotations
+3. **Mapper:** Transformation method `toEntity()` (Handle null fallback here)
 
 ### 3. Verification
 - User verifies type mapping matches business logic (e.g., does `status` return `int` or `String`?)
@@ -37,7 +37,7 @@ AI must generate code in dependency order:
 
 Applied during **Step 3 (Verification):**
 - Validates generated code follows Clean Architecture
-- Checks naming conventions (snake_case → camelCase)
+- Checks naming conventions
 - Ensures proper null safety handling
 - Reviews mapper pattern implementation
 

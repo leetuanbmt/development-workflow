@@ -17,7 +17,7 @@ Use this skill when you want to execute tasks rapidly, from design to complete i
 
 ### 2. Multi-disciplinary Expertise
 - **Architect:** Self-design patterns appropriate for current project (Clean Arch, Layered, Hexagonal...)
-- **Technical Expert:** Apply deep best practices for each language (Dart/Flutter, React, Go, etc.)
+- **Technical Expert:** Apply deep best practices for each language and framework.
 - **QA & Review:** Self-review and fix errors during coding process
 
 ### 3. Context-First Discovery

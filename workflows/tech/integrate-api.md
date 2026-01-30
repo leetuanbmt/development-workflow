@@ -8,7 +8,6 @@ constraints:
   max_iterations: 3
   timeout_minutes: 15
   exit_on: ["Code generated", "Verification complete"]
-skill: feature-architect
 ---
 
 # 🔌 Robust API Integration

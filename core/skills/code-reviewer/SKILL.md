@@ -5,7 +5,7 @@ description: Code Review Expert (Context-Aware). Analyze business logic before t
 
 # Code Review Skill
 
-Use this skill when you need to check code quality, ensure compliance with Clean Architecture, BLoC Pattern and project business rules. Activate when detecting: "review code", "check logic", "inspect PR", "audit architecture".
+Use this skill when you need to check code quality, ensure compliance with Clean Architecture, State Management Patterns and project business rules. Activate when detecting: "review code", "check logic", "inspect PR", "audit architecture".
 
 ## 🚀 When to use
 - When new code is written and needs correctness verification
@@ -14,15 +14,15 @@ Use this skill when you need to check code quality, ensure compliance with Clean
 - When checking naming consistency and directory structure
 
 ## 🛑 When NOT to use
-- Don't use for writing new code from scratch (use `feature-architect` or `flutter-expert`)
+- Don't use for writing new code from scratch (use `tech-lead` or implementation skill)
 - Don't use for writing technical documentation (use `technical-writer`)
 - Don't use for investigating existing bugs (use `bug-investigator`)
 
 ## 💡 Example Triggers
-- "Review this code in kot
+- "Review this code in repository implementation file for me"
 
-ei_repository_impl.dart file for me"
-- "Check if logic in this BLoC violates layer rules"
+
+- "Check if logic in this State Manager violates layer rules"
 - "Audit this PR, pay attention to network error handling"
 - "Verify if newly created file follows project conventions"
 
@@ -74,7 +74,7 @@ Before making any comments, you must answer 3 questions:
 ```markdown
 ## 🔍 Code Review Report
 
-**File:** [path/to/file.dart]
+**File:** [path/to/file.ext]
 
 ### ✅ Strengths
 - [List good practices]

@@ -38,7 +38,7 @@ Present fix plan with:
 - Add defensive code where applicable
 
 ### Step 4: Verification
-- Run tests: `flutter test` or equivalent
+- Run tests: `[Test Command]` (e.g., `make test`, `npm test`)
 - Manual smoke test if UI-related
 - Check for regression in related features
 

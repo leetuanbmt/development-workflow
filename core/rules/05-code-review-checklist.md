@@ -15,21 +15,21 @@
 - [ ] **Logic:** No off-by-one errors, infinite loops, or incorrect conditions.
 
 ## 3. Security (Critical)
-- [ ] **Injection:** No SQL injection (use Drift parameters) or XSS.
+- [ ] **Injection:** No SQL injection (use ORM parameters) or XSS.
 - [ ] **Secrets:** No hardcoded API keys or credentials.
-- [ ] **Auth:** Authentication checks on sensitive endpoints/blocs.
+- [ ] **Auth:** Authentication checks on sensitive endpoints/actions.
 - [ ] **Data:** Sensitive data is not logged or exposed.
 
 ## 4. Performance
-- [ ] **Rebuilds:** Minimize implementation of `build()` methods; use `const` widgets.
-- [ ] **Async:** Heavy computations are offloaded to Isolates.
-- [ ] **Memory:** StreamSubscriptions and Controllers are disposed.
+- [ ] **Rendering:** Minimize unnecessary rendering/re-painting.
+- [ ] **Async:** Heavy computations are offloaded to Background Threads/Workers.
+- [ ] **Memory:** Event Listeners and Controllers are disposed properly.
 - [ ] **Database:** Efficient queries (Indices utilized).
 
 ## 5. Code Quality (Clean Architecture)
 - [ ] **Readability:** Naming is clear (e.g., `isUserLoggedIn` vs `flag`).
 - [ ] **DRY:** No duplicated logic; logic extracted to UseCases/Utils.
-- [ ] **Structure:** Domain layer is pure Dart; no UI imports in Data layer.
+- [ ] **Structure:** Domain layer is pure (User/Business Logic); no UI imports in Data layer.
 - [ ] **Functions:** Small, focused, Single Responsibility Principle.
 
 ## 6. Tests
@@ -38,5 +38,5 @@
 
 ## 7. Documentation
 - [ ] **Comments:** Explain "Why", not "What".
-- [ ] **DartDoc:** Public APIs have `///` documentation.
+- [ ] **Docs:** Public APIs have proper documentation/docstrings.
 - [ ] **Migration:** Database migrations are documented if schema changed.

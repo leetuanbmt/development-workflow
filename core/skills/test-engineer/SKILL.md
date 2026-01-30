@@ -1,6 +1,6 @@
 ---
 name: test-engineer
-description: Automated testing expert. Write Unit/Widget/Integration tests ensuring coverage and quality.
+description: Automated testing expert. Write Unit/Component/Integration tests ensuring coverage and quality.
 ---
 
 # Test Engineer Skill
@@ -30,7 +30,7 @@ Expert in writing and maintaining automated tests with strategic approach.
 - Mock/stub creation
 - Assertion writing
 
-### 3. Widget Testing
+### 3. Component/UI Testing
 - UI component testing
 - User interaction simulation
 - State verification

@@ -31,16 +31,16 @@ Một tính năng chỉ được xem là hoàn thành khi:
 ### Kỹ thuật (Technical)
 *   [ ] **Clean Architecture:** Đủ 3 layers (Domain, Data, Presentation).
 *   [ ] **Code Quality:** Không còn lỗi Lint (`make lint` pass). Không còn `print` log thừa.
-*   [ ] **Code Gen:** Đã chạy `make gen` và không có lỗi conflict.
+*   [ ] **Code Gen:** Dữ liệu generated (nếu có) không bị conflict.
 *   [ ] **Tests:** 
     *   Unit Test cho UseCase và Repository.
-    *   Bloc Test cho logic UI.
-    *   Golden Test (nếu được yêu cầu) cho UI.
+    *   State/Logic Test cho UI Logic.
+    *   UI/Snapshot Test (nếu được yêu cầu).
 
 ### Sản phẩm (Product/UX)
 *   [ ] **UI States:** Đã xử lý đủ các trạng thái: `Initial`, `Loading`, `Success`, `Error`, `Empty`.
 *   [ ] **Error Handling:** Có thông báo lỗi thân thiện cho người dùng (Toast/Dialog) chứ không crash app.
-*   [ ] **I18n:** Các chuỗi text phải được tách ra file ngôn ngữ (Arb/String resource), không hardcode string.
+*   [ ] **I18n:** Các chuỗi text phải được tách ra file ngôn ngữ (Resource file), không hardcode string.
 
 ## 4. PR Handover Standard
 Khi kết thúc task, AI phải tạo nội dung PR Description theo mẫu sau để Dev copy:
@@ -51,9 +51,9 @@ Khi kết thúc task, AI phải tạo nội dung PR Description theo mẫu sau �
 **Related Issue:** #[Issue ID]
 
 ### 🏗 Changes
-- [Architecture] Added Domain entities: `EntityA`...
+- [Architecture] Added Domain entities: `UserEntity`...
 - [UI] Created `FeaturePage` with states (Loading, Error...).
-- [Data] Implemented `RepositoryImpl` with drift/retrofit.
+- [Data] Implemented `RepositoryImpl` with ORM/Client.
 
 ### ✅ Verification (DoD Check)
 - [ ] `make lint` passed.

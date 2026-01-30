@@ -15,8 +15,8 @@ Use this skill when system encounters errors (crash, logic errors, incorrect UI 
 
 ## 🛑 When NOT to use
 - Don't use for reviewing new code (use `code-reviewer`)
-- Don't use for designing new features (use `feature-architect`)
-- Don't use for performance optimization (use `flutter-expert`)
+- Don't use for designing new features (use `tech-lead` or specific architect skill)
+- Don't use for performance optimization (use `tech-lead` or optimization skill)
 
 ## 💡 Example Triggers
 - "Why does Kotei screen go blank when network is lost?"
@@ -32,9 +32,9 @@ Use this skill when system encounters errors (crash, logic errors, incorrect UI 
 - Check error type (NullPointerException, NetworkException, etc.)
 
 ### 2. Code Tracing
-- Trace data flow: UI → BLoC → UseCase → Repository → DataSource
+- Trace data flow: UI → State Management → UseCase → Repository → DataSource
 - Identify where flow breaks
-- Check state management (BLoC events, states)
+- Check state management (events, states, mutations)
 
 ### 3. Hypothesis Testing
 - Ask "What if...": What if API returns null? What if network is slow?
@@ -66,7 +66,7 @@ Investigation results must be presented clearly in 3 main parts:
 - **READ ONLY:** Only use read tools (`read_file`, `search_file_content`, `glob`) to gather information
 - **REPORT ONLY:** Your task ends when you submit the report. Bug fixing belongs to next step or different command
 - Always check logs before hypothesizing
-- When fixing bugs in BLoC, pay attention to `Stream` and `Subscription`
+- When fixing bugs in State Management, pay attention to lifecycle and subscriptions
 - Ensure bug fix doesn't break existing features (Regression checking)
 
 ## 🔌 Interface Definition

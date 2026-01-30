@@ -122,6 +122,17 @@ sync_gemini() {
 
 sync_antigravity() {
     echo "🛠  Configuring .agent structure..."
+    
+    # Backup Custom Architecture Rules if they exist and are significant (>1000 bytes)
+    CUSTOM_ARCH=""
+    if [ -f ".agent/memory/ARCHITECTURE.md" ]; then
+         SIZE=$(python3 -c "import os; print(os.path.getsize('.agent/memory/ARCHITECTURE.md'))" 2>/dev/null || echo 0)
+         if [ "$SIZE" -gt 1000 ]; then
+             CUSTOM_ARCH=$(cat ".agent/memory/ARCHITECTURE.md")
+             echo "   💾 Backing up custom Architecture Rules ($SIZE bytes)..."
+         fi
+    fi
+
     rm -rf .agent
     mkdir -p .agent/memory
     mkdir -p .agent/skills
@@ -131,16 +142,27 @@ sync_antigravity() {
     cp "$SRC_PREFIX/README.md" .agent/README.md 2>/dev/null || true
 
     # 2. Memory (Mapped from Core Rules + Stack Rules)
+    # Use Symlinks (ln -sf) instead of Copy (cp) to keep memory "live"
     if [ -d "$SRC_PREFIX/core/rules" ]; then
-        cp "$SRC_PREFIX/core/rules/00-core-behavior.md" .agent/memory/CONVENTIONS.md 2>/dev/null || true
-        cp "$SRC_PREFIX/core/rules/03-qa-process.md" .agent/memory/QA_PROCESS.md 2>/dev/null || true
-        cp "$SRC_PREFIX/core/rules/04-definition-of-done.md" .agent/memory/DOD.md 2>/dev/null || true
-        cp "$SRC_PREFIX/core/rules/07-auditor-mode.md" .agent/memory/AUDITOR_MODE.md 2>/dev/null || true
+        ln -sf "$SRC_PREFIX/core/rules/00-core-behavior.md" .agent/memory/CONVENTIONS.md
+        ln -sf "$SRC_PREFIX/core/rules/03-qa-process.md" .agent/memory/QA_PROCESS.md
+        ln -sf "$SRC_PREFIX/core/rules/04-definition-of-done.md" .agent/memory/DOD.md
+        ln -sf "$SRC_PREFIX/core/rules/07-auditor-mode.md" .agent/memory/AUDITOR_MODE.md
     fi
     
     # Copy stack-specific architecture rules
     if [ "$STACK" != "generic" ] && [ -f "$SRC_PREFIX/stacks/$STACK/rules/02-architecture-rules.md" ]; then
-        cp "$SRC_PREFIX/stacks/$STACK/rules/02-architecture-rules.md" .agent/memory/ARCHITECTURE.md
+        # For known stacks, link directly to source
+        ln -sf "$SRC_PREFIX/stacks/$STACK/rules/02-architecture-rules.md" .agent/memory/ARCHITECTURE.md
+    else
+        # Fallback to minimal rules for Generic/Uninitialized
+        # RESTORE backup if available, otherwise use minimal template
+        if [ -n "$CUSTOM_ARCH" ]; then
+             echo "$CUSTOM_ARCH" > .agent/memory/ARCHITECTURE.md
+             echo "   ↩️  Restored custom Architecture Rules."
+        else
+             cp "$SRC_PREFIX/templates/02-architecture-minimal.template.md" .agent/memory/ARCHITECTURE.md 2>/dev/null || true
+        fi
     fi
     
     # Project context template (will be filled by /setup)

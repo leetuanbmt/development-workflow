@@ -18,15 +18,17 @@ skill: tech-lead
 
 ## 🔄 Execution Flow
 
-### 1. Discovery (Khám phá)
-*   Sử dụng tool `list_directory` và `glob` để tìm các file cấu hình tại Root Project:
-    *   **Flutter:** `pubspec.yaml`, `analysis_options.yaml`, `Makefile`, `melos.yaml`.
-    *   **Node/Web:** `package.json`, `tsconfig.json`.
-    *   **General:** `README.md`, `.gitignore`.
-*   Sử dụng tool `read_file` để đọc nội dung các file tìm được.
-*   **Skill Tech-Lead:** Phân tích nội dung file và cấu trúc thư mục (`lib/`, `src/`) để:
-    *   Đoán kiến trúc (Clean Arch, MVC, Feature-based...).
-    *   Xác định thư viện cốt lõi (State Management, DI, Networking, Database).
+### 1. Discovery & Analysis
+*   **Case A: Brownfield (Existing Code):**
+    *   Scan file cấu hình: `pubspec.yaml`, `package.json`, `requirements.txt`...
+    *   Detect Tech Stack hiện tại.
+    *   Đánh giá chất lượng code hiện tại.
+*   **Case B: Greenfield (New Project):**
+    *   Nếu thư mục rỗng hoặc chỉ có README/Requirement:
+    *   **HỎI USER:** "Bạn muốn xây dựng hệ thống gì? (Mobile App, Backend, Tool...?)" (Nếu chưa có input).
+    *   **Skill Tech-Lead:** Phân tích Requirement -> Đề xuất Tech Stack phù hợp (Flutter/Node/Python/Generic).
+    *   **ACTION:** Chạy lệnh `scripts/sync.sh --stack=<suggested_stack>` để cài đặt môi trường AI tương ứng.
+    *   (Optional) Đề xuất lệnh khởi tạo dự án (VD: `[init command]`).
 
 ### 2. Generate Context (`PROJECT.md`)
 *   Dựa trên thông tin thu thập, điền vào template `PROJECT.md` (xem dưới).
@@ -34,16 +36,19 @@ skill: tech-lead
 
 ### 3. Generate Dynamic Rules (Tech-Lead Skill)
 *   **Phân nhánh xử lý:**
-    *   **Nếu là Flutter:** Tạo nội dung cho `rules/02-architecture-rules.md` tập trung vào: Clean Architecture (Domain/Data/Presentation), quy tắc đặt tên Dart, quy định về State Management (đã tìm thấy ở bước 1), và Code Gen.
-    *   **Nếu là Node.js/Backend:** Tạo quy tắc về Controller-Service-Repository, Error Handling, Logging chuẩn.
-    *   **Nếu là Python:** Tạo quy tắc về PEP8, Type Hinting, Project Structure.
-*   **HÀNH ĐỘNG:** Ghi đè file `rules/02-architecture-rules.md` với nội dung được cá nhân hóa này.
+    *   **Nếu là Mobile (Flutter/React Native):**
+        *   Load Template tương ứng.
+        *   **Dynamic Adjust:** Thêm/Bớt rule dựa trên thư viện thực tế.
+    *   **Nếu là Node.js (Generic Backend):**
+        *   **Generate Fresh:** Tạo quy tắc Generic Backend (Controller-Service-Repository...).
+    *   **Nếu là Python:**
+        *   **Generate Fresh:** Tạo quy tắc Coding Standard phù hợp ngôn ngữ (PEP8, GoFmt...).
+*   **HÀNH ĐỘNG:** Ghi đè file `rules/02-architecture-rules.md` (hoặc trực tiếp cập nhật `.agent/memory/ARCHITECTURE.md`).
 
 ### 4. Sync & Finalize
 *   Copy `rules/01-project-context.md` sang `.agent/memory/PROJECT.md`.
-*   Copy `rules/02-architecture-rules.md` sang `.agent/memory/ARCHITECTURE.md`.
-*   Chạy lệnh `bash scripts/sync.sh` (hoặc `make sync`) để đồng bộ toàn hệ thống.
-*   Thông báo kết quả cho User và nhắc User kiểm tra lại folder `rules/`.
+*   Cập nhật `.agent/memory/ARCHITECTURE.md` với nội dung đã generate ở bước 3.
+*   (Nếu cần) Chạy lệnh `bash scripts/sync.sh` để reload skill tương ứng (nếu stack thay đổi từ Generic -> Specific).
 
 ## 📝 Output Template (Target: rules/01-project-context.md)
 

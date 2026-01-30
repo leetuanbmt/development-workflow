@@ -1,15 +1,15 @@
 ---
-description: "Manage Database schema with Drift safely, focusing on Migration and Data Integrity."
+description: "Manage Database schema safely, focusing on Migration and Data Integrity."
 trigger: /manage-db
 version: "3.0.0"
 skills:
-  - flutter-expert
+  - tech-lead
   - test-engineer
 constraints:
   max_iterations: 4
   timeout_minutes: 25
   exit_on: ["Migration complete", "Tests passed"]
-skill: flutter-expert
+skill: tech-lead
 ---
 
 # 🗄️ Safe Database Management
@@ -23,11 +23,11 @@ skill: flutter-expert
 - **Constraint Check:** New column has `NOT NULL`? If yes, what's the `defaultValue`?
 
 ### 2. Implementation Steps
-1. **Modify Table:** Edit `.dart` file defining the table
-2. **Generate:** Run `make gen` (or project equivalent)
+1. **Modify Schema:** Edit schema definition file (e.g., SQL, ORM Model)
+2. **Generate:** Run code generation command if applicable
 3. **Migration Logic:**
-   - Write code in `migration` block of `AppDatabase`
-   - **REQUIRED:** Must use Drift's `addColumn`, `createTable` commands, NOT raw SQL unless absolutely necessary
+   - Write migration script/code
+   - **REQUIRED:** Use safe migration methods (e.g., `ADD COLUMN` instead of `DROP TABLE`)
 
 ### 3. Verification (Safety First)
 - **Test Migration:**
@@ -40,12 +40,12 @@ skill: flutter-expert
 **Active skills:** `flutter-expert`, `test-engineer`
 
 **Skill roles:**
-- **flutter-expert:** Database schema expertise, Drift-specific knowledge
+- **tech-lead:** Database schema expertise, ORM-specific knowledge
 - **test-engineer:** Migration testing strategy, data integrity verification
 
 **Application:**
-- Step 1: `flutter-expert` analyzes impact
-- Step 2: `flutter-expert` guides implementation
+- Step 1: `tech-lead` analyzes impact
+- Step 2: `tech-lead` guides implementation
 - Step 3: `test-engineer` designs verification tests
 
 ## 💡 AI Guidelines

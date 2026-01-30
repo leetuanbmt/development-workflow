@@ -15,8 +15,8 @@ Expert in application security auditing and vulnerability assessment.
 
 ## 🛑 When NOT to use
 - General code review (use `code-reviewer`)
-- Architecture design (use `feature-architect`)
-- Performance issues (use `flutter-expert`)
+- Architecture design (use `tech-lead`)
+- Performance issues (use `tech-lead` or optimization skill)
 
 ## 💡 Core Capabilities
 

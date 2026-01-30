@@ -19,14 +19,14 @@ skill: tech-lead
 1. **Run Diagnostic Script:**
    - **ACTION:** Execute `development-workflow/scripts/doctor.sh`
    - Script checks:
-     - Required tools: `python3`, `melos`, `flutter`
+     - Required tools: `python3`, `git`, `make` (and stack specific tools)
      - Sync status: Compare checksum/timestamp between `development-workflow/rules` and `.agent/memory`
      - Directory structure: Verify `.gemini`, `.agent` and symlinks exist
 
 2. **Analyze Results:**
    - Read script output
    - If errors found (❌), explain root cause to user
-   - Suggest fix commands (e.g., `make sync`, `flutter pub get`)
+   - Suggest fix commands (e.g., `make sync`, `npm install`, `flutter pub get`)
 
 3. **Auto-Fix (Optional):**
    - If error is "Out of Sync", ask user if they want to run Sync now
@@ -34,7 +34,7 @@ skill: tech-lead
 
 4. **Smart Workflow Suggestions:**
    - Script auto-analyzes context and suggests relevant workflows:
-     - BLoC/Cubit changes → `/write-test`
+     - State Management changes → `/write-test`
      - Data layer changes → `/audit`
      - Presentation changes → `/review`
      - Recent bug fixes → `/write-test` (regression tests)
@@ -46,8 +46,8 @@ Script `doctor.sh` performs these checks:
 
 ```bash
 # 1. Check Tools
-check_tool "flutter"
-check_tool "melos"
+check_tool "git"
+check_tool "make"
 
 # 2. Check Sync
 compare_dirs "development-workflow/rules" ".agent/memory"
