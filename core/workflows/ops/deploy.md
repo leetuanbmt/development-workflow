@@ -2,7 +2,8 @@
 description: "Build and deploy application to environments (Dev/Staging/Production)."
 trigger: /deploy
 version: "2.4.0"
-skills: []
+skills:
+  - tech-lead
 constraints:
   max_iterations: 3
   timeout_minutes: 15

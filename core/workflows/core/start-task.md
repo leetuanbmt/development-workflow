@@ -4,12 +4,10 @@ trigger: /start-task
 version: "3.0.0"
 skills:
   - tech-lead
-  - feature-architect
 constraints:
   max_iterations: 3
   timeout_minutes: 20
   exit_on: ["Plan approved", "User declined"]
-skill: feature-architect
 ---
 
 # 🚀 Start Task (Auditor Edition)

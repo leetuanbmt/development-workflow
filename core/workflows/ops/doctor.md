@@ -2,7 +2,8 @@
 description: "Check Agent environment health & sync status."
 trigger: /doctor
 version: "1.0.0"
-skills: []
+skills:
+  - tech-lead
 constraints:
   max_iterations: 2
   timeout_minutes: 10
