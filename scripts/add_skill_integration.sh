@@ -1,7 +1,12 @@
 #!/bin/bash
 # Add Skill Integration sections to workflows
 
-cd /Users/tuanvm/Desktop/gmo/kansuke/development-workflow
+# 1. Xác định thư mục gốc của dự án (Dynamic Path Resolution)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+WORKFLOW_ROOT="$(dirname "$SCRIPT_DIR")"
+
+echo "📂 Project Root: $WORKFLOW_ROOT"
+cd "$WORKFLOW_ROOT" || exit
 
 # /investigate
 cat >> workflows/core/investigate.md.tmp << 'EOF'
@@ -56,5 +61,5 @@ cat >> workflows/core/audit.md.tmp << 'EOF'
 Both skills applied based on audit aspect selected.
 EOF
 
-echo "Skill integration templates created"
-echo "Manual insertion needed (templates in .tmp files)"
+echo "✅ Skill integration templates created in .tmp files"
+echo "👉 Please manually review and merge these .tmp files into the markdown files."

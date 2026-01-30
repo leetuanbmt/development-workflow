@@ -1,112 +1,203 @@
-# ⚡ AI-Native Development Workflow (Auditor Edition)
+# 🚀 Multi-Project Development Workflow Framework
 
-> **Auditor-First Mindset:** Powered by **Gemini CLI** & **Google Antigravity** (Context-Aware AI).
+## Overview
 
-Workflow này đã được chuyển đổi từ việc AI "viết hộ" sang việc AI **"thực thi dưới sự giám sát"**. User đóng vai trò là **Kiến trúc sư trưởng (Auditor)**, AI là **Lead Engineer** thực hiện các lệnh kỹ thuật.
+Framework này được thiết kế để tái sử dụng cho nhiều dự án khác nhau, hỗ trợ cả **Gemini CLI** và **Google Antigravity**.
 
-## 🏗️ Triết lý Auditor-First
+## Architecture
 
-1.  **Intent & Constraints:** User cung cấp **Ý định** (Mục tiêu) và **Ràng buộc** (Kiến trúc, Bảo mật).
-2.  **Implementation Plan:** Với các thay đổi phức tạp, AI phải trình bày **Kế hoạch** trước khi chạm vào mã nguồn.
-3.  **Verification Loop:** Mọi dòng code sinh ra phải có cơ chế kiểm chứng.
+```
+development-workflow/
+├── core/                    # Tech-agnostic components
+│   ├── rules/              # Universal rules (6 files)
+│   ├── workflows/          # Universal workflows (13 workflows)
+│   └── skills/             # Generic skills (6 skills)
+├── stacks/                 # Tech-specific components
+│   └── flutter/
+│       ├── rules/          # Flutter architecture rules
+│       └── skills/         # Flutter-specific skills
+├── templates/              # Project templates
+│   ├── 01-project-context.template.md
+│   └── GEMINI.template.md
+└── scripts/                # Automation tools
+```
 
----
+## Quick Start
 
-## 🛠️ Command Center (13 Workflows)
+### 1. Add to Your Project
 
-### 🔴 Core Loop (Hàng ngày) — 6 workflows
-| Command | Chức năng |
-| :--- | :--- |
-| `/start-task` | Phân tích yêu cầu, lập kế hoạch thực hiện |
-| `/investigate` | Điều tra nguyên nhân lỗi, xuất báo cáo (NO code edit) |
-| `/fix` | Investigate → Plan → Fix → Verify |
-| `/review` | Review code/PR/changes (unified, auto-detect mode) |
-| `/audit` | Audit multi-aspect (arch/security/analytics/general) |
-| `/refactor` | Tái cấu trúc an toàn, không đổi hành vi |
+**Option A: Git Submodule (Recommended)**
+```bash
+cd your-project/
+git submodule add https://github.com/your-org/development-workflow.git
+./development-workflow/init-submodule.sh
+```
 
-### 🟡 Technical Services — 3 workflows
-| Command | Chức năng |
-| :--- | :--- |
-| `/manage-db` | Quản lý Schema, Migration, Data Integrity |
-| `/integrate-api` | Sinh Data Layer từ JSON specs |
-| `/write-test` | Viết Unit/Widget/Integration tests |
+**Option B: Symlink (Local Development)**
+```bash
+cd your-project/
+ln -s /path/to/development-workflow ./development-workflow
+./development-workflow/scripts/sync.sh
+```
 
-### 🔵 Operations — 4 workflows
-| Command | Chức năng |
-| :--- | :--- |
-| `/doctor` | Kiểm tra sức khỏe môi trường |
-| `/deploy` | Build và deploy ứng dụng |
-| `/document` | Tạo tài liệu "sống" |
-| `/prepare-release` | Pipeline rà soát trước Release |
+### 2. Initialize
 
----
+```bash
+# Auto-detect stack and sync
+./development-workflow/scripts/sync.sh
 
-## 🧠 Skills (8 Core)
+# Or specify stack explicitly
+./development-workflow/scripts/sync.sh --stack=flutter
+./development-workflow/scripts/sync.sh --stack=nodejs
+./development-workflow/scripts/sync.sh --stack=python
+```
+
+### 3. Setup Project Context
+
+In Gemini CLI or Antigravity:
+```
+/setup
+```
+
+This will:
+- Scan your project structure
+- Detect tech stack
+- Generate `PROJECT.md` with your project context
+- Apply appropriate architecture rules
+
+## Supported Stacks
+
+| Stack | Status | Features |
+|:---|:---:|:---|
+| **Flutter** | ✅ Full | Clean Architecture, BLoC, Drift, flutter-expert skill |
+| **Node.js** | 🚧 Planned | Express/NestJS patterns, backend-expert skill |
+| **Python** | 🚧 Planned | FastAPI/Django patterns, python-expert skill |
+| **Generic** | ✅ Core | Universal workflows & skills only |
+
+## Core Workflows (13)
+
+### Daily Loop (6)
+- `/start-task` - Analyze requirements and create implementation plan
+- `/investigate` - Root cause analysis (report only, no code changes)
+- `/fix` - Full bug fix flow (investigate → plan → fix → verify)
+- `/review` - Unified code/PR/changes review
+- `/audit` - Multi-aspect audit (architecture/security/analytics)
+- `/refactor` - Safe refactoring without breaking functionality
+
+### Technical Services (3)
+- `/manage-db` - Database schema & migration management
+- `/integrate-api` - Auto-generate data layer from JSON specs
+- `/write-test` - Unit/Widget/Integration test generation
+
+### Operations (4)
+- `/setup` - Auto-discovery & project context initialization
+- `/doctor` - Environment health check
+- `/deploy` - Build and deploy application
+- `/document` - Generate living documentation
+
+## Core Skills (6)
 
 | Skill | Focus |
 |:---|:---|
 | `bug-investigator` | Root cause analysis, debugging |
-| `code-reviewer` | Code quality, architecture check |
-| `flutter-expert` | Performance, memory, Flutter specifics |
-| `feature-architect` | Feature design, layer breakdown |
+| `code-reviewer` | Code quality, architecture compliance |
 | `tech-lead` | Architecture decisions, mentoring |
 | `test-engineer` | Testing strategy, coverage |
 | `security-auditor` | Vulnerabilities, secrets scan |
-| `vibecoder` | Fast implementation, full-stack |
+| `vibecoder` | High-speed implementation (500-2000 lines) |
 
----
+## Stack-Specific: Flutter
 
-## 📂 Cấu trúc Dự án
+### Additional Skills
+- `flutter-expert` - Performance, memory, jank fixes
+- `feature-architect` - Feature design with Clean Architecture
 
-```text
-development-workflow/
-├── rules/               # 📜 Bộ quy tắc
-├── workflows/           # 🚀 Quy trình thực thi (13 active)
-│   ├── core/            # Hàng ngày (6)
-│   ├── tech/            # Kỹ thuật (3)
-│   ├── ops/             # Vận hành (4)
-│   └── _archived_legacy # Archived (27)
-├── skills/              # 🧠 Kỹ năng (8 active)
-│   ├── [8 skill folders]
-│   └── _deprecated/     # Archived (14)
-└── scripts/             # 🛠 Công cụ hỗ trợ
+### Additional Rules
+- Clean Architecture (Data/Domain/Presentation)
+- BLoC pattern enforcement
+- Code generation workflow
+- Drift database patterns
+
+## Auditor-First Philosophy
+
+```
+┌─────────────────────────────────────────┐
+│  USER (Auditor/Architect)               │
+│  • Define Intent & Constraints          │
+│  • Review & Approve Plans               │
+│  • Final Sign-off                       │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│  AI (Lead Engineer)                     │
+│  • Propose Solutions                    │
+│  • Execute Code                         │
+│  • Self-Verify                          │
+│  • Report Status                        │
+└─────────────────────────────────────────┘
 ```
 
----
+## Advanced Usage
 
-## ⚡ Bắt đầu sử dụng
-
-1.  **Đồng bộ hóa môi trường:**
-    ```bash
-    ./development-workflow/scripts/sync.sh
-    ```
-2.  **Vận hành theo chuẩn Auditor:**
-    - Bước 1: `/start-task [yêu cầu]` để lên kế hoạch.
-    - Bước 2: Duyệt kế hoạch và ra lệnh thực thi.
-    - Bước 3: `/review` kết quả cuối cùng.
-
----
-
-## 🗺️ Workflow Flow
-
-```mermaid
-graph TD
-    A[🎯 User Request] --> B{/start-task}
-    B -->|Bug| C[/investigate]
-    B -->|Feature| D[/audit]
-    B -->|Quick Fix| E[/fix]
-    
-    C -->|Root Cause Found| E
-    D -->|Plan Approved| F[Implement]
-    
-    E --> G[/review]
-    F --> G
-    
-    G -->|Pass| H[✅ Done]
-    G -->|Issues| I[Fix & Iterate]
-    I --> G
+### Watch Mode (Auto-sync on changes)
+```bash
+./development-workflow/scripts/sync.sh --watch
 ```
 
+### Multiple Projects
+```bash
+# Project A (Flutter)
+cd project-a/
+./development-workflow/scripts/sync.sh --stack=flutter
+
+# Project B (Node.js)
+cd project-b/
+./development-workflow/scripts/sync.sh --stack=nodejs
+```
+
+### Custom Stack
+
+Create your own stack:
+```bash
+mkdir -p development-workflow/stacks/mystack/{rules,skills,workflows}
+# Add your custom rules/skills/workflows
+./scripts/sync.sh --stack=mystack
+```
+
+## Migration from v3.x
+
+If you're using the old structure:
+
+```bash
+# Backup current config
+cp -r .gemini .gemini.backup
+cp -r .agent .agent.backup
+
+# Pull latest changes
+cd development-workflow/
+git pull origin main
+
+# Re-sync with new structure
+cd ..
+./development-workflow/scripts/sync.sh
+```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for:
+- Adding new stacks
+- Creating custom skills
+- Workflow development guidelines
+
+## Version
+
+**v4.0.0** - Multi-Project Refactor
+- Core/Stacks separation
+- Stack auto-detection
+- Template system
+- Improved reusability
+
 ---
 
-*v3.0.0 - Refactored: 40→13 workflows, 22→8 skills*
+*Powered by Gemini CLI & Google Antigravity*

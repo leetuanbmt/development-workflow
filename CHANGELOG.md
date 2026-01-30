@@ -2,6 +2,48 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [5.0.0] - 2026-01-30
+### 🏗️ Multi-Project Architecture (Core/Stacks Separation)
+
+**BREAKING CHANGES:**
+- **Directory restructure:** `rules/`, `workflows/`, `skills/` → `core/` + `stacks/`
+- **Stack-aware sync:** `sync.sh` now supports `--stack` parameter
+- **Template system:** New `templates/` folder for project initialization
+
+#### New Structure
+```
+core/                    # Tech-agnostic (6 rules, 13 workflows, 6 skills)
+stacks/flutter/          # Flutter-specific (1 rule, 2 skills)
+templates/               # Project templates
+```
+
+#### Migration
+- **Core Rules:** 00, 03-07 → `core/rules/`
+- **Flutter Rules:** 02 → `stacks/flutter/rules/`
+- **Core Skills:** bug-investigator, code-reviewer, tech-lead, test-engineer, security-auditor, vibecoder → `core/skills/`
+- **Flutter Skills:** flutter-expert, feature-architect → `stacks/flutter/skills/`
+- **All Workflows:** → `core/workflows/`
+
+#### New Features
+- **Stack Auto-Detection:** Detects Flutter/Node.js/Python automatically
+- **Multi-Stack Support:** Same framework for different tech stacks
+- **Template System:** `01-project-context.template.md`, `GEMINI.template.md`
+- **Improved Reusability:** Use as Git submodule across multiple projects
+
+#### Scripts Updated
+- **sync.sh:** Added `--stack` parameter, auto-detection logic, merge core + stack
+- **generate_commands.py:** Scan from `core/workflows/` + `stacks/{stack}/workflows/`
+- **New:** `MIGRATION.md` - Detailed migration guide from v3.x/v4.x
+
+#### Documentation
+- **README.md:** Complete rewrite focusing on multi-project usage
+- **MIGRATION.md:** Step-by-step migration guide
+- **Templates:** Added project initialization templates
+
+See [MIGRATION.md](MIGRATION.md) for upgrade instructions.
+
+---
+
 ## [4.0.0] - 2026-01-29
 ### 🔧 System Refactoring (Anti-Loop & Consolidation)
 
