@@ -1,11 +1,12 @@
 import os
 import glob
 import sys
+import argparse
 
 # 1. Base Paths
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(CURRENT_DIR)
-WORKFLOW_ROOT = os.path.join(PROJECT_ROOT, "workflows")
+DEFAULT_WORKFLOW_ROOT = os.path.join(PROJECT_ROOT, "workflows")
 COMMAND_DIR = ".gemini/commands"
 
 def parse_frontmatter(content):
@@ -31,14 +32,22 @@ def parse_frontmatter(content):
             
     return meta, body
 
-def convert_md_to_toml():
+def convert_md_to_toml(source_dir):
     if not os.path.exists(COMMAND_DIR):
         os.makedirs(COMMAND_DIR)
 
-    print(f"🔄 Converting workflows from {WORKFLOW_ROOT}...")
+    # Resolve absolute path for source_dir
+    if not os.path.isabs(source_dir):
+        source_dir = os.path.join(PROJECT_ROOT, source_dir)
+
+    print(f"🔄 Converting workflows from: {source_dir}")
     
+    if not os.path.exists(source_dir):
+         print(f"❌ Error: Source directory does not exist: {source_dir}")
+         return
+
     # Scan all markdown files in workflows/ recursively
-    workflow_files = glob.glob(f"{WORKFLOW_ROOT}/**/*.md", recursive=True)
+    workflow_files = glob.glob(f"{source_dir}/**/*.md", recursive=True)
     
     count = 0
     for md_path in workflow_files:
@@ -78,7 +87,9 @@ def convert_md_to_toml():
     print(f"🎉 Done! Converted {count} commands.")
 
 if __name__ == "__main__":
-    if not os.path.exists(WORKFLOW_ROOT):
-        print(f"❌ Error: Cannot find workflows directory at {WORKFLOW_ROOT}")
-    else:
-        convert_md_to_toml()
+    parser = argparse.ArgumentParser(description='Generate Gemini TOML commands.')
+    parser.add_argument('--source', type=str, default=DEFAULT_WORKFLOW_ROOT,
+                        help='Source directory containing markdown workflows')
+    
+    args = parser.parse_args()
+    convert_md_to_toml(args.source)

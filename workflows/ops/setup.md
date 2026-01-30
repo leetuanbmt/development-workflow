@@ -1,7 +1,7 @@
 ---
 description: "Automatically detects Tech Stack, initializes Context, and Hydrates Workflows from Templates."
 trigger: /setup
-version: "4.2.0"
+version: "4.3.0"
 skills: 
   - tech-lead
 constraints:
@@ -45,32 +45,33 @@ skill: tech-lead
 *   Create `.agent/memory/PROJECT.md` listing these constants for reference.
 
 ### 4. Expert Skill Generation
-*   **Check:** `stacks/<stack>/skills/framework-expert` (for curated skills).
-*   **Fallback:** Generate from `templates/skills/framework-expert.template.md`.
-    *   Replace `{{STACK_NAME}}` with detected stack.
-    *   Fill in capabilities.
-    *   Save to `.agent/skills/framework-expert/SKILL.md`.
+*   **Source:** `templates/skills/framework-expert.template.md`.
+*   **Action:** Replace `{{STACK_NAME}}`, fill capabilities.
+*   **Dest:** `.agent/skills/framework-expert/SKILL.md`.
 
 ### 5. Workflow Hydration (The Core Logic)
-**Action:** Read templates, replace constants, and save to active workflows.
+**Action:** Read templates, replace constants, and **SAVE TO .agent/workflows/**.
 
 *   **Ops Workflows:**
-    *   `deploy.md`: Replace `{{CMD_BUILD}}`, `{{DEPLOY_...}}`.
-    *   `prepare-release.md`: Replace `{{CMD_LINT}}`, `{{CMD_TEST}}`, `{{FILE_VERSION}}`.
+    *   `templates/workflows/ops/deploy.template.md` -> `.agent/workflows/ops/deploy.md`
+    *   `templates/workflows/ops/prepare-release.template.md` -> `.agent/workflows/ops/prepare-release.md`
 
 *   **Core Workflows:**
-    *   `audit.md`: Replace `{{STACK_ARCH_CHECK}}`, `{{STACK_PERF_CHECK}}`, `{{STACK_SEC_CHECK}}`.
-    *   `fix.md`: Replace `{{COMMON_BUGS}}`, `{{CMD_TEST}}`, `{{LIB_TEST}}`.
-    *   `review.md`: Replace `{{CMD_LINT}}`, `{{STACK_ARCH_CHECK}}`.
-    *   `investigate.md`: Replace `{{COMMON_BUGS}}`, `{{FILE_VERSION}}`.
-    *   `refactor.md`: Replace `{{CMD_TEST}}`, `{{STACK_ARCH_CHECK}}`.
+    *   `templates/workflows/core/audit.template.md` -> `.agent/workflows/core/audit.md`
+    *   `templates/workflows/core/fix.template.md` -> `.agent/workflows/core/fix.md`
+    *   `templates/workflows/core/review.template.md` -> `.agent/workflows/core/review.md`
+    *   `templates/workflows/core/investigate.template.md` -> `.agent/workflows/core/investigate.md`
+    *   `templates/workflows/core/refactor.template.md` -> `.agent/workflows/core/refactor.md`
 
 *   **Tech Workflows:**
-    *   `write-test.md`: Replace `{{LIB_TEST}}`, `{{LIB_MOCK}}`.
+    *   `templates/workflows/tech/write-test.template.md` -> `.agent/workflows/tech/write-test.md`
 
-### 6. Finalize
-*   Run `bash scripts/sync.sh`.
-*   **Report:** List the detected stack and the configured commands.
+### 6. Finalize (IMPORTANT)
+*   Run the sync script in **RUNTIME** mode to register the new workflows:
+    ```bash
+    bash scripts/sync.sh --runtime
+    ```
+*   **Report:** List the detected stack and configured commands.
 
 ## 📝 Output Template (Target: rules/01-project-context.md)
 
