@@ -1,126 +1,64 @@
 #!/bin/bash
-# Script đồng bộ hóa môi trường AI Agent
-# Tự động nhận diện đường dẫn (Submodule-ready)
+# Script to synchronize the AI Agent environment
+# Supports Template-based architecture and multi-stack projects
 
-# 1. Xác định các đường dẫn gốc
+# 1. Determine base paths
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-WORKFLOW_ROOT="$(dirname "$SCRIPT_DIR")"
-PROJECT_ROOT="$(dirname "$WORKFLOW_ROOT")"
-WORKFLOW_DIR_NAME=$(basename "$WORKFLOW_ROOT")
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 echo "🚀 Starting AI Environment Sync..."
-echo "📂 Workflow Root: $WORKFLOW_ROOT"
-echo "🏠 Project Root: $PROJECT_ROOT"
+echo "📂 Project Root: $PROJECT_ROOT"
 
-# Di chuyển về Project Root để thực hiện symlink chính xác
-cd "$PROJECT_ROOT" || exit
-
-# Hàm helper tạo symlink an toàn
-link_folder() {
+# Helper for symlinking
+link_file() {
     src=$1
     dest=$2
-    rm -rf "$dest" # Xóa cũ (nếu là folder hoặc link)
-    ln -s "$src" "$dest"
-    echo "   🔗 Linked: $dest -> $src"
+    ln -sf "$src" "$dest"
+    echo "   🔗 Linked: $dest"
 }
 
-sync_gemini() {
-    echo "🛠  Configuring .gemini structure..."
-    mkdir -p .gemini
-    mkdir -p .gemini/memory
+# 2. Configure .agent structure
+echo "🛠  Configuring .agent structure..."
+mkdir -p .agent/memory
+mkdir -p .agent/skills
+mkdir -p .agent/workflows/core
+mkdir -p .agent/workflows/ops
+mkdir -p .agent/workflows/tech
 
-    # Tạo các Symlink logic (Trỏ về thư mục workflow)
-    link_folder "$WORKFLOW_DIR_NAME/rules" ".gemini/rules"
-    link_folder "$WORKFLOW_DIR_NAME/skills" ".gemini/skills"
-    link_folder "$WORKFLOW_DIR_NAME/memory" ".gemini/memory"
-    link_folder "$WORKFLOW_DIR_NAME/CHEAT_SHEET.md" ".gemini/CHEAT_SHEET.md"
-    link_folder "$WORKFLOW_DIR_NAME/GEMINI.md" ".gemini/GEMINI.md"
+# 3. Sync Memory (Rules)
+echo "📝 Syncing Memory & Rules..."
+if [ -d "$PROJECT_ROOT/core/rules" ]; then
+    link_file "$PROJECT_ROOT/core/rules/00-core-behavior.md" ".agent/memory/CONVENTIONS.md"
+    link_file "$PROJECT_ROOT/core/rules/03-qa-process.md" ".agent/memory/QA_PROCESS.md"
+    link_file "$PROJECT_ROOT/core/rules/04-definition-of-done.md" ".agent/memory/DOD.md"
+    link_file "$PROJECT_ROOT/core/rules/07-auditor-mode.md" ".agent/memory/AUDITOR_MODE.md"
+fi
 
-    # 2. Generate Commands (MD -> TOML)
-    rm -rf .gemini/commands
-    mkdir -p .gemini/commands
+# 4. Sync Skills
+echo "🧠 Syncing Generic Skills..."
+if [ -d "$PROJECT_ROOT/skills" ]; then
+    # Sync all generic skills from root skills folder
+    rsync -a --exclude='_*' "$PROJECT_ROOT/skills/" .agent/skills/
+fi
 
-    echo "🔄 Generating Gemini Commands (.toml)..."
-    if command -v python3 &> /dev/null; then
-        python3 "$WORKFLOW_DIR_NAME/scripts/generate_commands.py"
+# 5. Sync Workflows
+echo "⚙️  Syncing Workflows..."
+# Note: We sync the root workflows folder. 
+# Specialized workflows (hydrated by /setup) will reside here or in .agent/workflows.
+if [ -d "$PROJECT_ROOT/workflows" ]; then
+    rsync -a --exclude='_*' "$PROJECT_ROOT/workflows/" .agent/workflows/
+fi
+
+# 6. Ensure project context exists
+if [ ! -f ".agent/memory/PROJECT.md" ]; then
+    if [ -f "$PROJECT_ROOT/templates/01-project-context.template.md" ]; then
+        cp "$PROJECT_ROOT/templates/01-project-context.template.md" .agent/memory/PROJECT.md
+        echo "   📄 Initialized PROJECT.md from template."
     else
-        python "$WORKFLOW_DIR_NAME/scripts/generate_commands.py"
+        touch .agent/memory/PROJECT.md
     fi
-}
+fi
 
-sync_antigravity() {
-    echo "🛠  Configuring .agent structure..."
-    rm -rf .agent
-    mkdir -p .agent/memory
-    mkdir -p .agent/skills
-    mkdir -p .agent/workflows
-
-    # 1. README
-    cp "$WORKFLOW_DIR_NAME/README.md" .agent/README.md 2>/dev/null || true
-
-    # 2. Memory (Mapped from Rules + Actual Memory)
-    if [ -d "$WORKFLOW_DIR_NAME/rules" ]; then
-        cp "$WORKFLOW_DIR_NAME/rules/01-project-context.md" .agent/memory/PROJECT.md 2>/dev/null || true
-        cp "$WORKFLOW_DIR_NAME/rules/02-architecture-rules.md" .agent/memory/ARCHITECTURE.md 2>/dev/null || true
-        cp "$WORKFLOW_DIR_NAME/rules/00-core-behavior.md" .agent/memory/CONVENTIONS.md 2>/dev/null || true
-        touch .agent/memory/GLOSSARY.md
-    fi
-    
-    # Copy user memory (Knowledge Base, Preferences, History)
-    if [ -d "$WORKFLOW_DIR_NAME/memory" ]; then
-        cp -R "$WORKFLOW_DIR_NAME/memory/"* .agent/memory/ 2>/dev/null || true
-    fi
-
-    # 3. Skills & Workflows (Exclude archived/deprecated folders)
-    if [ -d "$WORKFLOW_DIR_NAME/skills" ]; then
-        rsync -a --exclude='_*' "$WORKFLOW_DIR_NAME/skills/" .agent/skills/
-    fi
-    if [ -d "$WORKFLOW_DIR_NAME/workflows" ]; then
-        rsync -a --exclude='_*' "$WORKFLOW_DIR_NAME/workflows/" .agent/workflows/
-    fi
-}
-
-sync_all() {
-    sync_gemini
-    sync_antigravity
-    echo "✅ Sync Complete! Your AI is ready."
-}
-
-watch_loop() {
-    echo "👀 Watching for changes in $WORKFLOW_DIR_NAME..."
-    echo "   (Press Ctrl+C to stop)"
-    
-    # Primitive watch implementation using sleep & timestamp comparison
-    # Ideally should use fswatch or entr if available
-    
-    # We will compute a simple hash of the directory state
-    get_state() {
-        find "$WORKFLOW_DIR_NAME" -type f -name "*.md" -o -name "*.py" -o -name "*.sh" | xargs -I {} ls -lT {} 2>/dev/null | cksum
-    }
-
-    LAST_STATE=$(get_state)
-
-    while true; do
-        sleep 2
-        CURRENT_STATE=$(get_state)
-        
-        if [ "$CURRENT_STATE" != "$LAST_STATE" ]; then
-            echo "🔄 Change detected! Syncing..."
-            sync_all
-            LAST_STATE=$CURRENT_STATE
-            echo "👀 Waiting for next change..."
-        fi
-    done
-}
-
-case "$1" in
-    gemini) sync_gemini ;;
-    antigravity) sync_antigravity ;;
-    --watch) 
-        sync_all
-        watch_loop
-        ;;
-    *)
-        sync_all
-        ;;
-esac
+# 7. Finalize
+echo "✅ Sync Complete!"
+echo "💡 Next: Run '/setup' to specialize workflows for your tech stack."

@@ -45,14 +45,67 @@ Dispatch skill dựa trên keyword đơn giản. Không composite mặc định.
 
 ---
 
-## 💡 Usage
+## 💡 How to Invoke Skills
 
-AI tự động dispatch dựa trên request. User không cần chỉ định skill.
+### Automatic Invocation (Recommended)
+
+When workflow frontmatter contains `skills: [skill-name]`, AI should:
+
+1. **Read skill documentation** first: `view_file("skills/{skill-name}/SKILL.md")`
+2. **Follow skill guidelines** exactly as documented
+3. **Apply skill perspective** to current task
+4. **Execute skill instructions** inline (no separate tool call needed)
+
+**Example:**
+```yaml
+# In workflow frontmatter:
+skills:
+  - bug-investigator
+  - code-reviewer
+```
+
+**AI behavior:**
+1. Read `skills/bug-investigator/SKILL.md`
+2. Apply bug investigation methodology
+3. Generate report following skill's output format
+4. Switch to `code-reviewer` perspective for validation
+
+### Manual Invocation (Fallback)
+
+User can explicitly request: "Use bug-investigator skill to analyze this error"
+
+**AI should:**
+1. Acknowledge: "Activating bug-investigator skill..."
+2. Load skill: `view_file("skills/bug-investigator/SKILL.md")`
+3. Execute with skill's context and constraints
+
+---
+
+## 🔄 Skill Chaining
+
+Workflows can chain multiple skills sequentially:
 
 ```
-User: "Review file này"     → code-reviewer
-User: "Tại sao app crash?"  → bug-investigator  
-User: "App chạy chậm quá"   → flutter-expert
+/investigate (bug-investigator) → Report
+      ↓
+/fix (bug-investigator + code-reviewer) → Implementation → Verification
+```
+
+**Rules:**
+- Max 2 skills per workflow execution
+- Skills execute in order listed in frontmatter
+- Each skill's output feeds into next skill's context
+
+---
+
+## 🎯 Context Inheritance
+
+Skills inherit context from:
+1. **Workflow:** Current workflow's objectives and constraints
+2. **User request:** Original task description
+3. **Codebase:** Files/features being worked on
+4. **Previous skills:** Output from earlier skills in chain
+
 ```
 
 ---

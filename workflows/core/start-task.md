@@ -1,39 +1,57 @@
 ---
-description: "Khởi động task mới với quy trình phân tích và lập kế hoạch chuẩn Auditor."
+description: "Start new task with Auditor-grade analysis and planning."
 trigger: /start-task
-version: "3.0.0"
+version: "3.1.0"
 skills:
   - tech-lead
-  - feature-architect
-  - product-manager
+constraints:
+  max_iterations: 3
+  timeout_minutes: 20
+  exit_on: ["Plan approved", "User declined"]
 ---
 
 # 🚀 Start Task (Auditor Edition)
 
-**Mục tiêu:** Chuyển đổi yêu cầu thô (Raw Request) thành Kế hoạch hành động (Action Plan) có thể kiểm soát được.
+**Objective:** Transform raw requests into actionable, validated plans.
 
-## 🔄 Quy trình (Execution Flow)
+## 🔄 Execution Flow
 
 ### 1. Context & Memory Loading
-*   **Memory Scan:** Kiểm tra `.agent/memory/knowledge_base.md` để tìm các bài học liên quan.
-*   **Project Context:** Đọc `.agent/memory/PROJECT.md` để hiểu mục tiêu dự án.
+- **Memory Scan:** Check `.agent/memory/knowledge_base.md` for relevant lessons.
+- **Project Context:** Read `.agent/memory/PROJECT.md` to understand project goals and tech stack.
+- **Architecture Context:** Read `.agent/memory/ARCHITECTURE.md` to ensure alignment.
 
-### 2. Mode Selection (Chọn chế độ)
-Dựa trên yêu cầu, AI đề xuất 1 trong 3 chế độ:
-*   **🔥 Hotfix:** Sửa lỗi gấp. Bỏ qua Spec chi tiết, tập trung vào Fix & Verify.
-*   **🏗️ Feature:** Tính năng mới. Yêu cầu Plan chi tiết (Layering, API, UI).
-*   **🧪 Prototype:** Thử nghiệm. Code nhanh, chấp nhận nợ kỹ thuật (nhưng phải cô lập).
+### 2. Mode Selection
+Based on the request, AI suggests one of 3 modes:
+- **🔥 Hotfix:** Urgent bug fix. Skip detailed specs, focus on Fix & Verify.
+- **🏗️ Feature:** New feature. Requires detailed plan (Layering, API, UI, Tests).
+- **🧪 Prototype:** Experimentation. Fast code, accept technical debt (but must isolate).
 
-### 3. Strategic Planning (Quan trọng)
-AI phải trình bày kế hoạch gồm 3 phần:
-*   **🎯 Objective:** Mục tiêu cuối cùng là gì? (Definition of Done).
-*   **⚠️ Risks & Constraints:** Có rủi ro gì về kiến trúc, performance, hay bảo mật?
-*   **📋 Implementation Steps:** Các bước thực hiện cụ thể (dưới dạng checklist).
+### 3. Strategic Planning
+AI must present a plan with 3 parts:
+- **🎯 Objective:** What is the end goal? (Definition of Done).
+- **⚠️ Risks & Constraints:** Any risks regarding architecture, performance, security, or data integrity?
+- **📋 Implementation Steps:** Specific action items (as a checklist), including test creation.
 
 ### 4. User Confirmation
-*   Chờ Auditor (User) duyệt Plan.
-*   Nếu duyệt -> Chuyển sang thực thi (dùng các lệnh `/fix`, `/implement`...).
+- Wait for Auditor (User) to approve the plan.
+- If approved → Move to execution (using `/fix`, `/implement`, etc.).
 
-## 💡 Hướng dẫn cho AI
-*   **Không diễn kịch:** Bỏ qua màn "Họp team giả lập". Hãy đóng vai trò là một trợ lý kỹ thuật cao cấp báo cáo trực tiếp cho CTO.
-*   **Tư duy phản biện:** Nếu yêu cầu của User mơ hồ, hãy đặt câu hỏi làm rõ (Clarifying Questions) thay vì đoán mò.
+## 🔌 Skill Integration
+
+This workflow automatically activates these skills based on task type:
+
+- **tech-lead:** Strategic decisions, architecture guidance.
+- **feature-architect:** Feature design, layer breakdown.
+
+**Auto-activation rules:**
+- If task involves "new feature" → Use `feature-architect` for design.
+- If task involves "refactoring" or "architecture" → Use `tech-lead` for guidance.
+- If task is "bug fix" → Delegate to `/fix` workflow with `bug-investigator`.
+
+## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **English**.
+- **No role-playing:** Skip the "Team Meeting Simulation". Act as a senior technical assistant reporting directly to the CTO.
+- **Critical thinking:** If user's request is vague, ask clarifying questions instead of guessing.
+- **Plan First:** Always get approval on the plan before writing code.

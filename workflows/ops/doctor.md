@@ -1,58 +1,75 @@
 ---
-description: "Kiểm tra sức khỏe môi trường Agent & Sync Status."
+description: "Check Agent environment health & sync status."
 trigger: /doctor
-version: "1.0.0"
+version: "1.2.0"
 skills:
-  - devops-engineer
+  - tech-lead
+constraints:
+  max_iterations: 2
+  timeout_minutes: 10
+  exit_on: ["Check complete", "Auto-fix executed"]
+skill: tech-lead
 ---
 
 # 🏥 Doctor Check (Environment & Sync Diagnostic)
 
-**Mục tiêu:** Kiểm tra tính toàn vẹn của môi trường Agent, trạng thái đồng bộ (Sync Status) và các công cụ cần thiết. Giúp phát hiện lỗi "Out of Sync" hoặc thiếu dependencies.
+**Objective:** Verify Agent environment integrity, sync status, and required tools. Detect "Out of Sync" or missing dependencies.
 
-## 🚀 Các bước thực hiện (Execution Steps)
+## 🚀 Execution Steps
 
-1.  **Chạy Diagnostic Script:**
-    *   **HÀNH ĐỘNG:** Chạy script `development-workflow/scripts/doctor.sh`.
-    *   Script này sẽ kiểm tra:
-        *   Các tool bắt buộc: `python3`, `melos`, `flutter`.
-        *   Trạng thái đồng bộ: So sánh checksum/timestamp giữa `development-workflow/rules` và `.agent/memory`.
-        *   Cấu trúc thư mục: Kiểm tra sự tồn tại của `.gemini`, `.agent` và các symlink.
+1. **Run Diagnostic Script:**
+   - **ACTION:** Execute `scripts/doctor.sh` (relative to workflow root).
+   - Script checks:
+     - **Core Tools:** `python3`, `git`.
+     - **Project Tools:** Detects and checks presence of `flutter`, `node`, `npm`, `yarn`, `go`, `cargo`, `pip`, etc. based on project type.
+     - **Sync Status:** Compare checksum/timestamp between repo rules and `.agent/memory`.
+     - **Directory Structure:** Verify `.gemini`, `.agent` and symlinks exist.
 
-2.  **Phân tích kết quả:**
-    *   Đọc output từ script.
-    *   Nếu phát hiện lỗi (❌), hãy giải thích nguyên nhân cho người dùng.
-    *   Đề xuất lệnh sửa lỗi (ví dụ: `make sync`, `flutter pub get`).
+2. **Analyze Results:**
+   - Read script output.
+   - If errors found (❌), explain root cause to user.
+   - Suggest fix commands (e.g., `make sync`, `npm install`, `flutter pub get`, `pip install -r requirements.txt`).
 
-3.  **Tự động sửa lỗi (Auto-Fix - Optional):**
-    *   Nếu lỗi là "Out of Sync", hỏi người dùng có muốn chạy Sync ngay không.
-    *   Nếu đồng ý, chạy `make sync`.
+3. **Auto-Fix (Optional):**
+   - If error is "Out of Sync", ask user if they want to run Sync now.
+   - If agreed, execute the sync command.
 
-4.  **Smart Workflow Suggestions:**
-    *   Script tự động phân tích context và suggest workflow phù hợp:
-        *   BLoC/Cubit changes → `/write-test`
-        *   Data layer changes → `/audit-architecture`
-        *   Presentation changes → `/review-ui`
-        *   Recent bug fixes → `/write-test` (regression tests)
-        *   Uncommitted changes → `/review-code`
+4. **Smart Workflow Suggestions:**
+   - Analyze context and suggest relevant workflows:
+     - **Logic/Backend:** `/write-test`
+     - **Architecture/Structure:** `/audit`
+     - **UI/Frontend:** `/review`
+     - **Recent Bugs:** `/write-test` (regression tests)
+     - **Uncommitted Changes:** `/review`
 
-## 📝 Script Logic (Tham khảo)
+## 📝 Script Logic (Reference)
 
-Script `doctor.sh` thực hiện các kiểm tra sau:
+Script `doctor.sh` performs these checks:
 
 ```bash
-# 1. Check Tools
-check_tool "flutter"
-check_tool "melos"
+# 1. Check Core Tools
+check_tool "git"
+check_tool "python3"
 
-# 2. Check Sync
-compare_dirs "development-workflow/rules" ".agent/memory"
-compare_dirs "development-workflow/skills" ".agent/skills"
+# 2. Check Project Specific Tools (Auto-detected)
+# if flutter project -> check_tool "flutter"
+# if node project -> check_tool "node"
 
-# 3. Smart Suggestions
+# 3. Check Sync
+compare_dirs "core/rules" ".agent/memory"
+compare_dirs "core/skills" ".agent/skills"
+
+# 4. Smart Suggestions
 suggest_workflow  # Analyze git history & project patterns
 ```
 
-## ⚠️ Lưu ý
-*   Luôn ưu tiên chạy `make sync` nếu có bất kỳ nghi ngờ nào về sự không đồng nhất.
-*   Suggestions dựa trên 5 commits gần nhất - cần có git history.
+## ⚠️ Important Notes
+- Always prefer running the project's sync command if there's any doubt about consistency.
+- Suggestions based on last 5 commits - requires git history.
+
+## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **English**.
+- Provide clear diagnostics.
+- Suggest fixes in user-friendly language.
+- Explain script output in detail.

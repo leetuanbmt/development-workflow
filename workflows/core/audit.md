@@ -1,7 +1,7 @@
 ---
-description: "Audit code theo nhiều góc độ. Tự động chọn aspect phù hợp dựa trên context."
+description: "Audit code from multiple perspectives. Auto-select aspect based on context."
 trigger: /audit
-version: "2.0.0"
+version: "2.1.0"
 skills:
   - code-reviewer
   - tech-lead
@@ -9,69 +9,87 @@ constraints:
   max_iterations: 3
   timeout_minutes: 25
   exit_on: ["Audit report generated", "Plan approved"]
+skill: tech-lead
 ---
 
 # 🕵️ Unified Audit Mode
 
-**Mục tiêu:** Phân tích sâu code/feature theo nhiều góc độ trước khi thực hiện thay đổi.
+**Objective:** Deep analysis of code/feature from multiple angles before making changes.
 
-## 🎯 Aspect Detection (Tự động)
+## 🎯 Aspect Detection (Automatic)
 
 | Keywords | Aspect | Focus |
 |:---|:---|:---|
-| `architecture`, `layer`, `dependency` | `architecture` | Clean Arch compliance |
-| `security`, `token`, `api key` | `security` | Vulnerabilities |
-| `tracking`, `analytics`, `event` | `analytics` | Event tracking |
-| (default) | `general` | Logic, edge cases |
+| `architecture`, `layer`, `dependency` | `architecture` | Clean Arch compliance, Layer separation |
+| `security`, `token`, `api key` | `security` | Vulnerabilities, Sensitive data |
+| `performance`, `slow`, `memory` | `performance` | Optimization, Big O, Leaks |
+| `tracking`, `analytics`, `event` | `analytics` | Event tracking, Data consistency |
+| (default) | `general` | Logic, edge cases, Readability |
 
-## 🚀 Execution Steps
+## 🚀 Execution Flow
 
-### 1. Context Discovery
-- Đọc `.agent/memory/ARCHITECTURE.md` nếu có
-- Xác định module/feature đang audit
-- Phân tích pattern đang dùng (Clean Arch, MVC, etc.)
+### 1. Aspect Selection
+- Analyze user request for keywords.
+- Select primary audit aspect.
+- May combine multiple aspects if needed.
 
 ### 2. Deep Investigation
-- Quét logic liên quan đến yêu cầu
-- Xác định constraints hiện có
-- Check resource management (memory, streams)
+Run aspect-specific checks:
 
-### 3. Aspect-Specific Checks
+**Architecture Audit:**
+- Layer separation (Data/Domain/Presentation).
+- Dependency rule violations.
+- Circular dependencies.
 
-#### Architecture Aspect
-- [ ] Dependency Rule: Domain không import UI/Data
-- [ ] Separation of Concerns: UI chỉ render, Logic trong BLoC
-- [ ] Coupling: Không import chéo giữa features
+**Security Audit:**
+- Hardcoded secrets.
+- Insecure data handling (SQLi, XSS).
+- Authentication/authorization issues.
 
-#### Security Aspect
-- [ ] Secrets: Không hardcode API keys
-- [ ] Logging: Không log sensitive data
-- [ ] Input validation: Sanitize user input
+**Performance Audit:**
+- N+1 queries.
+- Inefficient loops.
+- Memory leaks.
 
-#### Analytics Aspect
-- [ ] Event naming convention
-- [ ] Required parameters present
-- [ ] No PII in tracking
+**General Audit:**
+- Business logic correctness.
+- Edge case handling.
+- Code style and standards.
 
-### 4. Generate Report
-
+### 3. Report & Recommendations
 ```markdown
-## Audit Report
+## 🔍 Audit Report
 
-### Aspect: [architecture/security/analytics/general]
+**Aspect:** [architecture/security/performance/general]
+**Scope:** [Files/features audited]
 
-### Findings
-- ✅ **Good:** [Điểm tuân thủ tốt]
-- ⚠️ **Warning:** [Technical debt tiềm ẩn]
-- 🔴 **Violation:** [Vi phạm nghiêm trọng]
+### 🚨 Critical Issues
+- [Issues that must be fixed immediately]
 
-### Implementation Plan (nếu cần thay đổi)
-1. [Step 1]
-2. [Step 2]
-Files affected: [list]
+### ⚠️ Warnings
+- [Issues that should be addressed]
+
+### 💡 Recommendations
+- [Improvement suggestions]
+
+**Decision:** [PROCEED / NEEDS REVISION / BLOCKED]
 ```
 
+## 🔌 Skill Integration
+
+**Active skills:** `code-reviewer`, `tech-lead`
+
+**Skill assignment by aspect:**
+- **Architecture audit:** `tech-lead` (primary) + `code-reviewer` (validation)
+- **Security audit:** `code-reviewer` with security focus (or `security-auditor` if available)
+- **Performance audit:** `tech-lead`
+- **General audit:** Both skills collaborate
+
+AI selects and applies appropriate skill(s) based on detected audit aspect.
+
 ## 💡 AI Guidelines
-- Không giáo điều: Simple widget không cần full Clean Arch
-- Giải thích "Why": Tại sao vi phạm này nguy hiểm
-- Chờ approval trước khi thực thi plan
+
+**Language:** All responses and reports must be in **English**.
+- **No auto-fix:** Audit mode is analysis only.
+- **Evidence-based:** Reference specific code locations (file:line).
+- **Risk assessment:** Categorize by severity.

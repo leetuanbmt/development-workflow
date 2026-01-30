@@ -1,32 +1,48 @@
 ---
-description: "Tự động sinh Data Layer (Model, Entity, Mapper) từ JSON specs."
+description: "Auto-generate Data Layer (Model, Entity, Mapper) from JSON specs."
 trigger: /integrate-api
-version: "3.0.0"
+version: "3.1.0"
 skills:
-  - api-integrator
   - code-reviewer
+constraints:
+  max_iterations: 3
+  timeout_minutes: 15
+  exit_on: ["Code generated", "Verification complete"]
 ---
 
 # 🔌 Robust API Integration
 
-**Mục tiêu:** Sinh code Data Layer chuẩn Clean Architecture, xử lý Null Safety triệt để.
+**Objective:** Generate Clean Architecture Data Layer code with proper Null Safety and Type checking.
 
-## 🔄 Quy trình (Execution Flow)
+## 🔄 Execution Flow
 
 ### 1. Spec Analysis
-*   Đọc JSON Response.
-*   **Naming Audit:** JSON là `snake_case` -> Dart phải là `camelCase`. Phải dùng `@JsonKey(name: '...')`.
-*   **Type Audit:** Trường nào có thể `null`? Trường nào là `List`?
+- Read JSON Response or Swagger/OpenAPI spec.
+- **Naming Audit:** API is often `snake_case` → Client code should be standard (e.g., `camelCase` for JS/Dart, `snake_case` for Python). Use serialization annotations if needed (`@JsonKey`, `@JsonProperty`).
+- **Type Audit:** Which fields can be `null`? Which are `List`? Are dates strings or timestamps?
 
 ### 2. Code Generation Plan
-AI phải sinh code theo thứ tự phụ thuộc:
-1.  **Model (Data):** Chứa `fromJson`/`toJson`.
-2.  **Entity (Domain):** Class thuần Dart, không có annotation serialization (trừ Freezed).
-3.  **Mapper:** Extension method `toEntity()` (Xử lý null fallback tại đây).
+AI must generate code in dependency order:
+1. **Model/DTO (Data):** Handles serialization/deserialization.
+2. **Entity (Domain):** Pure business object, no framework annotations.
+3. **Mapper:** Logic to transform DTO ↔ Entity (Handle null fallback here).
 
 ### 3. Verification
-*   User kiểm tra xem type mapping có đúng nghiệp vụ không (Ví dụ: `status` trả về `int` hay `String`?).
+- Verify type mapping matches business logic (e.g., does `status` return `int` or `String`?).
+- Ensure breaking changes in API don't crash the app (defensive parsing).
 
-## 💡 Hướng dẫn cho AI
-*   **Mapper Pattern:** Logic biến đổi data (Data Transformation) phải nằm trong Mapper, tuyệt đối không nằm trong UI hay Repository.
-*   **Fallback:** Nếu trường `String?` bị null, Mapper nên map về `""` hay giữ nguyên `null`? (Hỏi User hoặc theo Convention).
+## 🔌 Skill Integration
+
+**Active skill:** `code-reviewer`
+
+Applied during **Step 3 (Verification):**
+- Validates generated code follows Clean Architecture.
+- Checks naming conventions.
+- Ensures proper null safety handling.
+- Reviews mapper pattern implementation.
+
+## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **English**.
+- **Mapper Pattern:** Data transformation logic must be in Mapper, NEVER in UI or Repository.
+- **Fallback:** If a nullable field is missing, should Mapper map to a default value or keep `null`? (Ask User or follow Project Convention).

@@ -1,52 +1,47 @@
 ---
 name: test-engineer
-description: Chuyên gia kiểm thử tự động. Chuyên viết Unit Test, Widget Test và Integration Test đảm bảo độ phủ (coverage) và chất lượng.
+description: Automated testing expert. Write Unit/Integration tests ensuring coverage and quality.
 ---
 
-# Test Engineer Skill (Standard Edition)
+# Test Engineer Skill (Generic)
 
-Bạn là chuyên gia về chất lượng phần mềm, người tin rằng "Code không có test là code chết".
+Expert in writing and maintaining automated tests with strategic approach.
 
-## 🎯 Nhiệm vụ Chính
-1.  **Unit Testing:** Viết test cho Domain (UseCases), Data (Repository, Models), và Presentation (Blocs).
-2.  **Widget Testing:** Viết test cho các Reusable Widgets hoặc các màn hình quan trọng.
-3.  **Refactoring for Testability:** Đề xuất sửa đổi code để dễ test hơn (Dependency Injection, Pure Functions).
+## 🚀 When to use
+- Writing new tests
+- Increasing test coverage
+- Fixing failing tests
+- Test strategy planning
 
-## 🛠️ Hướng dẫn Viết Test (Standard)
+## 🛑 When NOT to use
+- Writing production code (use feature skills)
+- Bug investigation (use `bug-investigator`)
+- Code review (use `code-reviewer`)
 
-### 1. Cấu trúc Test (Arrange - Act - Assert)
-```dart
-test('should return data when call is successful', () async {
-  // Arrange
-  when(mockRepo.getData()).thenAnswer((_) async => Right(data));
-  
-  // Act
-  final result = await useCase();
-  
-  // Assert
-  expect(result, Right(data));
-  verify(mockRepo.getData());
-});
-```
+## 💡 Core Capabilities
 
-### 2. Quy tắc Mocking
-- Sử dụng `mockito` hoặc `mocktail`.
-- Luôn reset mock sau mỗi test hoặc dùng `setUp`.
+### 1. Test Strategy
+- Identify what to test
+- Coverage planning
+- Test pyramid approach (Unit > Integration > E2E)
 
-### 3. Đặt tên Test
-- Rõ ràng, mô tả đúng hành vi.
-- Mẫu: `[MethodName] should [ExpectedResult] when [Condition]`.
+### 2. Unit Testing
+- Pure logic testing
+- Mock/stub creation
+- Assertion writing
+- Isolation of dependencies
 
-## 📋 Checklist Bàn giao
-- [ ] Test case bao phủ Happy Path.
-- [ ] Test case bao phủ Edge Cases (Lỗi mạng, Null data, Empty list).
-- [ ] Code coverage không bị giảm.
+### 3. Integration Testing
+- API integration tests
+- Database interactions
+- Module communication
 
-## 🔌 Interface Definition
+## 💡 AI Guidelines
 
-### Inputs
-- **logic_code** (dart): Business Logic hoặc Widget cần test
-- **test_scenario** (text): Kịch bản test
+**Language:** All test documentation and code must be in **English**.
 
-### Outputs
-- **test_code** (dart): File test executable
+- **Coverage with purpose:** Test to catch bugs, not just numbers
+- **AAA pattern:** Arrange, Act, Assert
+- **Readable tests:** Test names explain what they verify
+- **Maintainable:** Easy to update when code changes
+- **Mocking:** Mock external dependencies (DB, Network) in Unit tests

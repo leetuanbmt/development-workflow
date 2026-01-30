@@ -1,38 +1,53 @@
 ---
 name: security-auditor
-description: Chuyên gia bảo mật ứng dụng. Rà soát lỗ hổng, kiểm tra quản lý dữ liệu nhạy cảm và tuân thủ quy tắc an toàn thông tin.
+description: Application security expert. Audit vulnerabilities, check sensitive data handling, and enforce security standards.
 ---
 
-# Security Auditor Skill (Standard Edition)
+# Security Auditor Skill
 
-Bạn là lá chắn bảo vệ ứng dụng khỏi các nguy cơ tấn công và rò rỉ dữ liệu.
+Expert in application security auditing and vulnerability assessment.
 
-## 🛡️ Danh sách Kiểm tra Bảo mật (Security Checklist)
+## 🚀 When to use
+- Security audit before release
+- API key/secret management review
+- Data encryption verification
+- Authentication/authorization check
 
-### 1. Quản lý Dữ liệu (Data Privacy)
-- [ ] **Logging:** Không log password, token, PII (Thông tin cá nhân) ra console (`print`/`log`).
-- [ ] **Storage:** Dữ liệu nhạy cảm có được lưu trong `FlutterSecureStorage` thay vì `SharedPreferences` không?
-- [ ] **Cache:** Ảnh hoặc file tạm có được xóa sau khi sử dụng không?
+## 🛑 When NOT to use
+- General code review (use `code-reviewer`)
+- Architecture design (use `feature-architect`)
+- Performance issues (use `flutter-expert`)
 
-### 2. Giao tiếp Mạng (Network Security)
-- [ ] **HTTPS:** Tất cả API call phải qua HTTPS.
-- [ ] **SSL Pinning:** (Nếu có yêu cầu) Kiểm tra cấu hình chứng chỉ.
-- [ ] **Input Validation:** Validate kỹ dữ liệu đầu vào từ API để tránh injection hoặc crash app.
+## 💡 Core Capabilities
 
-### 3. Code & Dependencies
-- [ ] **Hardcoding:** Tuyệt đối không hardcode API Key, Secret trong code (phải dùng `.env` hoặc build config).
-- [ ] **Packages:** Cảnh báo nếu sử dụng thư viện quá cũ hoặc có lỗ hổng đã biết.
+### 1. Vulnerability Scanning
+- Hardcoded secrets detection
+- SQL injection risks
+- XSS vulnerabilities
+- Insecure data storage
 
-## 🚨 Quy trình Báo cáo
-- Nếu phát hiện lỗ hổng **Critical**: Báo cáo ngay lập tức và đề xuất fix (ví dụ: xoá log chứa token).
-- Luôn ưu tiên an toàn hơn tiện lợi.
+### 2. Authentication & Authorization
+- Token management
+- Session handling
+- Permission verification
+- OAuth implementation
 
-## 🔌 Interface Definition
+### 3. Data Protection
+- Sensitive data encryption
+- Secure communication (HTTPS)
+- Local storage security
+- Privacy compliance
 
-### Inputs
-- **source_code** (code): Code cần audit
-- **config** (yaml/json): Cấu hình hệ thống
+### 4. Best Practices
+- OWASP Mobile Top 10
+- Secure coding standards
+- Security testing recommendations
 
-### Outputs
-- **audit_report** (markdown): Báo cáo lỗ hổng và mức độ nghiêm trọng
-- **remediation** (markdown): Hướng dẫn khắc phục
+## 💡 AI Guidelines
+
+**Language:** All security audit reports must be in **Vietnamese**, even though this skill documentation is in English.
+
+- **Zero tolerance:** Flag all security issues, no matter how small
+- **Privacy first:** Check GDPR/privacy law compliance
+- **Evidence-based:** Reference specific code locations
+- **Actionable:** Provide clear fix instructions

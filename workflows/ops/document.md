@@ -1,32 +1,41 @@
 ---
-description: "Tạo và bảo trì tài liệu dự án (Architecture, Flow, API)."
+description: "Create and maintain project documentation (Architecture, Flow, API)."
 trigger: /document
-version: "3.0.0"
+version: "3.2.0"
 skills:
-  - technical-writer
-  - codebase_investigator
+  - tech-lead
+constraints:
+  max_iterations: 3
+  timeout_minutes: 20
+  exit_on: ["Documentation updated"]
 ---
 
 # 📚 Living Documentation
 
-**Mục tiêu:** Tài liệu "sống" (Living Docs) - luôn cập nhật cùng với code.
+**Objective:** "Living" Documentation - always updated alongside the code.
 
-## 🔄 Quy trình (Execution Flow)
+## 🔄 Execution Flow
 
 ### 1. Document Architecture
-*   Sử dụng `codebase_investigator` để vẽ lại cấu trúc thư mục hiện tại.
-*   Cập nhật `.agent/memory/ARCHITECTURE.md`.
-*   Tự động phát hiện các module mới chưa được document.
+*   Use `codebase_investigator` (or `list_directory` + `read_file`) to map the current directory structure.
+*   Analyze the relationships between modules/packages.
+*   Update `.agent/memory/ARCHITECTURE.md` with the latest structure and high-level design.
+*   Automatically detect new modules that are not yet documented.
 
 ### 2. Document Business Logic (Flow)
-*   User chọn 1 Feature (VD: Camera).
-*   AI đọc code và vẽ sơ đồ `mermaid` (Sequence Diagram hoặc State Diagram) mô tả luồng hoạt động.
-*   Lưu vào `docs/features/`.
+*   User selects a Feature (e.g., Auth, Checkout, Camera).
+*   AI reads the relevant code and generates `mermaid` diagrams (Sequence Diagram, State Diagram, or Flowchart) describing the logic flow.
+*   Save the documentation to `docs/features/<feature_name>.md`.
 
 ### 3. API & Data Model
-*   Liệt kê các API Endpoint đang được gọi trong code.
-*   Mô tả ý nghĩa các trường quan trọng trong Entity.
+*   Scan the codebase for API Endpoints (controllers, routes) and Data Models (entities, DTOs, schemas).
+*   **For Backend:** List active API Endpoints (method, path, input/output).
+*   **For Frontend/Mobile:** List Data Models and their mapping logic.
+*   Update `docs/api/` or `docs/models/` as appropriate.
 
-## 💡 Hướng dẫn cho AI
-*   **Mermaid First:** Ưu tiên dùng biểu đồ Mermaid thay vì văn bản dài dòng.
-*   **Context Link:** Trong tài liệu, luôn link đến file code thực tế để dễ tra cứu.
+## 💡 AI Guidelines
+
+**Language:** Documentation should be written in **English** (unless the user explicitly requests another language).
+*   **Mermaid First:** Prioritize Mermaid diagrams over long textual descriptions.
+*   **Context Links:** Always link to the actual code files in the documentation for easy reference.
+*   **Keep it Sync:** Ensure the documentation reflects the *current* state of the code, not the planned state.

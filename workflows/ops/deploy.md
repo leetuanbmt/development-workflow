@@ -1,16 +1,20 @@
 ---
-description: "Quy trình build và deploy ứng dụng lên các môi trường (Dev/Staging/Production)."
+description: "Build and deploy application to environments (Dev/Staging/Production) for any Tech Stack."
 trigger: /deploy
-version: "2.4.0"
+version: "2.6.0"
 skills:
-  - devops-engineer
+  - tech-lead
+constraints:
+  max_iterations: 3
+  timeout_minutes: 15
+  exit_on: ["Deploy complete", "Rollback executed", "User cancelled"]
 ---
 
 # 🚀 Deploy Application
 
-**Mục tiêu:** Hướng dẫn quy trình build và deploy ứng dụng an toàn, có kiểm soát version và rollback plan.
+**Objective:** Guide safe build and deploy process with version control and rollback plan for **[Detected Tech Stack]**.
 
-## 🖼️ Quy trình (Process Flow)
+## 🖼️ Process Flow
 
 ```mermaid
 graph TD
@@ -23,112 +27,88 @@ graph TD
     Approval -->|No| Stop[❌ Rejected]
     BuildDev --> Distribute[📤 Distribute]
     BuildStg --> Distribute
-    BuildProd --> Upload[Google Play/AppStore]
+    BuildProd --> Upload[Store/Registry]
     Distribute --> Verify[🕵️ Post-Verify]
     Upload --> Verify
     Verify -->|Pass| Success[✅ Done]
     Verify -->|Fail| Rollback[🔄 Rollback]
 ```
 
-## ⚠️ Điều kiện Tiên quyết (Prerequisites)
+## ⚠️ Prerequisites
 
 > [!IMPORTANT]
-> Trước khi deploy, đảm bảo đã hoàn thành checklist `/prepare-release`
+> Before deploying, ensure `/prepare-release` checklist is complete.
 
-**Kiểm tra bắt buộc:**
-- [ ] Code đã merge vào branch target (develop/main)
-- [ ] Tất cả tests passed (`make test`)
-- [ ] Version đã được bump (pubspec.yaml)
-- [ ] CHANGELOG.md đã cập nhật
+**Required checks:**
+- [ ] Code merged to target branch (develop/main).
+- [ ] All tests passed (CI/CD check).
+- [ ] Version bumped (in `pubspec.yaml`, `package.json`, `pom.xml`, etc.).
+- [ ] CHANGELOG.md updated.
 
-## 🎯 Chọn Môi Trường (Environment Selection)
+## 🎯 Environment Selection
 
-| Môi trường | Branch | Mục đích | Auto/Manual |
+| Environment | Branch | Purpose | Auto/Manual |
 |:--|:--|:--|:--:|
 | **Development** | `develop` | Internal testing | Auto |
-| **Staging** | `release/*` | UAT, Client review | Manual |
+| **Staging** | `release/*` | UAT, Client preview | Manual |
 | **Production** | `main` | End users | Manual + Approval |
 
-## 🚀 Các bước Deploy
+## 🚀 Deployment Steps
 
 ### 1. Build Application
 
-```bash
-# Development
-make build-dev
+**AI Action:** Detect build commands from `PROJECT.md`, `Makefile`, `package.json`, or `pyproject.toml`.
 
-# Staging  
-make build-staging
-
-# Production
-make build-prod
-```
+*Examples:*
+*   **Flutter:** `flutter build apk --flavor dev`, `flutter build ipa --release`
+*   **Node.js:** `npm run build:dev`, `npm run build`
+*   **Python:** `docker build -t app:dev .`, `python setup.py sdist`
+*   **Go:** `go build -o bin/app ./cmd/app`
 
 ### 2. Verify Build Artifacts
-- [ ] APK/IPA size hợp lý (không tăng đột biến)
-- [ ] Version number đúng
-- [ ] Bundle ID/Package name đúng môi trường
+- [ ] File size reasonable (no sudden increase).
+- [ ] Version number matches the tag.
+- [ ] Environment variables injected correctly (Config/Secrets).
 
 ### 3. Upload & Distribute
 
-#### Android
-```bash
-# Firebase App Distribution (Dev/Staging)
-make distribute-android ENV=staging
+**Select Target based on Stack:**
 
-# Google Play (Production)
-make upload-playstore TRACK=internal
-```
+#### Mobile (Flutter/React Native/iOS/Android)
+- **Dev/Staging:** Firebase App Distribution, TestFlight.
+- **Production:** Google Play Console, App Store Connect.
 
-#### iOS
-```bash
-# TestFlight (Dev/Staging)
-make distribute-ios ENV=staging
+#### Web (React/Vue/Angular/Next.js)
+- **Dev/Staging:** Vercel Preview, Netlify Draft, S3 Dev Bucket.
+- **Production:** Vercel Production, Netlify Prod, AWS CloudFront.
 
-# App Store (Production)
-make upload-appstore
-```
+#### Backend/Service (Node/Python/Go)
+- **Container:** Docker Hub, AWS ECR, Google GCR.
+- **Server:** Kubernetes (Helm upgrade), AWS ECS, Heroku, VPS (systemd).
 
 ### 4. Post-Deploy Verification
-- [ ] App có thể download và cài đặt
-- [ ] Smoke test các tính năng chính
-- [ ] Kiểm tra crash logs (Firebase Crashlytics)
-- [ ] Monitor API errors
+- [ ] App/Site accessible (Health Check endpoint 200 OK).
+- [ ] Smoke test main features.
+- [ ] Check crash logs (Sentry / Crashlytics / Datadog).
+- [ ] Monitor API error rates and Latency.
 
 ## 🔄 Rollback Plan
 
-Nếu phát hiện lỗi nghiêm trọng sau deploy:
+If critical issues found after deploy:
 
 ### Immediate Actions
-1. **Halt Distribution:** Tạm dừng phân phối bản mới
-2. **Notify Team:** Alert về incident
-3. **Assess Impact:** Đánh giá số users bị ảnh hưởng
+1. **Halt Distribution:** Stop distributing new version / drain traffic.
+2. **Notify Team:** Alert about incident.
+3. **Assess Impact:** Evaluate affected users.
 
 ### Rollback Steps
-```bash
-# Revert to previous version
-git checkout tags/v{PREVIOUS_VERSION}
-make build-prod
-make upload-playstore TRACK=production --rollout=100
-```
+*   **Mobile:** Revert to previous version code -> Build -> Upload with higher version number.
+*   **Web/Backend:** `git checkout tags/v{PREVIOUS_VERSION}` -> Redeploy OR `kubectl rollback`.
 
-## 📊 Deployment Checklist
+## 💡 AI Guidelines
 
-### Pre-Deploy
-- [ ] Feature complete và tested
-- [ ] No blocking bugs
-- [ ] Release notes prepared
-- [ ] Stakeholder approval (Production only)
-
-### Post-Deploy
-- [ ] Verify installation
-- [ ] Smoke tests passed
-- [ ] No spike in crash rate
-- [ ] Tag release in Git
-
-## 💡 Hướng dẫn cho AI
-
-- Không tự động deploy Production - chỉ hướng dẫn steps
-- Luôn nhắc user về rollback plan
-- Kiểm tra version mismatch trước khi proceed
-- Log mọi deployment vào CHANGELOG
+**Language:** All responses and reports must be in **English**.
+- **Context Aware:** Only show steps relevant to the current project's Tech Stack.
+- **Safety:** Always remind user about rollback plan.
+- **Version Control:** Check for version mismatches before proceeding.
+- **Log:** Log all deployments to CHANGELOG.

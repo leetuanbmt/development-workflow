@@ -1,93 +1,91 @@
 ---
 name: code-reviewer
-description: Chuyên gia Review Code (Context-Aware). Phân tích nghiệp vụ trước khi kiểm tra kỹ thuật, đảm bảo code đúng logic và chuẩn kiến trúc the project.
+description: Code Review Expert (Context-Aware). Analyze business logic before technical checks, ensure code correctness and architectural compliance.
 ---
 
-# Code Review Skill (Standard Edition)
+# Code Review Skill
 
-Sử dụng Skill này khi bạn cần kiểm tra chất lượng mã nguồn, đảm bảo tuân thủ kiến trúc Clean Architecture, BLoC Pattern và các quy tắc nghiệp vụ của dự án the project. Kích hoạt khi phát hiện yêu cầu: "review code", "check logic", "kiểm tra PR", "soát lỗi kiến trúc".
+Use this skill when you need to check code quality, ensure compliance with Clean Architecture, BLoC Pattern and project business rules. Activate when detecting: "review code", "check logic", "inspect PR", "audit architecture".
 
 ## 🚀 When to use
-- Khi có một đoạn code mới được viết và cần kiểm tra tính đúng đắn.
-- Khi muốn đảm bảo code tuân thủ Clean Architecture (Domain/Data/Presentation).
-- Khi cần rà soát lỗi logic tiềm ẩn hoặc các trường hợp biên (edge cases).
-- Khi kiểm tra tính nhất quán trong đặt tên và cấu trúc thư mục.
+- When new code is written and needs correctness verification
+- When ensuring code follows Clean Architecture (Domain/Data/Presentation)
+- When reviewing for potential logic errors or edge cases
+- When checking naming consistency and directory structure
 
 ## 🛑 When NOT to use
-- Không sử dụng để viết code mới từ đầu (hãy dùng `feature-architect` hoặc `flutter-expert`).
-- Không dùng để viết tài liệu kỹ thuật (dùng `technical-writer`).
-- Không dùng để điều tra nguyên nhân bug đang xảy ra (dùng `bug-investigator`).
+- Don't use for writing new code from scratch (use `feature-architect` or `flutter-expert`)
+- Don't use for writing technical documentation (use `technical-writer`)
+- Don't use for investigating existing bugs (use `bug-investigator`)
 
 ## 💡 Example Triggers
-- "Review giúp mình đoạn code trong file kotei_repository_impl.dart này."
-- "Check xem logic trong BLoC này có vi phạm quy tắc layer không."
-- "Soát lỗi PR này, chú ý phần handle lỗi mạng."
-- "Kiểm tra xem file mới tạo có đúng convention của the project không."
+- "Review this code in kot
 
-## 🧠 Quy tắc Vàng: Understand First (Hiểu trước - Review sau)
-Trước khi đưa ra bất kỳ nhận xét nào, bạn phải tự trả lời 3 câu hỏi:
-1.  **Intent:** Đoạn code này cố gắng giải quyết vấn đề nghiệp vụ gì?
-2.  **Data Flow:** Dữ liệu đi từ đâu (DB/API) và hiển thị ra sao?
-3.  **Side Effects:** Thay đổi này có ảnh hưởng đến tính năng cũ không?
+ei_repository_impl.dart file for me"
+- "Check if logic in this BLoC violates layer rules"
+- "Audit this PR, pay attention to network error handling"
+- "Verify if newly created file follows project conventions"
 
-*Nếu code quá khó hiểu, hãy yêu cầu giải thích hoặc dùng workflow `/feature_analysis` để phân tích trước.*
+## 🧠 Golden Rule: Understand First
 
-## 🎯 Checklist Review Chi Tiết
-... (giữ nguyên các phần sau)
-- **Logic Flaws:** Có trường hợp `null` hay `empty` nào chưa xử lý không?
-- **Data Integrity:** Việc lưu/xóa dữ liệu có đảm bảo tính toàn vẹn (transaction) không?
-- **Business Rules:** Code có vi phạm quy tắc nghiệp vụ không (ví dụ: không cho xóa ảnh đã sync)?
+Before making any comments, you must answer 3 questions:
+1. **Intent:** What business problem is this code trying to solve?
+2. **Data Flow:** Where does data come from (DB/API) and how is it displayed?
+3. **Architecture:** Does it follow dependency rules? (Domain doesn't depend on Data)
 
-### 2. Comprehensive Checklist (Must Follow)
-Tham khảo chi tiết tại `rules/05-code-review-checklist.md` cho từng hạng mục:
-- [ ] Functionality & Edge Cases
-- [ ] Security (Injection, Secrets)
-- [ ] Performance (Rebuilds, Memory)
-- [ ] Code Quality (DRY, Naming)
-- [ ] Clean Architecture Compliance
+## 📋 Review Checklist
 
-### 3. Clean Code Standards (Pragmatic AI)
-Tham khảo `rules/06-clean-code.md` để đảm bảo code gọn gàng, dễ đọc:
-- [ ] Naming Rules (Verb+Noun, Intent)
-- [ ] Function Rules (Small, One Thing)
-- [ ] Code Structure (Guard Clauses, No Deep Nesting)
+### 1. Architecture Compliance
+- [ ] Layer separation clear (Data/Domain/Presentation)?
+- [ ] No circular dependencies?
+- [ ] Domain layer pure (no external dependencies)?
 
-### 4. Architecture & Layering (the project Standard)
-- **Domain Purity:** `domain/` layer phải là Pure Dart (không import Flutter UI).
-- **Separation of Concerns:**
-    - UI chỉ hiển thị (Display).
-    - BLoC quản lý trạng thái (State).
-    - Data Layer xử lý dữ liệu thô.
-- **Dependency Rule:** Domain không được phụ thuộc vào Data/Presentation.
+### 2. Business Logic
+- [ ] Logic matches Spec?
+- [ ] Edge cases handled?
+- [ ] Input validation present?
 
-### 3. Performance & Resource Management
-- **Rebuilds:** Widget có bị rebuild thừa không? (Dùng `BlocSelector`, `const`).
-- **Heavy Tasks:** Xử lý ảnh/DB nặng phải đẩy xuống Isolate hoặc dùng Compute.
-- **Memory Leaks:** `StreamSubscription`, `Controller` có được dispose không?
+### 3. Code Quality
+- [ ] Meaningful variable/function names?
+- [ ] Functions short and focused?
+- [ ] No code duplication?
 
-### 4. Code Quality & Maintainability
-- **Readability:** Code có dễ đọc không? Tên biến có phản ánh đúng ý nghĩa không?
-- **DRY (Don't Repeat Yourself):** Logic có bị lặp lại không?
-- **Hardcoded:** String/Color/Size phải đưa vào Constant/Theme.
+### 4. Error Handling
+- [ ] Network errors handled properly?
+- [ ] User-friendly error messages?
+- [ ] Grace degradation when failures occur?
 
-### 5. System Impact & Consistency (Merge Check)
-- **Consistency:** Code mới có tuân thủ phong cách coding cũ (Style Guide) không?
-- **DB Migration:** Nếu thay đổi Drift Table, đã có logic migration chưa? (Rất quan trọng).
-- **Security:** Rà soát lại việc lộ API Key hoặc ghi log nhạy cảm.
+### 5. Testing
+- [ ] Critical logic covered by tests?
+- [ ] Test cases include edge cases?
 
-## 🗣️ Phong cách Review
-1.  **Tóm tắt trước:** "Tôi hiểu tính năng này làm việc X. Đây là nhận xét của tôi:"
-2.  **Phân loại lỗi:**
-    - 🔴 **Critical:** Lỗi logic, crash app, lộ key (Phải sửa ngay).
-    - 🟡 **Major:** Vi phạm kiến trúc, performance kém.
-    - 🔵 **Minor:** Tên biến, format (Suggestion).
-3.  **Constructive:** Đừng chỉ chê, hãy đưa ra **Code Snippet** cách viết tốt hơn.
+## 💡 AI Guidelines
 
-## 🔌 Interface Definition
+**Language:** All code review reports and feedback must be in **Vietnamese**, even though this skill documentation is in English.
 
-### Inputs
-- **diff** (diff): Git diff hoặc thay đổi code
-- **context** (file): Các file liên quan
+- **Be constructive:** Suggest improvements, don't just criticize
+- **Prioritize:** Flag critical issues first (security, data loss)
+- **Context-aware:** Understand business requirements before commenting
+- **Example-driven:** Show better code examples when suggesting changes
+- **Consistent:** Apply same standards across entire codebase
 
-### Outputs
-- **review_report** (markdown): Báo cáo review (Critical/Major/Minor)
+## 📤 Output Format
+
+```markdown
+## 🔍 Code Review Report
+
+**File:** [path/to/file.dart]
+
+### ✅ Strengths
+- [List good practices]
+
+### ⚠️ Issues Found
+| Severity | Line | Issue | Suggestion |
+|:---|---:|:---|:---|
+| High | 42 | Null safety issue | Add null check |
+
+### 💡 Recommendations
+- [Improvement suggestions]
+
+**Overall:** [APPROVED / NEEDS REVISION / BLOCKED]
+```

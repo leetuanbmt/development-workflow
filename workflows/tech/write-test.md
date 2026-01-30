@@ -1,33 +1,52 @@
 ---
-description: "Viết Unit/Widget Test có chiến lược (Strategy-based Testing)."
+description: "Write Unit/Widget/Integration Tests with strategy (Strategy-based Testing)."
 trigger: /write-test
-version: "3.0.0"
+version: "3.1.0"
 skills:
   - test-engineer
   - code-reviewer
+constraints:
+  max_iterations: 4
+  timeout_minutes: 25
+  exit_on: ["Tests written", "Tests passed"]
+skill: test-engineer
 ---
 
 # 🧪 Strategic Testing
 
-**Mục tiêu:** Viết test để bắt lỗi (Catch bugs), không phải viết test để đủ số lượng (Not just coverage).
+**Objective:** Write tests to catch bugs, not just for coverage numbers.
 
-## 🔄 Quy trình (Execution Flow)
+## 🔄 Execution Flow
 
-### 1. Test Strategy (Lập chiến lược)
-Trước khi code, AI phải liệt kê các trường hợp cần test:
-*   ✅ **Happy Path:** Luồng chính phải chạy đúng.
-*   ⚠️ **Edge Cases:** Null input, Empty List, Network Error, Timeout.
-*   🛡️ **Security:** Test quyền truy cập (nếu có).
+### 1. Test Strategy
+Before coding, AI must list test cases:
+- ✅ **Happy Path:** Main flow must work correctly.
+- ⚠️ **Edge Cases:** Null input, Empty List, Network Error, Timeout, Boundary values.
+- 🛡️ **Security:** Test access permissions/validations.
 
 ### 2. Mocking Setup
-*   Xác định dependencies cần mock.
-*   Đảm bảo `mocktail` hoặc `mockito` được cấu hình đúng `setUp` và `tearDown`.
+- Identify dependencies that need mocking.
+- Ensure Mocking library (Mockito, Mocktail, Jest Mocks, PyTest Mocks) is configured properly.
 
 ### 3. Implementation (AAA Pattern)
-*   **Arrange:** Chuẩn bị dữ liệu giả.
-*   **Act:** Gọi hàm cần test.
-*   **Assert:** Kiểm tra kết quả output VÀ side-effects (verify hàm mock được gọi mấy lần).
+- **Arrange:** Prepare test data (Fixtures, Factories).
+- **Act:** Call function under test.
+- **Assert:** Verify output AND side-effects (verify mock was called X times, state changed).
 
-## 💡 Hướng dẫn cho AI
-*   **Không Hardcode:** Sử dụng thư viện `faker` (nếu có) hoặc factory để tạo data test.
-*   **Readable Names:** Tên test case phải như một câu văn (VD: `should return Error when API fails`).
+## 🔌 Skill Integration
+
+**Active skills:** `test-engineer`, `code-reviewer`
+
+**Skill sequence:**
+1. **test-engineer:** Defines test strategy, identifies test cases.
+2. **test-engineer:** Implements tests using AAA pattern.
+3. **code-reviewer:** Validates test quality and readability.
+
+Both skills work together to ensure tests are effective and maintainable.
+
+## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **English**.
+- **No Hardcode:** Use factories or `faker` library to generate test data.
+- **Readable Names:** Test case names should read like sentences (e.g., `should return Error when API fails`).
+- **Test Logic:** Test the business logic, not the framework.

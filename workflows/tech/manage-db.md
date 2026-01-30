@@ -1,35 +1,55 @@
 ---
-description: "Quy trình quản lý Schema Database Drift an toàn, tập trung vào Migration và Data Integrity."
+description: "Manage Database schema safely, focusing on Migration and Data Integrity."
 trigger: /manage-db
-version: "3.0.0"
+version: "3.1.0"
 skills:
-  - flutter-expert
+  - tech-lead
   - test-engineer
+constraints:
+  max_iterations: 4
+  timeout_minutes: 25
+  exit_on: ["Migration complete", "Tests passed"]
+skill: tech-lead
 ---
 
 # 🗄️ Safe Database Management
 
-**Mục tiêu:** Thay đổi Schema DB mà không làm mất dữ liệu người dùng.
+**Objective:** Change DB schema without losing user data.
 
-## 🔄 Quy trình (Execution Flow)
+## 🔄 Execution Flow
 
 ### 1. Schema Impact Analysis
-*   **Audit:** Trước khi thêm cột/bảng, kiểm tra xem nó có ảnh hưởng đến các Query hiện tại (`DAOs`) không?
-*   **Constraint Check:** Cột mới có `NOT NULL` không? Nếu có, `defaultValue` là gì?
+- **Audit:** Before adding columns/tables, check if it affects existing Queries (DAOs/Repositories)?
+- **Constraint Check:** New column has `NOT NULL`? If yes, what's the `defaultValue`?
 
 ### 2. Implementation Steps
-1.  **Modify Table:** Sửa file `.dart` định nghĩa bảng.
-2.  **Generate:** Chạy `make gen` (hoặc lệnh tương ứng của dự án).
-3.  **Migration Logic:**
-    *   Viết code trong `migration` block của `AppDatabase`.
-    *   **BẮT BUỘC:** Phải dùng lệnh `addColumn`, `createTable` của Drift, không viết Raw SQL trừ khi bất khả kháng.
+1. **Modify Schema:** Edit the schema definition (Entity/Table class, Prisma schema, etc.).
+2. **Generate:** Run code generation tools (e.g., `make gen`, `prisma generate`, `room compiler`).
+3. **Migration Logic:**
+   - Create migration script/file.
+   - **REQUIRED:** Use the ORM/DB's standard migration tool (Drift, Room, Prisma, TypeORM, Alembic). Avoid raw SQL manual execution if possible.
 
 ### 3. Verification (Safety First)
-*   **Test Migration:**
-    *   AI phải đề xuất viết (hoặc tự viết) một test case nhỏ để verify migration từ version N lên N+1.
-*   **Sanity Check:**
-    *   Chạy thử app để đảm bảo không crash khi mở Database.
+- **Test Migration:**
+  - AI must suggest (or write) a small test case to verify migration from version N to N+1.
+- **Sanity Check:**
+  - Run app to ensure no crash when accessing the Database.
 
-## 💡 Hướng dẫn cho AI
-*   **Cảnh báo:** Nếu User định xóa cột (Delete Column), hãy cảnh báo 3 lần về việc mất dữ liệu.
-*   **Version Control:** Luôn nhắc user tăng `schemaVersion`.
+## 🔌 Skill Integration
+
+**Active skills:** `tech-lead`, `test-engineer`
+
+**Skill roles:**
+- **tech-lead:** Database schema expertise, ORM-specific knowledge.
+- **test-engineer:** Migration testing strategy, data integrity verification.
+
+**Application:**
+- Step 1: `tech-lead` analyzes impact.
+- Step 2: `tech-lead` guides implementation.
+- Step 3: `test-engineer` designs verification tests.
+
+## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **English**.
+- **Warning:** If User plans to delete a column/table, warn 3 times about data loss.
+- **Version Control:** Always remind user to increment schema version if applicable.

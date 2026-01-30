@@ -1,11 +1,19 @@
 import os
 import glob
+import sys
 
 # 1. Xác định các đường dẫn gốc dựa trên vị trí của script
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 WORKFLOW_ROOT = os.path.dirname(CURRENT_DIR)
-WORKFLOW_DIR = os.path.join(WORKFLOW_ROOT, "workflows")
+CORE_WORKFLOW_DIR = os.path.join(WORKFLOW_ROOT, "core", "workflows")
+STACKS_DIR = os.path.join(WORKFLOW_ROOT, "stacks")
 COMMAND_DIR = ".gemini/commands"
+
+# Parse stack argument
+STACK = "generic"
+for arg in sys.argv[1:]:
+    if arg.startswith("--stack="):
+        STACK = arg.split("=")[1]
 
 def parse_frontmatter(content):
     """Trích xuất description, skill và trả về nội dung chính (đã bỏ frontmatter)"""
@@ -38,16 +46,29 @@ def convert_md_to_toml():
     if not os.path.exists(COMMAND_DIR):
         os.makedirs(COMMAND_DIR)
 
-    print(f"🔄 Converting workflows from {WORKFLOW_DIR}...")
+    print(f"🔄 Converting workflows from core + stack ({STACK})...")
+    
+    # Collect all workflow paths
+    workflow_paths = []
+    
+    # 1. Core workflows (always included)
+    if os.path.exists(CORE_WORKFLOW_DIR):
+        for md_path in glob.glob(f"{CORE_WORKFLOW_DIR}/**/*.md", recursive=True):
+            parent_folder = os.path.basename(os.path.dirname(md_path))
+            if not parent_folder.startswith("_"):
+                workflow_paths.append(md_path)
+    
+    # 2. Stack-specific workflows (if stack is not generic)
+    if STACK != "generic":
+        stack_workflow_dir = os.path.join(STACKS_DIR, STACK, "workflows")
+        if os.path.exists(stack_workflow_dir):
+            for md_path in glob.glob(f"{stack_workflow_dir}/**/*.md", recursive=True):
+                parent_folder = os.path.basename(os.path.dirname(md_path))
+                if not parent_folder.startswith("_"):
+                    workflow_paths.append(md_path)
     
     count = 0
-    # Sử dụng recursive=True để quét tất cả thư mục con
-    for md_path in glob.glob(f"{WORKFLOW_DIR}/**/*.md", recursive=True):
-        # Skip archived folders
-        parent_folder = os.path.basename(os.path.dirname(md_path))
-        if parent_folder.startswith("_"):
-            continue
-
+    for md_path in workflow_paths:
         filename = os.path.basename(md_path)
         cmd_name = filename.replace(".md", ".toml")
         output_path = os.path.join(COMMAND_DIR, cmd_name)
@@ -62,14 +83,7 @@ def convert_md_to_toml():
             ''
         ]
         
-        if meta["skill"]:
-            skill_name = meta["skill"]
-            lines.append('[config.skill]')
-            lines.append(f'name = "{skill_name}"')
-            lines.append(f'path = "skills/{skill_name}"')
-            lines.append('')
-
-        safe_content = body.replace('"""', '\"\"\"')
+        safe_content = body.replace('"""', '\\"\\"\\"')
         lines.append('prompt = """')
         lines.append(safe_content)
         lines.append('"""')
@@ -80,10 +94,10 @@ def convert_md_to_toml():
         print(f"   ✅ Generated: {cmd_name}")
         count += 1
 
-    print(f"🎉 Done! Converted {count} commands.")
+    print(f"🎉 Done! Converted {count} commands (Core + {STACK}).")
 
 if __name__ == "__main__":
-    if not os.path.exists(WORKFLOW_DIR):
-        print(f"❌ Error: Cannot find workflows directory at {WORKFLOW_DIR}")
+    if not os.path.exists(CORE_WORKFLOW_DIR):
+        print(f"❌ Error: Cannot find core workflows directory at {CORE_WORKFLOW_DIR}")
     else:
         convert_md_to_toml()

@@ -1,37 +1,59 @@
 ---
-description: "Tái cấu trúc mã nguồn an toàn, đảm bảo không làm hỏng logic hiện tại."
+description: "Safe code refactoring without breaking existing functionality."
 trigger: /refactor
-version: "3.0.0"
+version: "3.1.0"
 skills:
   - tech-lead
   - code-reviewer
+constraints:
+  max_iterations: 5
+  timeout_minutes: 30
+  exit_on: ["Refactor complete", "Tests passed"]
+skill: code-reviewer
 ---
 
 # ♻️ Safe Refactoring
 
-**Mục tiêu:** Code sạch hơn, dễ đọc hơn, nhưng chức năng phải giữ nguyên (Behavior Preserving).
+**Objective:** Cleaner, more readable code while preserving behavior (Behavior Preserving).
 
-## 🔄 Quy trình (Execution Flow)
+## 🔄 Execution Flow
 
 ### 1. Analysis & Mapping
-*   **Dependency Graph:** File này được gọi bởi ai? Sửa nó thì ảnh hưởng đến module nào?
-*   **Smell Detection:** Chỉ ra chính xác vấn đề (Code lặp, Long method, God class...).
+- **Dependency Graph:** Who calls this file? Which modules are affected by changes?
+- **Smell Detection:** Identify specific issues (Code duplication, Long method, God class, Feature Envy).
 
-### 2. Safety Net Strategy (Lưới an toàn)
-*   Kiểm tra xem đã có Unit Test chưa?
-*   Nếu chưa, đề xuất:
-    *   Option A: Viết Test trước (Khuyên dùng).
-    *   Option B: Tạo Golden Master (Lưu output hiện tại để so sánh).
-    *   Option C: Manual Checklist (Nếu code UI khó test).
+### 2. Safety Net Strategy
+- Check if Unit Tests exist.
+- If not, suggest:
+  - Option A: Write tests first (Recommended).
+  - Option B: Create Golden Master (Save current output for comparison).
+  - Option C: Manual Checklist (If UI code is hard to test).
 
-### 3. Incremental Execution (Thực hiện từng bước)
-*   Không refactor toàn bộ file 1000 dòng một lúc.
-*   Chia nhỏ: Rename trước -> Extract Method sau -> Move Class cuối cùng.
-*   Sau mỗi bước nhỏ, verify lại ngay.
+### 3. Incremental Execution
+- Don't refactor an entire 1000-line file at once.
+- **Baby Steps:** Rename first → Extract Method next → Move Class last.
+- Verify after each small step.
 
 ### 4. Final Review
-*   Sử dụng `/review` hoặc skill `code-reviewer` để đảm bảo code mới tuân thủ Clean Code.
+- Use `/review` or `code-reviewer` skill to ensure new code follows Clean Code standards.
 
-## 💡 Hướng dẫn cho AI
-*   **Tôn trọng Convention:** Đặt tên biến/hàm theo đúng quy chuẩn dự án (`.agent/memory/CONVENTIONS.md`).
-*   **Không thay đổi Logic:** Refactor != Fix Bug. Đừng cố sửa lỗi trong lúc refactor (trừ khi lỗi quá hiển nhiên và nhỏ).
+## 🔌 Skill Integration
+
+**Active skills:** `tech-lead`, `code-reviewer`
+
+**Skill roles:**
+- **tech-lead:** Strategic refactoring decisions, architecture guidance.
+- **code-reviewer:** Code quality validation, Clean Code compliance.
+
+**Step mapping:**
+1. Analysis → `tech-lead` (dependency analysis, smell detection).
+2. Safety Net → `code-reviewer` (test coverage check).
+3. Execution → `tech-lead` (incremental approach).
+4. Review → `code-reviewer` (final quality check).
+
+## 💡 AI Guidelines
+
+**Language:** All responses and reports must be in **English**.
+- **Respect conventions:** Name variables/functions according to project standards.
+- **Don't change logic:** Refactor != Bug Fix. Don't try to fix bugs while refactoring (unless trivial and obvious).
+- **Boy Scout Rule:** Always leave the code better than you found it.

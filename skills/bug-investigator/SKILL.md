@@ -1,65 +1,80 @@
 ---
 name: bug-investigator
-description: Chuyên gia điều tra và xử lý lỗi. Giúp tìm nguyên nhân gốc rễ và đề xuất giải pháp fix bug bền vững.
+description: Bug investigation and root cause analysis expert. Find root causes and propose sustainable bug fixes.
 ---
 
-# Bug Investigator Skill (Standard Edition)
+# Bug Investigator Skill
 
-Sử dụng Skill này khi hệ thống gặp lỗi (crash, logic sai, UI không hiển thị đúng) và cần tìm nguyên nhân gốc rễ (Root Cause Analysis). Kích hoạt khi phát hiện: "lỗi", "bug", "crash", "không chạy đúng", "stacktrace", "error log".
+Use this skill when system encounters errors (crash, logic errors, incorrect UI display) and need to find root cause (Root Cause Analysis). Activate when detecting: "error", "bug", "crash", "not working", "stacktrace", "error log".
 
 ## 🚀 When to use
-- Khi người dùng báo cáo một hành vi sai lệch so với Spec.
-- Khi có Error Log hoặc Stacktrace từ hệ thống.
-- Khi một tính năng cũ bỗng dưng chạy sai sau khi cập nhật code mới.
-- Khi cần phân tích luồng dữ liệu phức tạp để tìm điểm "gãy".
+- When user reports behavior different from Spec
+- When there's Error Log or Stacktrace from system
+- When old feature suddenly breaks after new code update
+- When need to analyze complex data flow to find breaking point
 
 ## 🛑 When NOT to use
-- Không dùng để review code mới (dùng `code-reviewer`).
-- Không dùng để thiết kế tính năng mới (dùng `feature-architect`).
-- Không dùng để tối ưu performance (dùng `flutter-expert`).
+- Don't use for reviewing new code (use `code-reviewer`)
+- Don't use for designing new features (use `feature-architect`)
+- Don't use for performance optimization (use `flutter-expert`)
 
 ## 💡 Example Triggers
-- "Tại sao màn hình Kotei lại bị trắng xóa khi mất mạng?"
-- "Điều tra giúp mình lỗi 'Null check operator used on a null value' ở file này."
-- "App bị crash khi mình bấm nút Save, đây là log lỗi..."
-- "Tìm nguyên nhân tại sao dữ liệu không được lưu vào Local DB."
+- "Why does Kotei screen go blank when network is lost?"
+- "Investigate this 'Null check operator used on a null value' error in this file"
+- "App crashes when I click Save button, here's the error log..."
+- "Find out why data isn't saving to Local DB"
 
-## 🕵️ Phương pháp Điều tra
-... (giữ nguyên phần Phương pháp)- Đặt câu hỏi "Nếu... thì sao?": Nếu API trả về null? Nếu mạng chậm?
-- Kiểm tra các file test hiện có để xem có case nào bị bỏ sót không.
+## 🕵️ Investigation Methodology
 
-## 📋 Cấu trúc Báo cáo Điều tra
+### 1. Log Analysis
+- Read error logs carefully
+- Identify stacktrace and error line
+- Check error type (NullPointerException, NetworkException, etc.)
 
-Kết quả điều tra cần được trình bày rõ ràng theo 3 phần chính:
+### 2. Code Tracing
+- Trace data flow: UI → BLoC → UseCase → Repository → DataSource
+- Identify where flow breaks
+- Check state management (BLoC events, states)
 
-### 1. Nguyên nhân
-- **Root Cause:** Chỉ đích danh đoạn code, logic hoặc cấu hình gây ra lỗi.
-- **Tại sao:** Giải thích cơ chế gây lỗi (ví dụ: race condition, null reference, sai logic nghiệp vụ).
+### 3. Hypothesis Testing
+- Ask "What if...": What if API returns null? What if network is slow?
+- Check existing test cases for missed scenarios
 
-### 2. Phạm vi ảnh hưởng
-- **Tính năng:** Những tính năng/màn hình nào bị tác động?
-- **Mức độ:** Nghiêm trọng (Crash/Blocker) hay Nhẹ (UI Glitch)?
-- **Lan truyền:** Việc sửa lỗi có nguy cơ gây regression ở đâu không?
+## 📋 Investigation Report Structure
 
-### 3. Cách xử lý
-- **Giải pháp:** Đề xuất code fix sạch sẽ, tuân thủ Clean Architecture.
-- **Code Change:** Snippet mô tả thay đổi (Gợi ý).
-- **Phòng ngừa:** Gợi ý test case hoặc refactor để tránh lặp lại.
+Investigation results must be presented clearly in 3 main parts:
 
-## 💡 Chỉ dẫn cho AI (QUAN TRỌNG)
-- **NO CODE EDITING:** Bạn KHÔNG ĐƯỢC PHÉP chỉnh sửa file code trong quá trình điều tra.
-- **READ ONLY:** Chỉ sử dụng các tool đọc (`read_file`, `search_file_content`, `glob`) để thu thập thông tin.
-- **REPORT ONLY:** Nhiệm vụ của bạn kết thúc khi đưa ra báo cáo. Việc sửa lỗi thuộc về bước tiếp theo hoặc lệnh khác.
-- Luôn kiểm tra logs trước khi đưa ra giả thuyết.
-- Khi fix bug trong BLoC, hãy chú ý đến các `Stream` và `Subscription`.
-- Đảm bảo fix bug không phá vỡ các tính năng hiện có (Regression checking).
+### 1. Root Cause
+- **Root Cause:** Pinpoint exactly which code, logic or configuration caused the error
+- **Why:** Explain error mechanism (e.g., race condition, null reference, wrong business logic)
+
+### 2. Impact Scope
+- **Features:** Which features/screens are affected?
+- **Severity:** Critical (Crash/Blocker) or Minor (UI Glitch)?
+- **Propagation:** Risk of regression when fixing?
+
+### 3. Fix Approach
+- **Solution:** Propose clean fix following Clean Architecture
+- **Code Change:** Snippet describing change (Suggestion)
+- **Prevention:** Suggest test cases or refactoring to avoid recurrence
+
+## 💡 AI Guidelines
+
+**Language:** All investigation reports and analysis must be in **Vietnamese**, even though this skill documentation is in English.
+
+- **NO CODE EDITING:** You are NOT ALLOWED to edit code files during investigation
+- **READ ONLY:** Only use read tools (`read_file`, `search_file_content`, `glob`) to gather information
+- **REPORT ONLY:** Your task ends when you submit the report. Bug fixing belongs to next step or different command
+- Always check logs before hypothesizing
+- When fixing bugs in BLoC, pay attention to `Stream` and `Subscription`
+- Ensure bug fix doesn't break existing features (Regression checking)
 
 ## 🔌 Interface Definition
 
 ### Inputs
-- **stacktrace** (text): Error log hoặc Stacktrace
-- **behavior** (text): Mô tả hành vi lỗi của user
+- **stacktrace** (text): Error log or Stacktrace
+- **behavior** (text): User's description of error behavior
 
 ### Outputs
-- **root_cause** (markdown): Phân tích nguyên nhân gốc rễ
-- **fix_plan** (markdown): Kế hoạch sửa lỗi
+- **root_cause** (markdown): Root cause analysis
+- **fix_plan** (markdown): Bug fix plan
