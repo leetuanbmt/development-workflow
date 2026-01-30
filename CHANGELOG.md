@@ -2,6 +2,18 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [5.1.0] - 2026-01-30
+### 🔌 Skill Integration & Core Framework Cleanup
+
+- **[NEW]** **Antigravity Progressive Disclosure:** Aligned all workflows with the new skill activation pattern. Agent now auto-discovers and activates skills via the `skills:` frontmatter array.
+- **[UPDATE]** **Workflow Standardization:** Updated `skills:` array across all 14 core workflows for seamless activation.
+- **[CLEANUP]** **Redundant Fields:** Removed legacy `skill:` (singular) fields and non-existent `feature-architect` skill references from core workflows.
+- **[CLEANUP]** **Core Refactor:** Refactored core workflows and rules to ensure a 100% technology-agnostic framework.
+- **[ARCHIVE]** **Legacy Assets:** Archived deprecated workflows and skills into `.zip` files to reduce noise in the active environment.
+- **[FIX]** **Synchronization:** Resolved inconsistencies between core framework and active workspace files.
+
+---
+
 ## [5.0.0] - 2026-01-30
 ### 🏗️ Multi-Project Architecture (Core/Stacks Separation)
 
