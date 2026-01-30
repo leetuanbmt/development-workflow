@@ -13,6 +13,7 @@ echo "📂 Project Root: $PROJECT_ROOT"
 link_file() {
     src=$1
     dest=$2
+    rm -f "$dest" # Remove existing symlink/file
     ln -sf "$src" "$dest"
     echo "   🔗 Linked: $dest"
 }
@@ -37,14 +38,11 @@ fi
 # 4. Sync Skills
 echo "🧠 Syncing Generic Skills..."
 if [ -d "$PROJECT_ROOT/skills" ]; then
-    # Sync all generic skills from root skills folder
     rsync -a --exclude='_*' "$PROJECT_ROOT/skills/" .agent/skills/
 fi
 
 # 5. Sync Workflows
 echo "⚙️  Syncing Workflows..."
-# Note: We sync the root workflows folder. 
-# Specialized workflows (hydrated by /setup) will reside here or in .agent/workflows.
 if [ -d "$PROJECT_ROOT/workflows" ]; then
     rsync -a --exclude='_*' "$PROJECT_ROOT/workflows/" .agent/workflows/
 fi
@@ -57,6 +55,29 @@ if [ ! -f ".agent/memory/PROJECT.md" ]; then
     else
         touch .agent/memory/PROJECT.md
     fi
+fi
+
+# ------------------------------------------------------------------
+# [NEW] GEMINI CLI SYNC
+# ------------------------------------------------------------------
+echo "💎 Configuring .gemini structure (CLI Config)..."
+mkdir -p .gemini/commands
+mkdir -p .gemini/memory
+
+# Link Core Configs
+if [ -f "$PROJECT_ROOT/GEMINI.md" ]; then
+    link_file "$PROJECT_ROOT/GEMINI.md" ".gemini/GEMINI.md"
+fi
+if [ -f "$PROJECT_ROOT/CHEAT_SHEET.md" ]; then
+    link_file "$PROJECT_ROOT/CHEAT_SHEET.md" ".gemini/CHEAT_SHEET.md"
+fi
+
+# Generate Commands (.toml)
+if command -v python3 &> /dev/null; then
+    echo "🔄 Generating Gemini Commands (.toml)..."
+    python3 "$PROJECT_ROOT/scripts/generate_commands.py"
+else
+    echo "⚠️  Python3 not found. Skipping command generation."
 fi
 
 # 7. Finalize
