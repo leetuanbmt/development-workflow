@@ -5,14 +5,14 @@
 # 1. Determine base paths
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-MODE="source" # Default: sync from source code
+MODE="source" # Default: Reset .agent from Source Code
 
 # Check arguments
 if [[ "$1" == "--runtime" ]]; then
     MODE="runtime"
-    echo "🔥 Running in RUNTIME MODE (Preserving .agent/workflows)"
+    echo "🔥 Running in RUNTIME MODE (Preserving hydrated workflows in .agent)"
 else
-    echo "📦 Running in SOURCE MODE (Resetting .agent from repository)"
+    echo "📦 Running in SOURCE MODE (Resetting .agent from repository templates)"
 fi
 
 echo "📂 Project Root: $PROJECT_ROOT"
@@ -26,14 +26,18 @@ link_file() {
     echo "   🔗 Linked: $dest"
 }
 
-# 2. Configure .agent structure
+# ==============================================================================
+# PHASE 1: PREPARE ANTIGRAVITY RUNTIME (.agent)
+# This is where the Agent looks for Workflows and Skills.
+# ==============================================================================
+echo "🛠  Configuring .agent (Antigravity Runtime)..."
 mkdir -p .agent/memory
 mkdir -p .agent/skills
 mkdir -p .agent/workflows/core
 mkdir -p .agent/workflows/ops
 mkdir -p .agent/workflows/tech
 
-# 3. Sync Memory (Rules) - Always sync rules from Source
+# 1.1 Sync Memory (Rules) - Always sync rules from Source (Single Source of Truth)
 echo "📝 Syncing Memory & Rules..."
 if [ -d "$PROJECT_ROOT/core/rules" ]; then
     link_file "$PROJECT_ROOT/core/rules/00-core-behavior.md" ".agent/memory/CONVENTIONS.md"
@@ -42,23 +46,25 @@ if [ -d "$PROJECT_ROOT/core/rules" ]; then
     link_file "$PROJECT_ROOT/core/rules/07-auditor-mode.md" ".agent/memory/AUDITOR_MODE.md"
 fi
 
-# 4. Sync Skills - Always sync Generic Skills from Source
+# 1.2 Sync Skills - Always sync Generic Skills from Source
 echo "🧠 Syncing Generic Skills..."
 if [ -d "$PROJECT_ROOT/skills" ]; then
     rsync -a --exclude='_*' "$PROJECT_ROOT/skills/" .agent/skills/
 fi
 
-# 5. Sync Workflows (CONDITIONAL)
+# 1.3 Sync Workflows (THE CRITICAL PART)
 if [[ "$MODE" == "source" ]]; then
-    echo "⚙️  Syncing Workflows (Reset from Source)..."
+    echo "⚙️  Syncing Workflows (Resetting .agent/workflows from Source)..."
+    # In Source mode, we ensure .agent mirrors the repo exactly (Generic state)
     if [ -d "$PROJECT_ROOT/workflows" ]; then
         rsync -a --exclude='_*' "$PROJECT_ROOT/workflows/" .agent/workflows/
     fi
 else
-    echo "🔒 Skipping Workflow Reset (Using Hydrated Workflows in .agent/)..."
+    echo "🔒 Preserving Hydrated Workflows in .agent/workflows..."
+    # In Runtime mode, we DO NOT touch .agent/workflows because /setup has modified them.
 fi
 
-# 6. Ensure project context exists
+# 1.4 Ensure project context exists
 if [ ! -f ".agent/memory/PROJECT.md" ]; then
     if [ -f "$PROJECT_ROOT/templates/01-project-context.template.md" ]; then
         cp "$PROJECT_ROOT/templates/01-project-context.template.md" .agent/memory/PROJECT.md
@@ -68,14 +74,16 @@ if [ ! -f ".agent/memory/PROJECT.md" ]; then
     fi
 fi
 
-# ------------------------------------------------------------------
-# [NEW] GEMINI CLI SYNC
-# ------------------------------------------------------------------
-echo "💎 Configuring .gemini structure (CLI Config)..."
+# ==============================================================================
+# PHASE 2: CONFIGURE GEMINI CLI (.gemini)
+# This is where the CLI looks for commands (.toml).
+# IT MUST ALWAYS REFLECT THE CURRENT STATE OF .agent
+# ==============================================================================
+echo "💎 Configuring .gemini (CLI Config)..."
 mkdir -p .gemini/commands
 mkdir -p .gemini/memory
 
-# Link Core Configs
+# 2.1 Link Core Configs
 if [ -f "$PROJECT_ROOT/GEMINI.md" ]; then
     link_file "$PROJECT_ROOT/GEMINI.md" ".gemini/GEMINI.md"
 fi
@@ -83,25 +91,19 @@ if [ -f "$PROJECT_ROOT/CHEAT_SHEET.md" ]; then
     link_file "$PROJECT_ROOT/CHEAT_SHEET.md" ".gemini/CHEAT_SHEET.md"
 fi
 
-# Generate Commands (.toml)
+# 2.2 Generate Commands (.toml) from .agent
+# We always generate commands from .agent so the CLI uses exactly what the Agent sees.
 if command -v python3 &> /dev/null; then
-    echo "🔄 Generating Gemini Commands (.toml)..."
-    
-    if [[ "$MODE" == "runtime" ]]; then
-        # In Runtime mode, generate commands from the HYDRATED workflows in .agent
-        python3 "$PROJECT_ROOT/scripts/generate_commands.py" --source=".agent/workflows"
-    else
-        # In Source mode, generate commands from the GENERIC workflows in root
-        python3 "$PROJECT_ROOT/scripts/generate_commands.py" --source="workflows"
-    fi
+    echo "🔄 Generating Gemini Commands (.toml) from .agent/workflows..."
+    python3 "$PROJECT_ROOT/scripts/generate_commands.py" --source=".agent/workflows"
 else
     echo "⚠️  Python3 not found. Skipping command generation."
 fi
 
-# 7. Finalize
+# Finalize
 echo "✅ Sync Complete!"
 if [[ "$MODE" == "source" ]]; then
-    echo "💡 Next: Run '/setup' to specialize workflows."
+    echo "💡 System reset to GENERIC mode. Run '/setup' to specialize."
 else
-    echo "🔥 Agent is active with Hydrated Workflows."
+    echo "🔥 System running in HYDRATED mode (Stack-Specific)."
 fi
