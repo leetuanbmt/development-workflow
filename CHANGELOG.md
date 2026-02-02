@@ -2,6 +2,25 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [5.2.0] - 2026-02-02
+### 🧠 Dynamic Intelligence & Reliability Upgrade
+
+**Key Improvement:**
+The Agent's self-awareness (Metadata) is now **Dynamic** and **Internationalized**. The system no longer relies on hardcoded Python dictionaries but learns its capabilities directly from the `SKILL.md` documentation.
+
+#### ✨ Features
+- **Dynamic Metadata Parsing:** `scripts/generate_metadata.py` now parses YAML Frontmatter directly from Markdown files.
+- **Single Source of Truth:** Updating `SKILL.md` automatically updates the Agent's definition registry (`metadata.json`).
+- **Internationalization (i18n):** All 10 Core Skills (Tech Lead, Product Manager, Reviewer...) now have standardized **English Metadata** for global compatibility.
+
+#### 🛠 Infrastructure & Fixes
+- **Unified Memory:** `.gemini/memory` is now a symlink to `.agent/memory`. The CLI and the Agent Runtime now share the exact same brain.
+- **Rules Synchronization:** Fixed `scripts/sync.sh` to correctly symlink `core/rules` to `.agent/rules`.
+- **Doctor Check:** `scripts/doctor.sh` now passes reliably with the corrected directory structure.
+- **Cleanup:** Removed legacy migration scripts and hardcoded skill dictionaries.
+
+---
+
 ## [5.1.0] - 2026-02-02
 ### 🚀 Product Mindset & Vibecode DNA Integration
 

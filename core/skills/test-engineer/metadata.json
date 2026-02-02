@@ -1,0 +1,25 @@
+{
+  "name": "test-engineer",
+  "version": "1.0.0",
+  "description": "Writes Unit Tests, Widget Tests, and Integration Tests.",
+  "inputs": [
+    {
+      "name": "logic_code",
+      "type": "dart",
+      "desc": "Business Logic or Widget to test"
+    },
+    {
+      "name": "test_scenario",
+      "type": "text",
+      "desc": "Test scenario description"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "test_code",
+      "type": "dart",
+      "desc": "Executable test file"
+    }
+  ],
+  "is_active": true
+}

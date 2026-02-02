@@ -1,6 +1,17 @@
 ---
-name: product-manager
-description: Expert in Product Strategy, Requirement Discovery, and Architectural Planning. Drove the project from vague Vision to concrete Blueprint and executable Contracts.
+name: "product-manager"
+description: "Translates ideas into detailed technical requirements (PRD)."
+inputs:
+  - name: "idea"
+    type: "text"
+    desc: "Raw idea or business request"
+outputs:
+  - name: "prd"
+    type: "markdown"
+    desc: "Product Requirement Document"
+  - name: "user_stories"
+    type: "markdown"
+    desc: "List of User Stories"
 ---
 
 # Product Manager Skill

@@ -21,7 +21,7 @@ echo "📂 Project Root: $PROJECT_ROOT"
 link_file() {
     src=$1
     dest=$2
-    rm -f "$dest"
+    rm -rf "$dest"
     ln -sf "$src" "$dest"
     echo "   🔗 Linked: $dest"
 }
@@ -40,6 +40,7 @@ mkdir -p .agent/workflows/tech
 # 1.1 Sync Memory (Rules) - Always sync rules from Source (Single Source of Truth)
 echo "📝 Syncing Memory & Rules..."
 if [ -d "$PROJECT_ROOT/core/rules" ]; then
+    link_file "$PROJECT_ROOT/core/rules" ".agent/rules"
     link_file "$PROJECT_ROOT/core/rules/00-core-behavior.md" ".agent/memory/CONVENTIONS.md"
     link_file "$PROJECT_ROOT/core/rules/03-qa-process.md" ".agent/memory/QA_PROCESS.md"
     link_file "$PROJECT_ROOT/core/rules/04-definition-of-done.md" ".agent/memory/DOD.md"
@@ -81,7 +82,12 @@ fi
 # ==============================================================================
 echo "💎 Configuring .gemini (CLI Config)..."
 mkdir -p .gemini/commands
-mkdir -p .gemini/memory
+
+# 2.0 Sync Memory (Link .gemini/memory -> .agent/memory)
+# We want the CLI to see exactly the same context/memory as the Agent runtime.
+if [ -d ".agent/memory" ]; then
+    link_file "$PROJECT_ROOT/.agent/memory" ".gemini/memory"
+fi
 
 # 2.1 Link Core Configs
 if [ -f "$PROJECT_ROOT/GEMINI.md" ]; then
@@ -90,14 +96,27 @@ fi
 if [ -f "$PROJECT_ROOT/CHEAT_SHEET.md" ]; then
     link_file "$PROJECT_ROOT/CHEAT_SHEET.md" ".gemini/CHEAT_SHEET.md"
 fi
+if [ -d "$PROJECT_ROOT/core/rules" ]; then
+    link_file "$PROJECT_ROOT/core/rules" ".gemini/rules"
+fi
 
-# 2.2 Generate Commands (.toml) from .agent
+# 2.2 Sync Skills to .gemini
+echo "🧠 Syncing Skills to .gemini/skills..."
+mkdir -p .gemini/skills
+if [ -d "$PROJECT_ROOT/core/skills" ]; then
+    rsync -a --exclude='_*' "$PROJECT_ROOT/core/skills/" .gemini/skills/
+fi
+
+# 2.3 Generate Commands (.toml) from .agent
 # We always generate commands from .agent so the CLI uses exactly what the Agent sees.
 if command -v python3 &> /dev/null; then
     echo "🔄 Generating Gemini Commands (.toml) from .agent/workflows..."
     python3 "$PROJECT_ROOT/scripts/generate_commands.py" --source=".agent/workflows"
+    
+    echo "📊 Generating Skill Metadata..."
+    python3 "$PROJECT_ROOT/scripts/generate_metadata.py" ".gemini/skills"
 else
-    echo "⚠️  Python3 not found. Skipping command generation."
+    echo "⚠️  Python3 not found. Skipping generation."
 fi
 
 # Finalize

@@ -1,6 +1,20 @@
 ---
-name: bug-investigator
-description: Bug investigation and root cause analysis expert. Find root causes and propose sustainable bug fixes.
+name: "bug-investigator"
+description: "Bug investigation expert. Analyzes stacktraces and logs to find root causes."
+inputs:
+  - name: "stacktrace"
+    type: "text"
+    desc: "Error log or Stacktrace"
+  - name: "behavior"
+    type: "text"
+    desc: "Description of the buggy behavior"
+outputs:
+  - name: "root_cause"
+    type: "markdown"
+    desc: "Root cause analysis"
+  - name: "fix_plan"
+    type: "markdown"
+    desc: "Step-by-step fix plan"
 ---
 
 # Bug Investigator Skill

@@ -1,6 +1,17 @@
 ---
-name: test-engineer
-description: Automated testing expert. Write Unit/Component/Integration tests ensuring coverage and quality.
+name: "test-engineer"
+description: "Writes Unit Tests, Widget Tests, and Integration Tests."
+inputs:
+  - name: "logic_code"
+    type: "dart"
+    desc: "Business Logic or Widget to test"
+  - name: "test_scenario"
+    type: "text"
+    desc: "Test scenario description"
+outputs:
+  - name: "test_code"
+    type: "dart"
+    desc: "Executable test file"
 ---
 
 # Test Engineer Skill

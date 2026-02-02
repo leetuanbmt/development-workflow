@@ -1,6 +1,17 @@
 ---
-name: code-reviewer
-description: Code Review Expert (Context-Aware). Analyze business logic before technical checks, ensure code correctness and architectural compliance.
+name: "code-reviewer"
+description: "Context-aware code review based on business logic and conventions."
+inputs:
+  - name: "diff"
+    type: "diff"
+    desc: "Git diff or code changes"
+  - name: "context"
+    type: "file"
+    desc: "Related files for context"
+outputs:
+  - name: "review_report"
+    type: "markdown"
+    desc: "Review report (Critical/Major/Minor)"
 ---
 
 # Code Review Skill

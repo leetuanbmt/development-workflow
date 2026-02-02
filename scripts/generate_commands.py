@@ -36,9 +36,13 @@ def convert_md_to_toml(source_dir):
     if not os.path.exists(COMMAND_DIR):
         os.makedirs(COMMAND_DIR)
 
-    # Resolve absolute path for source_dir
+    # Resolve path: try local first (CWD), then join with PROJECT_ROOT
     if not os.path.isabs(source_dir):
-        source_dir = os.path.join(PROJECT_ROOT, source_dir)
+        local_path = os.path.join(os.getcwd(), source_dir)
+        if os.path.exists(local_path):
+            source_dir = local_path
+        else:
+            source_dir = os.path.join(PROJECT_ROOT, source_dir)
 
     print(f"🔄 Converting workflows from: {source_dir}")
     

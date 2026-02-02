@@ -1,6 +1,20 @@
 ---
-name: tech-lead
-description: Senior technical expert. Guide solutions, enforce architectural compliance, and mentor team.
+name: "tech-lead"
+description: "Technical leadership, strategy, and complex problem solving."
+inputs:
+  - name: "problem"
+    type: "text"
+    desc: "Technical problem or architectural challenge"
+  - name: "constraints"
+    type: "text"
+    desc: "Project constraints"
+outputs:
+  - name: "decision"
+    type: "markdown"
+    desc: "Technical Decision (ADR)"
+  - name: "guideline"
+    type: "markdown"
+    desc: "Implementation guidelines"
 ---
 
 # Tech Lead Skill

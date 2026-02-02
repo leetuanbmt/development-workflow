@@ -1,6 +1,20 @@
 ---
-name: security-auditor
-description: Application security expert. Audit vulnerabilities, check sensitive data handling, and enforce security standards.
+name: "security-auditor"
+description: "Security audit and vulnerability assessment."
+inputs:
+  - name: "source_code"
+    type: "code"
+    desc: "Code to audit"
+  - name: "config"
+    type: "yaml/json"
+    desc: "System configuration"
+outputs:
+  - name: "audit_report"
+    type: "markdown"
+    desc: "Vulnerability report with severity levels"
+  - name: "remediation"
+    type: "markdown"
+    desc: " remediation guide"
 ---
 
 # Security Auditor Skill

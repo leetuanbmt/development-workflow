@@ -1,6 +1,17 @@
 ---
-name: feature-architect
-description: Feature architecture design expert. Break down requirements into layers (Data/Domain/Presentation) and create implementation plans.
+name: "feature-architect"
+description: "Feature architecture design. Decomposes requirements into Clean Architecture layers."
+inputs:
+  - name: "requirement"
+    type: "text"
+    desc: "Business Requirement (User Story)"
+outputs:
+  - name: "architecture_plan"
+    type: "markdown"
+    desc: "Layer diagram and file structure"
+  - name: "data_flow"
+    type: "markdown"
+    desc: "Data flow description"
 ---
 
 # Feature Architect Skill (Generic)

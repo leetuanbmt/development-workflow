@@ -1,0 +1,25 @@
+{
+  "name": "code-reviewer",
+  "version": "1.0.0",
+  "description": "Context-aware code review based on business logic and conventions.",
+  "inputs": [
+    {
+      "name": "diff",
+      "type": "diff",
+      "desc": "Git diff or code changes"
+    },
+    {
+      "name": "context",
+      "type": "file",
+      "desc": "Related files for context"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "review_report",
+      "type": "markdown",
+      "desc": "Review report (Critical/Major/Minor)"
+    }
+  ],
+  "is_active": true
+}
