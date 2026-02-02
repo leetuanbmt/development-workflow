@@ -1,9 +1,10 @@
 ---
-description: "Review code, PR, or Git changes. Auto-detect context and mode."
+description: "Review code, UI/UX, or PR changes. Auto-detect context and mode."
 trigger: /review
-version: "2.0.0"
+version: "3.0.0"
 skills:
   - code-reviewer
+  - frontend-architect
 constraints:
   max_iterations: 3
   timeout_minutes: 20
@@ -11,9 +12,9 @@ constraints:
 skill: code-reviewer
 ---
 
-# 🧐 Unified Code Review
+# 🧐 Unified Review (Code & UI/UX)
 
-**Objective:** Quality check code in a single workflow. Auto-detect context.
+**Objective:** Quality check code and user experience in a single workflow. Auto-detect context.
 
 ## 🎯 Mode Detection (Automatic)
 
@@ -26,66 +27,57 @@ skill: code-reviewer
 ## 🚀 Execution Steps
 
 ### 1. Context Detection
-- Check for uncommitted changes
-- Identify target files/branch
-- Select appropriate review mode
+*   Check for uncommitted changes.
+*   Identify target files/branch.
+*   **Analyze Scope:** Detect if changes involve UI (CSS, HTML, React/Flutter components).
 
-### 2. Code Analysis
-Run checks based on mode:
+### 2. Analysis & Audit
+Run checks based on scope:
 
-**For `code` mode:**
-- Architecture compliance (Clean Arch, Layer separation)
-- Code smells (duplicati
-on, complexity)
-- Naming conventions
+**Technical Audit (all modes):**
+*   Architecture compliance (Clean Arch).
+*   Logic errors and Edge cases.
+*   Security (Hardcoded secrets).
 
-**For `changes` mode:**
-- What changed and why?
-- Breaking changes?
-- Backward compatibility check
-
-**For `pr` mode:**
-- All of above +
-- Commit message quality
-- Migration scripts (if DB changed)
+**Frontend/UI Audit (if UI files detected):**
+*   **Aesthetics:** Check for distinctive typography and spacing (no generic slop).
+*   **Design Tokens:** Ensure use of CSS variables/hsl() instead of hardcoded hex.
+*   **Accessibility:** Check contrast ratios (≥4.5:1) and focus indicators.
+*   **Motion:** Verify easing and durations for animations.
 
 ### 3. Report Generation
 ```markdown
-## 📊 Code Review Report
+## 📊 Unified Review Report
 
 **Mode:** [code/changes/pr]
 **Files reviewed:** X files
 
 ### ✅ Strengths
-- [List good practices found]
+*   [Good practices found]
 
-### ⚠️ Issues Found
-| Severity | File | Line | Issue |
-|:---|:---|---:|:---|
-| High | path/to/file | 42 | [Description] |
+### 🚨 Critical Issues
+| Severity | Category | File:Line | Issue | Suggestion |
+|:---|:---|:---|:---|:---|
+| High | Technical | file.ts:12 | Logic error | Fix X |
+| High | UI/UX | style.css:5 | Low contrast | Use hsl(...) |
 
 ### 💡 Recommendations
-- [Actionable suggestions]
+*   [Actionable improvement suggestions]
 
 **Overall:** [APPROVED / NEEDS WORK / BLOCKED]
 ```
 
 ## 🔌 Skill Integration
 
-**Active skill:** `code-reviewer`
+**Active skills:** `code-reviewer`, `frontend-architect`
 
-Automatically loads code review checklist and standards from `skills/code-reviewer/SKILL.md`.
-
-**Applied techniques:**
-- Context-aware review (understands business logic first)
-- Architecture compliance checking
-- Golden Rule: "Understand First" methodology
-
-Review depth and focus adapts based on detected mode (code/changes/pr).
+**How it works:**
+1.  **Code Logic:** Uses `code-reviewer` for business rules and architecture.
+2.  **UI/UX Quality:** Uses `frontend-architect` to audit aesthetics, typography, and motion.
 
 ## 💡 AI Guidelines
 
-**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
-- **Context-aware:** Adjust depth based on mode
-- **Constructive:** Suggest improvements, not just criticisms
-- **Prioritize:** Flag critical issues first
+**Language:** All responses and reports must be in **Vietnamese**.
+
+*   **Be Multi-disciplinary:** Don't just look at the code logic. If a button has a hardcoded hex color, flag it as a UI debt.
+*   **Constructive Feedback:** Show "Better Code" examples for both logic and styling.

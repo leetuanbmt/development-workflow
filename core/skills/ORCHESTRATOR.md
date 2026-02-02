@@ -1,7 +1,7 @@
 ---
 name: skill-orchestrator
-description: Dispatch rules đơn giản cho 8 core skills
-version: "3.0.0"
+description: Dispatch rules đơn giản cho 11 core skills
+version: "4.0.0"
 ---
 
 # 🎭 Skill Orchestrator (Simplified)
@@ -14,6 +14,9 @@ Dispatch skill dựa trên keyword đơn giản. Không composite mặc định.
 
 | Pattern | Skill | Priority |
 |:---|:---|:---:|
+| `start`, `vision`, `product`, `idea`, `plan` | `product-manager` | 1 |
+| `ui`, `ux`, `design`, `css`, `tailwind`, `style`, `frontend` | `frontend-architect` | 1 |
+| `copy`, `text`, `content`, `writing`, `headline`, `cta` | `copywriter` | 1 |
 | `bug`, `lỗi`, `crash`, `error`, `stacktrace` | `bug-investigator` | 1 |
 | `review`, `check`, `kiểm tra`, `PR` | `code-reviewer` | 1 |
 | `performance`, `slow`, `leak`, `memory` | `tech-lead` | 1 |
@@ -110,10 +113,13 @@ Skills inherit context from:
 
 ---
 
-## 📦 Active Skills (8)
+## 📦 Active Skills (11)
 
 | Skill | Focus |
 |:---|:---|
+| `product-manager` | Product vision, context, blueprint |
+| `frontend-architect` | UI/UX, design systems, motion |
+| `copywriter` | UX writing, marketing copy |
 | `bug-investigator` | Root cause analysis, debugging |
 | `code-reviewer` | Code quality, architecture check |
 | `tech-lead` | Architecture decisions, mentoring, optimization |

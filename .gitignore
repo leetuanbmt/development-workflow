@@ -20,9 +20,5 @@ env/
 .DS_Store
 Thumbs.db
 
-# # Generated
-# .gemini/
-# .agent/
-
 # Logs
 *.log

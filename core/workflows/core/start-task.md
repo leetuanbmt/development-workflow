@@ -1,55 +1,60 @@
 ---
-description: "Start new task with Auditor-grade analysis and planning."
+description: "Start a new project or feature using Product Vision -> Blueprint workflow."
 trigger: /start-task
-version: "3.0.0"
+version: "4.0.0"
 skills:
+  - product-manager
   - tech-lead
 constraints:
-  max_iterations: 3
-  timeout_minutes: 20
-  exit_on: ["Plan approved", "User declined"]
+  max_iterations: 5
+  timeout_minutes: 30
+  exit_on: ["Blueprint approved", "Contract signed"]
+skill: product-manager
 ---
 
-# 🚀 Start Task (Auditor Edition)
+# 🚀 Start Task (Product Vision Mode)
 
-**Objective:** Transform raw requests into actionable plans.
+**Objective:** Transform raw ideas into executable Blueprints using the "Vision First" methodology.
 
 ## 🔄 Execution Flow
 
-### 1. Context & Memory Loading
-- **Memory Scan:** Check `.agent/memory/knowledge_base.md` for relevant lessons
-- **Project Context:** Read `.agent/memory/PROJECT.md` to understand project goals
+### 1. Vision Extraction (The "Proactive Proposal")
+*   **Analyze Input:** Read the user's request.
+*   **Detect Project Type:** (Landing Page / SaaS / Dashboard / Blog / Portfolio / Custom).
+*   **Generate Vision:** IMMEDIATELY propose a draft Vision based on the detected type (using `product-manager` skill).
+    *   **Layout:** Suggested sections/screens.
+    *   **Style:** Suggested aesthetic.
+    *   **Tech Stack:** Recommended stack based on project context (or defaults).
+*   **Ask for Context:** Ask 3-5 specific questions to refine the Vision (e.g., "Who is the target audience?", "What is the primary metric?").
 
-### 2. Mode Selection
-Based on request, AI suggests one of 3 modes:
-- **🔥 Hotfix:** Urgent bug fix. Skip detailed specs, focus on Fix & Verify.
-- **🏗️ Feature:** New feature. Requires detailed plan (Layering, API, UI).
-- **🧪 Prototype:** Experimentation. Fast code, accept technical debt (but must isolate).
+### 2. Context Refinement
+*   **Receive Context:** User answers the questions.
+*   **Refine Vision:** Update the proposal based on user input.
+*   **Verify:** Ask for confirmation before moving to the Blueprint phase.
 
-### 3. Strategic Planning
-AI must present a plan with 3 parts:
-- **🎯 Objective:** What is the end goal? (Definition of Done).
-- **⚠️ Risks & Constraints:** Any risks regarding architecture, performance, or security?
-- **📋 Implementation Steps:** Specific action items (as a checklist).
+### 3. Blueprint Design
+*   **Generate Blueprint:** Create a detailed architectural plan including:
+    *   **Modules & Flows:** How data moves.
+    *   **File Structure:** Key directories and files.
+    *   **Data Models:** Key entities.
+*   **Generate Contract:** Define the Scope (In/Out) and Definition of Done (DoD).
 
-### 4. User Confirmation
-- Wait for Auditor (User) to approve the plan
-- If approved → Move to execution (using `/fix`, `/implement`, etc.)
+### 4. Approval & Handover
+*   **User Approval:** Wait for the user to type "APPROVED" or "AGREE".
+*   **Generate Job Briefs:** Break down the Contract into atomic `JOB-XXX` briefs for the Coder (`vibecoder`).
+*   **Next Step:** Suggest running `/implement-feature` or `/vibecode` with the generated briefs.
 
 ## 🔌 Skill Integration
 
-This workflow automatically activates these skills based on task type:
+**Active skill:** `product-manager`
 
-- **tech-lead:** Strategic decisions, architecture guidance
-- **feature-architect:** Feature design, layer breakdown
-
-**Auto-activation rules:**
-- If task involves "new feature" → Use `feature-architect` for design
-- If task involves "refactoring" or "architecture" → Use `tech-lead` for guidance
-- If task is "bug fix" → Delegate to `/fix` workflow with `bug-investigator`
+**How it works:**
+1.  **Step 1 & 2:** Uses `product-manager` to access Product Templates and ask strategic questions.
+2.  **Step 3:** Uses `tech-lead` (if needed) for deep technical architecture validation.
 
 ## 💡 AI Guidelines
 
-**Language:** All responses and reports must be in **Vietnamese**, even though this workflow is written in English.
-- **No role-playing:** Skip the "Team Meeting Simulation". Act as a senior technical assistant reporting directly to the CTO.
-- **Critical thinking:** If user's request is vague, ask clarifying questions instead of guessing.
+**Language:** All responses and reports must be in **Vietnamese** (unless requested otherwise).
+
+*   **Be Proactive:** Do NOT ask "What do you want to build?". Say "I see you want a Landing Page. Here is a high-converting template. Does this fit?"
+*   **Blueprint is Law:** Once the Blueprint is signed, do not change architecture during the build phase without a formal update.

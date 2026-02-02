@@ -48,16 +48,16 @@ fi
 
 # 1.2 Sync Skills - Always sync Generic Skills from Source
 echo "🧠 Syncing Generic Skills..."
-if [ -d "$PROJECT_ROOT/skills" ]; then
-    rsync -a --exclude='_*' "$PROJECT_ROOT/skills/" .agent/skills/
+if [ -d "$PROJECT_ROOT/core/skills" ]; then
+    rsync -a --exclude='_*' "$PROJECT_ROOT/core/skills/" .agent/skills/
 fi
 
 # 1.3 Sync Workflows (THE CRITICAL PART)
 if [[ "$MODE" == "source" ]]; then
     echo "⚙️  Syncing Workflows (Resetting .agent/workflows from Source)..."
     # In Source mode, we ensure .agent mirrors the repo exactly (Generic state)
-    if [ -d "$PROJECT_ROOT/workflows" ]; then
-        rsync -a --exclude='_*' "$PROJECT_ROOT/workflows/" .agent/workflows/
+    if [ -d "$PROJECT_ROOT/core/workflows" ]; then
+        rsync -a --exclude='_*' "$PROJECT_ROOT/core/workflows/" .agent/workflows/
     fi
 else
     echo "🔒 Preserving Hydrated Workflows in .agent/workflows..."
