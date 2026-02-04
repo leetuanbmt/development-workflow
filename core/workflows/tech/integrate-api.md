@@ -1,7 +1,7 @@
 ---
 description: "Auto-generate Data Layer (Model, Entity, Mapper) from JSON specs."
 trigger: /integrate-api
-version: "3.0.0"
+version: "5.2.0"
 skills:
   - code-reviewer
 constraints:

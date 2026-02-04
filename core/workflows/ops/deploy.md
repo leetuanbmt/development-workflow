@@ -1,7 +1,7 @@
 ---
 description: "Build and deploy application to environments (Dev/Staging/Production)."
 trigger: /deploy
-version: "2.4.0"
+version: "5.2.0"
 skills:
   - tech-lead
 constraints:

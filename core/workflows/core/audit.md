@@ -1,7 +1,7 @@
 ---
 description: "Audit code from multiple perspectives. Auto-select aspect based on context."
 trigger: /audit
-version: "2.0.0"
+version: "5.2.0"
 skills:
   - code-reviewer
   - tech-lead

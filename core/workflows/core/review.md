@@ -1,7 +1,7 @@
 ---
 description: "Review code, UI/UX, or PR changes. Auto-detect context and mode."
 trigger: /review
-version: "3.0.0"
+version: "5.2.0"
 skills:
   - code-reviewer
   - frontend-architect

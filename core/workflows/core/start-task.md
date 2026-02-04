@@ -1,7 +1,7 @@
 ---
 description: "Start a new project or feature using Product Vision -> Blueprint workflow."
 trigger: /start-task
-version: "4.0.0"
+version: "5.2.0"
 skills:
   - product-manager
   - tech-lead
@@ -42,7 +42,7 @@ skill: product-manager
 ### 4. Approval & Handover
 *   **User Approval:** Wait for the user to type "APPROVED" or "AGREE".
 *   **Generate Job Briefs:** Break down the Contract into atomic `JOB-XXX` briefs for the Coder (`vibecoder`).
-*   **Next Step:** Suggest running `/implement-feature` or `/vibecode` with the generated briefs.
+*   **Next Step:** Suggest running `/vibe` with the generated briefs or the Job Brief ID.
 
 ## 🔌 Skill Integration
 

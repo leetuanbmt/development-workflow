@@ -1,7 +1,7 @@
 ---
 description: "Safe code refactoring without breaking existing functionality."
 trigger: /refactor
-version: "3.0.0"
+version: "5.2.0"
 skills:
   - tech-lead
   - code-reviewer

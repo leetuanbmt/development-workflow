@@ -22,6 +22,11 @@ The AI never commits code silently. It operates in **Audit Mode**:
 We use a "Hydration" process to customize workflows:
 *   `deploy.template.md` (`{{CMD_BUILD}}`)  ➡️  `/setup`  ➡️  `deploy.md` (`npm run build`)
 
+### 4. 🚀 Vibe Coding & Agent Skills (New in v4.1)
+*   **Vibe Coding:** High-throughput implementation (2000+ lines) with self-correction and automated safety hooks.
+*   **Agent Skills:** 10+ core expert skills (Tech Lead, Security Auditor, etc.) that auto-activate based on task context.
+*   **Verification Loop:** A mandatory 4-phase quality gate (Syntax, Logic, Integration, Security) for all code changes.
+
 ---
 
 ## 📦 Installation & Setup

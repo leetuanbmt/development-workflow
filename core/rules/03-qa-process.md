@@ -19,17 +19,31 @@ description: Quy trình kiểm thử (QA), Validation và Workflows.
 *   Hạn chế viết UI Test phức tạp trừ khi cần kiểm tra các flow quan trọng.
 
 ### C. Linting & Static Analysis
-*   Luôn chạy `make lint` trước khi tạo PR.
-*   Không được ignore các warning quan trọng liên quan đến `const` và `types`.
+*   Luôn chạy bộ lệnh lint (`npm run lint`, `dart analyze`, v.v.) trước khi tạo PR.
+*   Không được ignore các warning quan trọng liên quan đến types và security.
 
-## 2. Workflows (Quy trình làm việc với Agent)
+## 2. Verification Loop (Quy chuẩn bắt buộc)
 
-Dự án có sẵn các quy trình tự động hóa cho Agent. Sử dụng các lệnh sau để kích hoạt:
+Mọi thay đổi phải đi qua vòng lặp kiểm tra:
 
-| Lệnh (Trigger) | Workflow File | Mục đích |
+| Phase | Metric | Threshold |
+|:---|:---|:---|
+| **Syntax** | No compilation errors | 0 errors |
+| **Logic** | Unit tests pass | 100% of new tests |
+| **Integration** | E2E/Manual test pass | Critical paths only |
+| **Security** | No secrets exposed | 0 findings |
+
+## 3. Workflows (Quy trình làm việc với Agent)
+
+Dự án sử dụng bộ lệnh CLI đã được cấu hình:
+
+| Lệnh (Trigger) | Mục đích | Skill Active |
 | :--- | :--- | :--- |
-| `/investigate` | `workflows/investigate.md` | Phân tích và tìm nguyên nhân Bug (Root Cause Analysis). |
-| `/review` | `workflows/review.md` | Review code PR từ thành viên khác theo checklist. |
+| `/start-task` | Chốt Blueprint & Plan trước khi code. | Product Manager |
+| `/fix` | Sửa bug hệ thống. | Bug Investigator |
+| `/review` | Review code & UI/UX. | Code Reviewer |
+| `/audit` | Kiểm tra sâu Arch/Security/Performance. | Tech Lead |
+| `/write-test` | Tạo tự động bộ test suite. | Test Engineer |
 
 ## 3. Checklist khi Review Code
 Sử dụng workflow `/review_pr` để tự động hóa, nhưng cần nhớ các điểm chính:

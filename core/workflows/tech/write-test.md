@@ -1,7 +1,7 @@
 ---
 description: "Write Unit/Widget Tests with strategy (Strategy-based Testing)."
 trigger: /write-test
-version: "3.0.0"
+version: "5.2.0"
 skills:
   - test-engineer
   - code-reviewer

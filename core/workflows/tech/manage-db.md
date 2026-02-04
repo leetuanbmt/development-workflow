@@ -1,7 +1,7 @@
 ---
 description: "Manage Database schema safely, focusing on Migration and Data Integrity."
 trigger: /manage-db
-version: "3.0.0"
+version: "5.2.0"
 skills:
   - tech-lead
   - test-engineer

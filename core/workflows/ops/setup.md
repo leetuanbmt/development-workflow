@@ -1,7 +1,7 @@
 ---
 description: "Tự động nhận diện Tech Stack, khởi tạo Context và sinh bộ Rules phù hợp."
 trigger: /setup
-version: "3.3.0"
+version: "5.2.0"
 skills: 
   - tech-lead
 constraints:

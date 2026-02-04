@@ -1,7 +1,7 @@
 ---
 description: "Analyze root cause of bugs and generate investigation report. Report ONLY, NO code fixes."
 trigger: /investigate
-version: "3.1.0"
+version: "5.2.0"
 skills:
   - bug-investigator
 constraints:

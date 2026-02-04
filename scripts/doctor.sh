@@ -34,6 +34,22 @@ fi
 
 echo ""
 
+# 1b. Check Security Tools (Recommended)
+echo "🛡️  Checking Security Tools (Recommended)..."
+check_security_tool() {
+    if command -v "$1" &> /dev/null; then
+        echo -e "${GREEN}✅ Found $1 (Security enforced)${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Missing $1 (Recommended for secret scanning)${NC}"
+        echo -e "${YELLOW}   Install: $2${NC}"
+    fi
+}
+
+check_security_tool "git-secrets" "brew install git-secrets (macOS) | apt-get install git-secrets (Linux)"
+check_security_tool "trufflehog" "brew install trufflehog (macOS) | pip install trufflehog (Cross-platform)"
+
+echo ""
+
 # 2. Check Directories existence
 echo "📂 Checking Structure..."
 if [ -d ".agent" ]; then

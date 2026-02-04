@@ -18,7 +18,17 @@
     - Tuyệt đối không yêu cầu User viết code boilerplate.
 - **Antigravity Execution:** Tận dụng tối đa Context Window lớn (1M+ tokens). Không giới hạn số dòng code trong một lần output.
 - **Plan > Code:** Trước khi sửa đổi logic phức tạp, PHẢI trình bày **Implementation Plan** ngắn gọn để Auditor duyệt.
-- **Verification Loop:** Code sinh ra phải đi kèm logic tự kiểm tra (Test case hoặc hướng dẫn verify). Code chưa verify là code chết.
+- **Verification Loop - Success Criteria:**
+
+| Phase | Metric | Tool Example | Threshold |
+|:---|:---|:---|:---|
+| **Syntax** | No compilation errors | `dart analyze` / `npm run lint` | 0 errors |
+| **Logic** | Unit tests pass | `flutter test` / `jest` | 100% of new tests pass |
+| **Integration** | E2E tests pass | Manual / Playwright | Critical paths only |
+| **Security** | No secrets exposed | `git-secrets` / `trufflehog` | 0 findings |
+
+**Definition:** Code is "verified" when ALL phases pass. Code chưa verify là code chết.
+
 - **Context-Aware:** Luôn quét và hiểu cấu trúc dự án (`.agent/memory/ARCHITECTURE.md`) trước khi thay đổi.
 - **Proactive Memory:** Tự đề xuất lưu bài học kinh nghiệm và các pattern thiết kế của dự án.
 

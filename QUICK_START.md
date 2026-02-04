@@ -45,6 +45,23 @@ ln -s /path/to/development-workflow ./development-workflow
 /doctor
 ```
 
+### Security Tools Setup (Recommended)
+```bash
+# Install git-secrets
+brew install git-secrets  # macOS
+# OR
+apt-get install git-secrets  # Linux
+
+# Install trufflehog
+brew install trufflehog  # macOS
+# OR
+pip install trufflehog  # Cross-platform
+
+# Setup pre-commit hook (optional but recommended)
+cp development-workflow/templates/hooks/pre-commit.template .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
 ---
 
 ## 📁 Directory Structure

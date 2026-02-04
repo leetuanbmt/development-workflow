@@ -1,7 +1,7 @@
 ---
 description: "Check Agent environment health & sync status."
 trigger: /doctor
-version: "1.0.0"
+version: "5.2.0"
 skills:
   - tech-lead
 constraints:
@@ -21,6 +21,7 @@ skill: tech-lead
    - **ACTION:** Execute `development-workflow/scripts/doctor.sh`
    - Script checks:
      - Required tools: `python3`, `git`, `make` (and stack specific tools)
+     - **Security tools:** `git-secrets`, `trufflehog` (recommended for safety enforcement)
      - Sync status: Compare checksum/timestamp between `development-workflow/rules` and `.agent/memory`
      - Directory structure: Verify `.gemini`, `.agent` and symlinks exist
 

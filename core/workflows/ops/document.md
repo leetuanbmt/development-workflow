@@ -1,7 +1,7 @@
 ---
 description: "Tạo và bảo trì tài liệu dự án (Architecture, Flow, API)."
 trigger: /document
-version: "3.0.0"
+version: "5.2.0"
 skills:
   - tech-lead
 constraints:

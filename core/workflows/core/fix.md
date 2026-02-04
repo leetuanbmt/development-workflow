@@ -1,7 +1,7 @@
 ---
 description: "Systematic bug fix following: Quick Investigate → Plan → Fix → Verify."
 trigger: /fix
-version: "2.1.0"
+version: "5.2.0"
 skills:
   - bug-investigator
   - code-reviewer

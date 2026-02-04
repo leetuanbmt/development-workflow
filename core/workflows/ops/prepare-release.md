@@ -1,7 +1,7 @@
 ---
 description: "Release Engineering: Build, Test, and Audit before Production."
 trigger: /prepare-release
-version: "3.0.0"
+version: "5.2.0"
 skills:
   - tech-lead
   - security-auditor
