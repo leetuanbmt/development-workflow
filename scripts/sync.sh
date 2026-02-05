@@ -1,21 +1,127 @@
 #!/bin/bash
 # Script to synchronize the AI Agent environment
-# Usage: ./sync.sh [--runtime]
+# Version: 5.3.0 - Enhanced with Smart Sync and Safety Features
+# Usage: ./sync.sh [OPTIONS]
 
 # 1. Determine base paths
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-MODE="source" # Default: Reset .agent from Source Code
+MODE="source"  # Default: Reset .agent from Source Code
+BACKUP_ONLY=false
+FORCE_RESET=false
 
-# Check arguments
-if [[ "$1" == "--runtime" ]]; then
-    MODE="runtime"
-    echo "🔥 Running in RUNTIME MODE (Preserving hydrated workflows in .agent)"
-else
-    echo "📦 Running in SOURCE MODE (Resetting .agent from repository templates)"
+# Show help
+show_help() {
+    cat << EOF
+🔧 Sync Script v5.3.0 - AI Agent Environment Synchronization
+
+USAGE:
+    ./sync.sh [OPTIONS]
+
+OPTIONS:
+    (no options)       Smart sync (auto-detects initialization state)
+    --runtime          Preserve hydrated workflows (for initialized projects)
+    --force-reset      FULL RESET (deletes all custom data - requires confirmation)
+    --backup-only      Create backup without syncing
+    --help, -h         Show this help message
+
+MODES:
+    SOURCE MODE (default):
+        - Resets .agent/ from core/ templates
+        - Smart detection: preserves initialized PROJECT.md and custom skills
+        
+    RUNTIME MODE (--runtime):
+        - Preserves hydrated workflows
+        - Updates core files only
+        
+    FORCE RESET (--force-reset):
+        - Complete reset to factory defaults
+        - Deletes ALL custom configurations
+        - Requires user confirmation
+
+EXAMPLES:
+    # First-time setup
+    ./sync.sh
+    
+    # After /setup has been run
+    ./sync.sh --runtime
+    
+    # Backup before major changes
+    ./sync.sh --backup-only
+    
+    # Complete reset (dangerous!)
+    ./sync.sh --force-reset
+
+EOF
+    exit 0
+}
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --runtime)
+            MODE="runtime"
+            shift
+            ;;
+        --force-reset)
+            FORCE_RESET=true
+            MODE="force"
+            shift
+            ;;
+        --backup-only)
+            BACKUP_ONLY=true
+            shift
+            ;;
+        --help|-h)
+            show_help
+            ;;
+        *)
+            echo "❌ Unknown option: $1"
+            echo "💡 Use --help to see available options"
+            exit 1
+            ;;
+    esac
+done
+
+# Handle force reset confirmation
+if [[ "$FORCE_RESET" == true ]]; then
+    echo "⚠️  FORCE RESET MODE - This will DELETE all custom configurations!"
+    echo "   - Custom skills will be lost"
+    echo "   - Initialized PROJECT.md will be reset"
+    echo "   - Hydrated workflows will be reset"
+    echo ""
+    read -p "Are you sure? Type 'YES' to confirm: " confirmation
+    if [[ "$confirmation" != "YES" ]]; then
+        echo "❌ Reset cancelled."
+        exit 0
+    fi
+    echo "📦 Creating backup before reset..."
+    # Continue with forced mode
+fi
+
+# Handle backup-only mode
+if [[ "$BACKUP_ONLY" == true ]]; then
+    echo "📦 BACKUP-ONLY MODE"
+    # Will create backup and exit (logic below)
+fi
+
+# Display mode
+if [[ "$BACKUP_ONLY" != true ]]; then
+    case $MODE in
+        runtime)
+            echo "🔥 Running in RUNTIME MODE (Preserving hydrated workflows)"
+            ;;
+        force)
+            echo "� Running in FORCE RESET MODE (Full reset to defaults)"
+            ;;
+        *)
+            echo "📦 Running in SMART SYNC MODE (Auto-detection enabled)"
+            ;;
+    esac
 fi
 
 echo "📂 Project Root: $PROJECT_ROOT"
+
 
 # Helper for symlinking
 link_file() {
@@ -25,6 +131,108 @@ link_file() {
     ln -sf "$src" "$dest"
     echo "   🔗 Linked: $dest"
 }
+
+# ==============================================================================
+# DETECTION FUNCTIONS (v5.3.0)
+# ==============================================================================
+
+# Check if PROJECT.md has been filled (not a template anymore)
+is_project_initialized() {
+    if [ -f ".agent/memory/PROJECT.md" ]; then
+        # If file contains placeholder patterns, it's still a template
+        if grep -q "\[PROJECT_NAME\]" ".agent/memory/PROJECT.md" 2>/dev/null; then
+            return 1  # Still template = NOT initialized
+        else
+            return 0  # Filled = initialized
+        fi
+    fi
+    return 1  # File doesn't exist = NOT initialized
+}
+
+# Check if setup workflow has been completed
+is_setup_completed() {
+    [ -f ".agent/.setup-completed" ]
+    return $?
+}
+
+# Check if there are custom skills (non-core skills)
+has_custom_skills() {
+    # Count non-symlink, non-hidden directories in .agent/skills/
+    if [ -d ".agent/skills" ]; then
+        local custom_count=$(find .agent/skills -maxdepth 1 -type d ! -name ".*" ! -name "skills" | wc -l | xargs)
+        [ "$custom_count" -gt 10 ]  # More than 10 core skills = has custom
+        return $?
+    fi
+    return 1  # No skills dir = no custom skills
+}
+
+# Create timestamped backup of runtime state
+backup_runtime() {
+    local BACKUP_DIR=".agent/.backup-$(date +%Y%m%d-%H%M%S)"
+    
+    echo "📦 Creating backup..."
+    mkdir -p "$BACKUP_DIR"
+    
+    # Backup critical directories
+    if [ -d ".agent/memory" ]; then
+        cp -r .agent/memory "$BACKUP_DIR/" 2>/dev/null || true
+    fi
+    if [ -d ".agent/skills" ]; then
+        cp -r .agent/skills "$BACKUP_DIR/" 2>/dev/null || true
+    fi
+    if [ -d ".agent/workflows" ]; then
+        cp -r .agent/workflows "$BACKUP_DIR/" 2>/dev/null || true
+    fi
+    
+    # Create restore instructions
+    cat > "$BACKUP_DIR/RESTORE.md" << EOF
+# Backup Restore Instructions
+
+**Backup Created:** $(date)
+**To Restore:**
+
+\`\`\`bash
+# Restore memory
+cp -r $BACKUP_DIR/memory .agent/
+
+# Restore skills
+cp -r $BACKUP_DIR/skills .agent/
+
+# Restore workflows
+cp -r $BACKUP_DIR/workflows .agent/
+
+# Then re-run sync
+./scripts/sync.sh --runtime
+\`\`\`
+EOF
+    
+    echo "   ✅ Backup created: $BACKUP_DIR"
+    return 0
+}
+
+# ==============================================================================
+# SPECIAL MODES HANDLING
+# ==============================================================================
+
+# Backup-only mode: Create backup and exit
+if [[ "$BACKUP_ONLY" == true ]]; then
+    backup_runtime
+    echo "✅ Backup completed. No sync performed."
+    exit 0
+fi
+
+# Force reset mode: Override detection functions
+if [[ "$MODE" == "force" ]]; then
+    # Create comprehensive backup first
+    backup_runtime
+    
+    # Override functions to allow full reset
+    is_project_initialized() { return 1; }
+    is_setup_completed() { return 1; }
+    has_custom_skills() { return 1; }
+    
+    echo "💥 Force reset enabled - All protections disabled"
+fi
 
 # ==============================================================================
 # PHASE 1: PREPARE ANTIGRAVITY RUNTIME (.agent)
@@ -47,10 +255,34 @@ if [ -d "$PROJECT_ROOT/core/rules" ]; then
     link_file "$PROJECT_ROOT/core/rules/07-auditor-mode.md" ".agent/memory/AUDITOR_MODE.md"
 fi
 
-# 1.2 Sync Skills - Always sync Generic Skills from Source
-echo "🧠 Syncing Generic Skills..."
+# 1.2 Sync Skills - Smart Sync (v5.3.0)
+echo "🧠 Syncing Skills..."
 if [ -d "$PROJECT_ROOT/core/skills" ]; then
-    rsync -a --exclude='_*' "$PROJECT_ROOT/core/skills/" .agent/skills/
+    # Detect if project has custom skills or is initialized
+    if is_setup_completed || has_custom_skills; then
+        echo "   🔒 Project initialized - Using SAFE sync mode"
+        echo "   📌 Preserving custom skills, updating core skills only..."
+        
+        # Create backup before any changes
+        backup_runtime
+        
+        # Sync core skills but DON'T delete existing ones
+        rsync -a --ignore-existing --exclude='_*' "$PROJECT_ROOT/core/skills/" .agent/skills/
+        
+        # Update existing core skills (files that already exist)
+        for skill_dir in "$PROJECT_ROOT/core/skills"/*; do
+            if [ -d "$skill_dir" ]; then
+                skill_name=$(basename "$skill_dir")
+                if [ -d ".agent/skills/$skill_name" ]; then
+                    # Update only if it's a core skill (exists in source)
+                    rsync -a --exclude='_*' "$skill_dir/" ".agent/skills/$skill_name/"
+                fi
+            fi
+        done
+    else
+        echo "   📦 Fresh project - Using FULL sync mode"
+        rsync -a --exclude='_*' "$PROJECT_ROOT/core/skills/" .agent/skills/
+    fi
 fi
 
 # 1.3 Sync Workflows (THE CRITICAL PART)
@@ -65,15 +297,23 @@ else
     # In Runtime mode, we DO NOT touch .agent/workflows because /setup has modified them.
 fi
 
-# 1.4 Ensure project context exists
-if [ ! -f ".agent/memory/PROJECT.md" ]; then
-    if [ -f "$PROJECT_ROOT/templates/01-project-context.template.md" ]; then
-        cp "$PROJECT_ROOT/templates/01-project-context.template.md" .agent/memory/PROJECT.md
-        echo "   📄 Initialized PROJECT.md from template."
+# 1.4 Ensure project context exists (Smart Detection - v5.3.0)
+if is_project_initialized; then
+    echo "   🔒 PROJECT.md already initialized - PRESERVING"
+else
+    if [ ! -f ".agent/memory/PROJECT.md" ]; then
+        if [ -f "$PROJECT_ROOT/templates/01-project-context.template.md" ]; then
+            cp "$PROJECT_ROOT/templates/01-project-context.template.md" .agent/memory/PROJECT.md
+            echo "   📄 Initialized PROJECT.md from template."
+        else
+            touch .agent/memory/PROJECT.md
+        fi
     else
-        touch .agent/memory/PROJECT.md
+        echo "   ⚠️  PROJECT.md exists but not initialized (still template)"
+        echo "   💡 Run '/setup' to fill project context"
     fi
 fi
+
 
 # ==============================================================================
 # PHASE 2: CONFIGURE GEMINI CLI (.gemini)

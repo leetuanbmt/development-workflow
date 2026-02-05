@@ -1,4 +1,4 @@
-# ⚡ Quick Reference - AI-Native Development Workflow (v4.1)
+# ⚡ Quick Reference - AI-Native Development Workflow (v5.3.0)
 
 > Bảng tra cứu nhanh các lệnh và quy chuẩn cho Antigravity Workflow.
 
@@ -77,15 +77,52 @@ scripts/              # 🔧 Maintenance & Sync utilities
 
 ---
 
-## 📞 Sync & Emergency
+## 📞 Sync & Emergency (v5.3.0 - Enhanced)
+
+### 🔄 Sync Script Options
 
 ```bash
-# Sync lại toàn bộ môi trường (khi đổi branch hoặc update workflow)
+# Smart sync (auto-detects if project is initialized)
+./scripts/sync.sh
+
+# Preserve hydrated workflows (after /setup)
 ./scripts/sync.sh --runtime
 
+# Create backup without syncing
+./scripts/sync.sh --backup-only
+
+# Complete reset to factory defaults (DANGEROUS - requires confirmation)
+./scripts/sync.sh --force-reset
+
+# Show all available options
+./scripts/sync.sh --help
+```
+
+### 🆘 Emergency Commands
+
+```bash
 # Kiểm tra lỗi cấu hình
 /doctor
 
 # Rollback khi AI làm sai logic nặng
-git stash push -m "ai-failed-attempt" && git stash drop
+git stash push -m "ai-failed-attempt"
+
+# Restore từ backup (nếu sync gây lỗi)
+cp -r .agent/.backup-YYYYMMDD-HHMMSS/* .agent/
 ```
+
+### 🛡️ Safety Features (v5.3.0)
+
+- ✅ **Smart Detection:** Tự động nhận biết project đã setup hay chưa
+- ✅ **Auto Backup:** Tạo backup timestamped trước khi sync
+- ✅ **Custom Skills Protection:** Không xóa skills tự tạo
+- ✅ **PROJECT.md Protection:** Không ghi đè nếu đã initialized
+- ✅ **Confirmation Required:** --force-reset yêu cầu xác nhận "YES"
+
+---
+
+## 📚 See Also
+
+- **[README.md](./README.md)** - Full system documentation
+- **[GEMINI.md](./GEMINI.md)** - Agent core philosophy
+- **[CHANGELOG.md](./CHANGELOG.md)** - Version history

@@ -2,6 +2,74 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [5.3.0] - 2026-02-05
+### 🛡️ Sync Safety Enhancement - Smart Detection & Protection
+
+**Theme:** Prevent data loss and enhance developer confidence during sync operations.
+
+#### ✨ New Features
+- **Smart Sync Detection:** Auto-detects if project has been initialized via `/setup`
+  - Checks if `PROJECT.md` has been filled (no longer contains `[PLACEHOLDER]` markers)
+  - Checks for `.setup-completed` flag file
+  - Detects presence of custom skills beyond the 10 core skills
+- **Auto-Backup System:** Creates timestamped backups before any destructive operations
+  - Backup location: `.agent/.backup-YYYYMMDD-HHMMSS/`
+  - Includes `RESTORE.md` with step-by-step restoration instructions
+  - Preserves memory/, skills/, and workflows/ directories
+
+#### 🔄 Enhanced Sync Modes
+- **Smart Mode (default):** `./sync.sh`
+  - Auto-detects initialization state
+  - Preserves `PROJECT.md` if already filled
+  - Protects custom skills (only updates core skills)
+  - Safe for daily use
+- **Runtime Mode:** `./sync.sh --runtime`
+  - Preserves hydrated workflows
+  - Updates core files only
+  - Recommended after `/setup`
+- **Force Reset Mode:** `./sync.sh --force-reset`
+  - Complete reset to factory defaults
+  - Requires typing "YES" for confirmation
+  - Creates backup before proceeding
+  - Use only when intentional clean slate needed
+- **Backup-Only Mode:** `./sync.sh --backup-only`
+  - Creates backup without syncing
+  - Useful before major manual changes
+
+#### 🛠 Infrastructure Improvements
+- **Enhanced CLI:** `./sync.sh --help` shows comprehensive usage documentation
+- **Detection Functions:**
+  - `is_project_initialized()` - Checks if PROJECT.md filled
+  - `is_setup_completed()` - Checks for .setup-completed flag
+  - `has_custom_skills()` - Detects skills beyond core 10
+- **Backup Function:** `backup_runtime()` with automatic restore instructions
+
+#### 📚 Documentation Updates
+- **CHEAT_SHEET.md:** Added v5.3.0 sync options section with safety features explanation
+- **Migration Guide:** Clear upgrade path for existing users
+- **Sync Script Help:** Inline documentation with examples
+
+#### 🔒 Safety Guarantees
+- ✅ **PROJECT.md Protection:** Never overwritten if initialized
+- ✅ **Custom Skills Preservation:** User-created skills never deleted
+- ✅ **Backup Before Action:** Auto-backup when risks detected
+- ✅ **Confirmation Gates:** Destructive operations require explicit confirmation
+- ✅ **Rollback Path:** Clear instructions in backup RESTORE.md
+
+#### ⚠️ Migration Notes for Existing Users
+**No breaking changes** - all existing workflows continue to work:
+- Old: `./sync.sh` → Now has smart detection (safer)
+- Old: `./sync.sh --runtime` → Works exactly the same
+- New: `./sync.sh --force-reset` → Explicit command for old "source mode" behavior
+
+**Recommended Action:**
+1. After upgrading, run `./sync.sh` (will auto-detect your project)
+2. If PROJECT.md already filled, it will be preserved
+3. Custom skills will be kept intact
+4. Run `/doctor` to verify system health
+
+---
+
 ## [5.2.1] - 2026-02-04
 ### 🚀 Vibe Coding Enhancement & System Alignment
 
