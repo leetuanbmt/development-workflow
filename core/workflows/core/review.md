@@ -1,10 +1,11 @@
 ---
 description: "Review code, UI/UX, or PR changes. Auto-detect context and mode."
 trigger: /review
-version: "5.2.0"
+version: "5.3.1"
 skills:
   - code-reviewer
   - frontend-architect
+  - defensive-coder
 constraints:
   max_iterations: 3
   timeout_minutes: 20
@@ -26,10 +27,19 @@ skill: code-reviewer
 
 ## 🚀 Execution Steps
 
-### 1. Context Detection
-*   Check for uncommitted changes.
-*   Identify target files/branch.
-*   **Analyze Scope:** Detect if changes involve UI (CSS, HTML, React/Flutter components).
+### 1. Context Detection & Scoping (Crucial)
+*   **Refresh Refs:** If checking a PR or branch, **ALWAYS** run `git fetch origin` first to ensure you have the latest code.
+*   **Identify Parent Branch:**
+    *   If argument is a branch (e.g., `feature/login`), determine its parent (usually `origin/develop` or `origin/main`).
+    *   **Best Practice:** Find the merge base to review *only* what this feature added:
+        `git diff --name-only $(git merge-base origin/develop HEAD)...HEAD`
+*   **Identify Changed Files:**
+    *   *Uncommitted:* `git diff --name-only HEAD`
+    *   *Branch/PR:* `git diff --name-only [PARENT_BRANCH]...[FEATURE_BRANCH]`
+*   **Filter Scope (Token Saver):**
+    *   **Exclude:** `*.lock`, `*.g.dart`, `*.freezed.dart`, `assets/*`, `*.min.js`, `*.map`, `node_modules/*`
+    *   **Focus:** ONLY read files in the filtered list.
+*   **Confirm Scope:** Output: "Comparing [FEATURE] vs [PARENT]. Found X changed files."
 
 ### 2. Analysis & Audit
 Run checks based on scope:
@@ -45,7 +55,87 @@ Run checks based on scope:
 *   **Accessibility:** Check contrast ratios (≥4.5:1) and focus indicators.
 *   **Motion:** Verify easing and durations for animations.
 
-### 3. Report Generation
+### 3. Edge Case & Defensive Audit (CRITICAL - v5.3.1) 🛡️
+
+**Skill Activation:** `defensive-coder`
+
+**Objective:** Ensure code handles ALL abnormal scenarios gracefully.
+
+#### Step 3.1: Auto-Fail Pattern Detection
+
+Scan code for CRITICAL failures (auto-REJECT if found):
+
+```typescript
+// 🚫 BLOCK MERGE if detected:
+user.name                    // No null check
+await api.call()             // No try-catch
+items[0]                     // No length check
+JSON.parse(data)             // No validation
+fetch(url)                   // No timeout
+localStorage.set()           // No quota check
+file.write()                 // No finally cleanup
+```
+
+**Action:** If ANY pattern found → Set status to **BLOCKED**, generate fix examples.
+
+#### Step 3.2: Edge Case Checklist Audit
+
+Verify coverage of 5 categories (from DOD.md):
+
+**📋 Input Validation:**
+- [ ] Null/undefined checks before property access
+- [ ] Empty array/string checks before iteration
+- [ ] Type validation for user inputs
+- [ ] Boundary value handling (0, -1, MAX)
+
+**🌐 Network & External:**
+- [ ] Timeout on all API calls (default 30s)
+- [ ] Retry logic with exponential backoff
+- [ ] Offline/network error handling
+- [ ] Response schema validation
+
+**💾 Resource Management:**
+- [ ] Finally blocks for cleanup
+- [ ] Memory limit handling (pagination)
+- [ ] Permission error handling
+- [ ] Concurrent access protection
+
+**🔐 Security:**
+- [ ] Auth check before operations
+- [ ] Rate limiting handling
+- [ ] Input sanitization (SQL/XSS prevention)
+
+**🖱️ User Behavior:**
+- [ ] Double-click prevention
+- [ ] Loading states for >500ms operations
+- [ ] Error retry mechanisms
+
+#### Step 3.3: Defensive Pattern Scoring
+
+**Green (Pass):** 4+ categories covered  
+**Yellow (Warn):** 2-3 categories covered  
+**Red (Block):** 0-1 category covered
+
+**Output Example:**
+```markdown
+### 🛡️ Edge Case Coverage: 🟡 YELLOW (3/5)
+
+| Category | Status | Issues |
+|:---|:---:|:---|
+| Input Validation | ✅ | Good null checks |
+| Network | ❌ | No timeout on API calls (line 45, 67) |
+| Resources | ✅ | Finally blocks present |
+| Security | ❌ | No auth check in deleteUser() |
+| UI Behavior | ✅ | Loading states implemented |
+
+**Critical Gaps:**
+1. Add timeout to `fetchUserData()` (line 45)
+2. Add auth check before `deleteUser()` (line 120)
+
+**Recommendation:** Fix 2 critical gaps before merge.
+```
+
+### 4. Report Generation
 ```markdown
 ## 📊 Unified Review Report
 
