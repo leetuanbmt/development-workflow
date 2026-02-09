@@ -2,6 +2,20 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [5.4.0] - 2026-02-09
+### 🚀 Review Workflow v5.4.0 - Business Logic & Observability Layer
+
+**Theme:** Expanding review scope beyond code style to Business, Mobile, and Operations.
+
+#### ✨ New Features
+- **Business Logic Audit:** Kiểm tra State Machine, Permission, và Invariants.
+- **Context-Aware UI Audit:** Tách biệt tiêu chí cho **Web** (CSS/A11y) và **Mobile/Flutter** (SafeArea, Touch Targets, Platform behaviors).
+- **Observability Audit:** Bắt buộc kiểm tra Logging (Structured logs), Traceability (IDs), và Metrics.
+- **Review Context:** Tự động phát hiện `Spike` vs `MVP` vs `Prod` để điều chỉnh độ nghiêm ngặt.
+- **Enhanced Git Flow:** Hỗ trợ detect `release/*` và `hotfix/*` làm base branch.
+
+---
+
 ## [5.3.2] - 2026-02-09
 ### 🧐 Enhanced Review Workflow - Interactive Base Detection & Metrics
 

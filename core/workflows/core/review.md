@@ -1,7 +1,7 @@
 ---
 description: "Review code, UI/UX, or PR changes. Auto-detect context and mode."
 trigger: /review
-version: "5.3.1"
+version: "5.4.0"
 skills:
   - code-reviewer
   - frontend-architect
@@ -33,7 +33,9 @@ skill: code-reviewer
     *   AI MUST detect the branch point to avoid comparing against the wrong base.
     *   **Heuristic 1:** `git show-branch -a | grep '\*' | grep -v "\[$(git rev-parse --abbrev-ref HEAD)\]" | head -n1`
     *   **Heuristic 2:** `git log --oneline --decorate --simplify-by-decoration -n 5` (Look for the first branch head above the current branch).
-    *   **Heuristic 3:** If on a feature branch, check against `origin/main`, `origin/master`, or `origin/develop` (preferred order).
+    *   **Heuristic 3:** If on a feature branch, check against `origin/main`, `origin/master`, `origin/develop`, `origin/release/*`, or `origin/hotfix/*` (preferred order).
+    *   **Context Check:** Detect if this is a `Spike`, `MVP`, or `Production` feature to adjust severity.
+
 *   **Set Variables:**
     *   `FEATURE_BRANCH`: Current branch.
     *   `BASE_BRANCH`: Detected parent branch.
@@ -57,17 +59,34 @@ Run checks based on scope:
 *   Logic errors and Edge cases.
 *   Security (Hardcoded secrets).
 
-**Frontend/UI Audit (if UI files detected):**
-*   **Aesthetics:** Check for distinctive typography and spacing (no generic slop).
-*   **Design Tokens:** Ensure use of CSS variables/hsl() instead of hardcoded hex.
-*   **Accessibility:** Check contrast ratios (≥4.5:1) and focus indicators.
-*   **Motion:** Verify easing and durations for animations.
+**Business Logic Audit (New - v5.4.0):**
+*   **State Machine:** Verify valid state transitions (e.g., Loading -> Success/Error).
+*   **Permissions:** Check if role-based access control (RBAC) is enforced.
+*   **Invariants:** Ensure core business rules are not violated.
+
+
+**Frontend/UI Audit (Context-Aware):**
+*   **Web:**
+    *   **Aesthetics:** distinctive typography, spacing, CSS variables.
+    *   **Accessibility:** semantic HTML, contrast ratios.
+*   **Mobile (Flutter):**
+    *   **Widgets:** Use `SafeArea`, avoid hardcoded pixel values (use logical pixels/screen %).
+    *   **Touch Targets:** Buttons must be >= 44x44px.
+    *   **Platform:** Check for iOS/Android specific behaviors (Back button, Dialogs).
+*   **Motion (All):** Verify easing and durations.
+
 
 **Performance Audit (Speed & Efficiency):**
 *   **Complexity:** Flag nested loops O(n^2) or expensive computations in hot paths.
 *   **IO/Network:** Ensure non-blocking I/O (await properly used).
 *   **Rendering (Frontend):** Check for excessive re-renders, large lists without virtualization.
 *   **Memory:** Check for unclosed subscriptions, listeners, or timers.
+
+**Observability Audit (New - v5.4.0):**
+*   **Logging:** Ensure structured logging for State changes and Errors.
+*   **Context:** Logs must include `userId`, `requestId` or relevant correlation IDs.
+*   **Metrics:** Check if critical user flows emit success/failure metrics.
+
 
 
 ### 3. Edge Case & Defensive Audit (CRITICAL - v5.3.1) 🛡️
