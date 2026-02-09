@@ -28,18 +28,22 @@ skill: code-reviewer
 ## 🚀 Execution Steps
 
 ### 1. Context Detection & Scoping (Crucial)
-*   **Refresh Refs:** If checking a PR or branch, **ALWAYS** run `git fetch origin` first to ensure you have the latest code.
-*   **Identify Parent Branch:**
-    *   If argument is a branch (e.g., `feature/login`), determine its parent (usually `origin/develop` or `origin/main`).
-    *   **Best Practice:** Find the merge base to review *only* what this feature added:
-        `git diff --name-only $(git merge-base origin/develop HEAD)...HEAD`
+*   **Refresh Refs:** If checking a PR or branch, **ALWAYS** run `git fetch origin` first.
+*   **Identify Parent Branch (Base):**
+    *   AI MUST detect the branch point to avoid comparing against the wrong base.
+    *   **Heuristic 1:** `git show-branch -a | grep '\*' | grep -v "\[$(git rev-parse --abbrev-ref HEAD)\]" | head -n1`
+    *   **Heuristic 2:** `git log --oneline --decorate --simplify-by-decoration -n 5` (Look for the first branch head above the current branch).
+    *   **Heuristic 3:** If on a feature branch, check against `origin/main`, `origin/master`, or `origin/develop` (preferred order).
+*   **Set Variables:**
+    *   `FEATURE_BRANCH`: Current branch.
+    *   `BASE_BRANCH`: Detected parent branch.
 *   **Identify Changed Files:**
     *   *Uncommitted:* `git diff --name-only HEAD`
-    *   *Branch/PR:* `git diff --name-only [PARENT_BRANCH]...[FEATURE_BRANCH]`
+    *   *Branch/PR:* `git diff --name-only $BASE_BRANCH...$FEATURE_BRANCH`
 *   **Filter Scope (Token Saver):**
-    *   **Exclude:** `*.lock`, `*.g.dart`, `*.freezed.dart`, `assets/*`, `*.min.js`, `*.map`, `node_modules/*`
+    *   **Exclude:** `*.lock`, `*.g.dart`, `*.freezed.dart`, `assets/*`, `*.min.js`, `*.map`, `node_modules/*`, `vendor/*`, `dist/*`
     *   **Focus:** ONLY read files in the filtered list.
-*   **Confirm Scope:** Output: "Comparing [FEATURE] vs [PARENT]. Found X changed files."
+*   **Confirm Scope:** Output: "Comparing `$FEATURE_BRANCH` vs `$BASE_BRANCH`. Found X changed files."
 
 ### 2. Analysis & Audit
 Run checks based on scope:

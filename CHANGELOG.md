@@ -2,6 +2,22 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [5.3.1] - 2026-02-09
+### 🧐 Enhanced Review Workflow - Dynamic Base Detection
+
+**Theme:** Improve review accuracy by automatically detecting the parent branch.
+
+#### ✨ New Features
+- **Dynamic Parent Branch Detection:** AI giờ đây tự động nhận diện branch gốc (Base Branch) để so sánh thay vì mặc định `origin/main`.
+- **Three-Level Heuristics:** Sử dụng 3 cấp độ kiểm tra (show-branch, decoration-log, common-fallback) để tìm điểm tách branch chính xác nhất.
+- **Improved Scoping:** Báo cáo rõ ràng phạm vi so sánh `$FEATURE_BRANCH` vs `$BASE_BRANCH` kèm số lượng file thay đổi trước khi audit.
+
+#### 🔧 Internal Fixes
+- **Unified Sync:** Đồng bộ cải tiến từ file nguồn `core/workflows/` sang runtime `.agent/`.
+- **Filtration Update:** Bổ sung `vendor/` và `dist/` vào danh sách loại trừ khi quét file để tối ưu Token.
+
+---
+
 ## [5.3.0] - 2026-02-05
 ### 🛡️ Sync Safety Enhancement - Smart Detection & Protection
 
