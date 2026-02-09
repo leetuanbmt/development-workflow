@@ -37,6 +37,10 @@ skill: code-reviewer
 *   **Set Variables:**
     *   `FEATURE_BRANCH`: Current branch.
     *   `BASE_BRANCH`: Detected parent branch.
+*   **Verification (Fallback):**
+    *   If heuristics fail or results are ambiguous (e.g., diff > 20 files), **STOP and ASK**:
+        > "Cannot determine base branch with high confidence. Comparing against `origin/main` shows 50+ changed files. Please specify the correct base branch (e.g., origin/develop)."
+
 *   **Identify Changed Files:**
     *   *Uncommitted:* `git diff --name-only HEAD`
     *   *Branch/PR:* `git diff --name-only $BASE_BRANCH...$FEATURE_BRANCH`
@@ -58,6 +62,13 @@ Run checks based on scope:
 *   **Design Tokens:** Ensure use of CSS variables/hsl() instead of hardcoded hex.
 *   **Accessibility:** Check contrast ratios (≥4.5:1) and focus indicators.
 *   **Motion:** Verify easing and durations for animations.
+
+**Performance Audit (Speed & Efficiency):**
+*   **Complexity:** Flag nested loops O(n^2) or expensive computations in hot paths.
+*   **IO/Network:** Ensure non-blocking I/O (await properly used).
+*   **Rendering (Frontend):** Check for excessive re-renders, large lists without virtualization.
+*   **Memory:** Check for unclosed subscriptions, listeners, or timers.
+
 
 ### 3. Edge Case & Defensive Audit (CRITICAL - v5.3.1) 🛡️
 
@@ -146,7 +157,15 @@ Verify coverage of 5 categories (from DOD.md):
 **Mode:** [code/changes/pr]
 **Files reviewed:** X files
 
+### 📊 Issue Summary
+| Severity | Count |
+|:---|:---:|
+| 🔴 Critical | 0 |
+| 🟠 Major | 0 |
+| 🟡 Minor | 0 |
+
 ### ✅ Strengths
+
 *   [Good practices found]
 
 ### 🚨 Critical Issues

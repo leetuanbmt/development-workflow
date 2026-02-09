@@ -2,6 +2,18 @@
 
 All notable changes to the AI Development Workflow will be documented in this file.
 
+## [5.3.2] - 2026-02-09
+### 🧐 Enhanced Review Workflow - Interactive Base Detection & Metrics
+
+**Theme:** Improve review accuracy via Human-in-the-loop and better reporting.
+
+#### ✨ New Features
+- **Interactive Fallback:** Nếu AI không tự tin về branch gốc (hoặc diff > 20 files), quy trình sẽ tạm dừng và hỏi người dùng chỉ định base branch.
+- **Report Summary Table:** Thêm bảng tổng hợp số lượng Issue theo mức độ (Critical/Major/Minor) ngay đầu báo cáo.
+- **Performance Audit:** Bổ sung hạng mục audit hiệu năng (Complexity, IO/Network, Rendering, Memory Check).
+
+---
+
 ## [5.3.1] - 2026-02-09
 ### 🧐 Enhanced Review Workflow - Dynamic Base Detection
 
