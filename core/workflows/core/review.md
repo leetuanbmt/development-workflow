@@ -27,29 +27,29 @@ skill: code-reviewer
 
 ## 🚀 Execution Steps
 
-### 1. Context Detection & Scoping (Crucial)
-*   **Refresh Refs:** If checking a PR or branch, **ALWAYS** run `git fetch origin` first.
-*   **Identify Parent Branch (Base):**
-    *   AI MUST detect the branch point to avoid comparing against the wrong base.
-    *   **Heuristic 1:** `git show-branch -a | grep '\*' | grep -v "\[$(git rev-parse --abbrev-ref HEAD)\]" | head -n1`
-    *   **Heuristic 2:** `git log --oneline --decorate --simplify-by-decoration -n 5` (Look for the first branch head above the current branch).
-    *   **Heuristic 3:** If on a feature branch, check against `origin/main`, `origin/master`, `origin/develop`, `origin/release/*`, or `origin/hotfix/*` (preferred order).
-    *   **Context Check:** Detect if this is a `Spike`, `MVP`, or `Production` feature to adjust severity.
+### 1. Context Detection & Scoping (Smart Mode)
 
-*   **Set Variables:**
-    *   `FEATURE_BRANCH`: Current branch.
-    *   `BASE_BRANCH`: Detected parent branch.
-*   **Verification (Fallback):**
-    *   If heuristics fail or results are ambiguous (e.g., diff > 20 files), **STOP and ASK**:
-        > "Cannot determine base branch with high confidence. Comparing against `origin/main` shows 50+ changed files. Please specify the correct base branch (e.g., origin/develop)."
+**Step 1.1: Check Cache**
+*   If `pr_changes.diff` exists AND `.pr_review_cache` is fresh (< 5 minutes), use cached diff.
+*   Output: "Using cached diff from [cached timestamp]"
 
-*   **Identify Changed Files:**
-    *   *Uncommitted:* `git diff --name-only HEAD`
-    *   *Branch/PR:* `git diff --name-only $BASE_BRANCH...$FEATURE_BRANCH`
-*   **Filter Scope (Token Saver):**
-    *   **Exclude:** `*.lock`, `*.g.dart`, `*.freezed.dart`, `assets/*`, `*.min.js`, `*.map`, `node_modules/*`, `vendor/*`, `dist/*`
-    *   **Focus:** ONLY read files in the filtered list.
-*   **Confirm Scope:** Output: "Comparing `$FEATURE_BRANCH` vs `$BASE_BRANCH`. Found X changed files."
+**Step 1.2: Determine Base Branch (Interactive)**
+*   **DO NOT hardcode base branch** (e.g., `-b develop`).
+*   **Strategy:**
+    1. Check if user specified base branch in their request (e.g., "review against release/v2.0")
+    2. If specified, use that: `.agent/skills/code-reviewer/scripts/create_pr_diff.sh -b <user_specified> -y`
+    3. If NOT specified, let script auto-detect: `.agent/skills/code-reviewer/scripts/create_pr_diff.sh -y`
+    4. Script will show detected base for user confirmation (unless `-y` suppresses it)
+
+**Step 1.3: Generate Diff**
+*   Run: `.agent/skills/code-reviewer/scripts/create_pr_diff.sh [-b base_if_user_specified] -y`
+*   **Script auto-detects** merge-base using `git merge-base` (finds true branch point).
+*   **Caches result** in `.pr_review_cache` to avoid re-running.
+*   **Output:** `pr_changes.diff` (filtered, ready for analysis)
+
+**Step 1.4: Confirm Scope**
+*   Read first 50 lines of diff to understand scope.
+*   Output: "Reviewing X files against [detected_base]. Merge point: [commit_hash]"
 
 ### 2. Analysis & Audit
 Run checks based on scope:
@@ -213,3 +213,22 @@ Verify coverage of 5 categories (from DOD.md):
 
 *   **Be Multi-disciplinary:** Don't just look at the code logic. If a button has a hardcoded hex color, flag it as a UI debt.
 *   **Constructive Feedback:** Show "Better Code" examples for both logic and styling.
+
+### ⚠️ CRITICAL: Base Branch Detection
+
+**DO NOT:**
+- ❌ Hardcode `-b develop` or `-b main` in script calls
+- ❌ Assume base branch without checking user's request
+- ❌ Override script's auto-detection unless user explicitly requests
+
+**DO:**
+- ✅ Parse user request for branch mentions: "review against release/v2.0"
+- ✅ Let script auto-detect if user doesn't specify
+- ✅ Show detected base branch in output for transparency
+- ✅ Trust the merge-base algorithm (it finds the true branch point)
+
+**Example User Requests:**
+- "Review PR" → Run script WITHOUT `-b` flag (auto-detect)
+- "Review against develop" → Run script WITH `-b origin/develop`
+- "Review this branch" → Run script WITHOUT `-b` flag (auto-detect)
+

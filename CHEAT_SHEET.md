@@ -79,8 +79,27 @@ scripts/              # 🔧 Maintenance & Sync utilities
 
 ## 📞 Sync & Emergency (v5.3.0 - Enhanced)
 
-### 🔄 Sync Script Options
+### 🔄 Sync Options (v5.3.1 - Quick Sync)
 
+**Via Makefile (Recommended):**
+```bash
+# Full sync with smart detection
+make sync
+
+# Runtime sync (preserve hydrated workflows)
+make sync-runtime
+
+# Quick sync: workflows + skills only (no backup)
+make sync-quick
+
+# Sync workflows only (fastest)
+make sync-workflows
+
+# Sync skills only
+make sync-skills
+```
+
+**Via Script Directly:**
 ```bash
 # Smart sync (auto-detects if project is initialized)
 ./scripts/sync.sh

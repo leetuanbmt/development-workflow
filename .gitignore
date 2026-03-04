@@ -23,3 +23,9 @@ Thumbs.db
 # Logs
 *.log
 .DS_Store
+
+# Review Workflow Cache
+pr_changes.diff
+.pr_review_cache
+
+/vibecode-mcp
