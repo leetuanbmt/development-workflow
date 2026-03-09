@@ -1,0 +1,89 @@
+# ⚙️ Development Workflow Configuration
+
+# Language & Output Settings
+language: vi  # vi, en, es, pt
+output:
+  format: console  # console, json, markdown, html
+  verbose: true    # true (detailed), false (compact)
+  colors: true     # colorized output
+  timezone: Asia/Ho_Chi_Minh
+
+# Setup & Environment Detection
+setup:
+  auto_detect_stack: true          # Auto-detect tech stack
+  prompt_on_ambiguous: true        # Ask if multiple stacks detected
+  cache_detection: true            # Remember detected stack
+  default_stack: nodejs            # Fallback if detection fails
+
+# Skill Selection & Dispatch
+skills:
+  enable_confidence_scoring: true  # Show confidence % for skills
+  suggest_top_n: 3                 # Show top 3 skill suggestions
+  allow_manual_override: true      # User can choose different skill
+  enable_composition: true         # Allow combining 2-3 skills
+  auto_retry_on_failure: true      # Retry with different skill if first fails
+
+# Multi-Project Deployment
+deployment:
+  auto_backup_before_deploy: true
+  rollback_window_hours: 24        # Max 24h rollback allowed
+  require_approval: false          # auto-deploy or require approval
+  test_before_deploy: true         # Run tests first
+  parallel_deploy: true            # Deploy to multiple projects simultaneously
+  timeout_seconds: 300             # Operation timeout
+
+# Cache Management
+cache:
+  enabled: true
+  location: ./.agent/.cache       # Cache directory
+  auto_invalidate_hours: 1         # Auto-clear after 1 hour
+  max_size_mb: 100                 # Max cache size
+  include_patterns:
+    - pr_review_cache
+    - stack_detection_cache
+    - skill_selection_cache
+
+# Documentation
+documentation:
+  language_variants: [vi, en]      # Available translations
+  include_examples: true           # Include real-world examples
+  include_videos: true             # Link to video tutorials
+  include_troubleshooting: true    # Add FAQ section
+
+# Logging & Metrics
+logging:
+  level: info  # debug, info, warn, error
+  file: ./.agent/logs/workflow.log
+  rotation_mb: 10                  # Rotate when log > 10MB
+  keep_days: 30                    # Keep logs for 30 days
+
+metrics:
+  enabled: true
+  track_usage: true                # Track which workflows used
+  track_success_rate: true
+  track_time_to_complete: true
+  track_skill_accuracy: true
+  report_frequency: weekly         # Generate reports weekly
+
+# Security & Validation
+security:
+  require_audit_before_ship: true
+  scan_for_secrets: true           # git-secrets check
+  max_changes_per_workflow: 500     # Warn if > 500 files changed
+  require_test_coverage: 80        # Minimum test coverage %
+
+# UI/UX Settings
+ui:
+  theme: auto              # auto, light, dark
+  show_progress_bar: true
+  show_estimated_time: true
+  interactive_mode: true   # Wizard-style questions
+  confirmation_required: true  # Confirm before major actions
+
+# Advanced Options
+advanced:
+  enable_experimental_features: false
+  debug_mode: false
+  custom_skill_paths: []          # Additional skill directories
+  custom_workflow_paths: []       # Additional workflow directories
+  python_version: "3.9"           # Python version for scripts
