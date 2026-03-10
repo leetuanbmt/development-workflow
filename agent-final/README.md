@@ -65,7 +65,8 @@ vim .agent/memory/config.override.json  # adjust language/autoApproval/qualityGa
 │   ├── guides/                                  # 📖 How-to guides
 │   │   ├── CONTEXT_PASSING.md                  # How to provide context
 │   │   ├── CONTEXT_CACHING.md                  # Token optimization
-│   │   └── CONFIGURATION.md                     # Centralized config & overrides
+│   │   ├── CONFIGURATION.md                     # Centralized config & overrides
+│   │   ├── TEMPLATES.md                         # Template system for multi-project reuse
 │   │   └── SKILL_INTEGRATION.md                # Custom skill development
 │   ├── testing/                                 # ✅ QA reference
 │   │   └── WORKFLOW_INTEGRATION_TESTS.md       # Test patterns & examples
@@ -115,13 +116,16 @@ vim .agent/memory/config.override.json  # adjust language/autoApproval/qualityGa
 
    ### 🧩 Configuration & Templates
 
-   - Framework defaults: `agent-final/config/framework.json`
-   - Cache policy: `agent-final/config/cache.policy.json`
-   - Project overrides (per project): `memory/config.override.json` (deep-merge)
-   - Workflow template: `agent-final/templates/workflow-template.md`
-   - Skill template: `agent-final/templates/skill-template/SKILL.md`
+**Centralized Configuration:**
+- Framework defaults: `agent-final/config/framework.json`
+- Cache policy: `agent-final/config/cache.policy.json`
+- Project overrides (per project): `memory/config.override.json` (deep-merge)
 
-    ├── core/                                    # Daily Development (7)
+**Template System (Multi-Project Reuse):**
+- **Complete Guide:** [docs/guides/TEMPLATES.md](./docs/guides/TEMPLATES.md)
+- **Memory Templates:** PROJECT, ARCHITECTURE, CODE_STYLE, CONVENTIONS, GLOSSARY, TESTING_STRATEGY, QA_PROCESS, DOD, AUDITOR_MODE
+- **Rules Templates:** project-context, architecture-rules
+- **Workflow & Skill Templates:** Standard formats for extending framework
     │   ├── start-task.md                       # Plan & analyze
     │   ├── implement-feature.md                # Execute with parallelization
     │   ├── fix.md                              # Bug fixes with auto-approval
