@@ -1,0 +1,30 @@
+{
+  "name": "security-auditor",
+  "version": "1.0.0",
+  "description": "Security audit and vulnerability assessment.",
+  "inputs": [
+    {
+      "name": "source_code",
+      "type": "code",
+      "desc": "Code to audit"
+    },
+    {
+      "name": "config",
+      "type": "yaml/json",
+      "desc": "System configuration"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "audit_report",
+      "type": "markdown",
+      "desc": "Vulnerability report with severity levels"
+    },
+    {
+      "name": "remediation",
+      "type": "markdown",
+      "desc": " remediation guide"
+    }
+  ],
+  "is_active": true
+}

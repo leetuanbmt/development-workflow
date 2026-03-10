@@ -1,0 +1,730 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI Workflow Context Schema",
+  "description": "Standard context object for passing data between chained workflows. Project-agnostic.",
+  "version": "1.0.0",
+  "type": "object",
+  "definitions": {
+    "metadata": {
+      "type": "object",
+      "required": [
+        "created_at",
+        "version"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        },
+        "version": {
+          "type": "string",
+          "description": "Schema version (e.g., '1.0.0')",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "created_by": {
+          "type": "string",
+          "description": "Which workflow created this context"
+        },
+        "trace_id": {
+          "type": "string",
+          "description": "Unique ID for tracking this context through workflow chain"
+        }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Entity class name"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "String",
+                  "int",
+                  "bool",
+                  "DateTime",
+                  "List",
+                  "Map"
+                ]
+              },
+              "required": {
+                "type": "boolean",
+                "default": true
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "validation_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "use_case": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "error_cases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "api_endpoint": {
+      "type": "object",
+      "required": [
+        "method",
+        "path"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "PATCH"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "description": "e.g., '/items' or '/resources/{id}/items'"
+        },
+        "description": {
+          "type": "string"
+        },
+        "headers": {
+          "type": "object"
+        },
+        "request_body": {
+          "type": "object"
+        },
+        "response_schema": {
+          "type": "object"
+        },
+        "error_codes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "dor_checklist": {
+      "type": "object",
+      "properties": {
+        "requirement_clear": {
+          "type": "boolean"
+        },
+        "design_complete": {
+          "type": "boolean"
+        },
+        "api_contract_documented": {
+          "type": "boolean"
+        },
+        "assets_available": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "contract": {
+      "type": "object",
+      "properties": {
+        "in_scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "out_of_scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dod": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "estimated_effort": {
+          "type": "string",
+          "example": "4 hours"
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Error code (e.g., ERROR_INVALID_INPUT)"
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable error message"
+        },
+        "details": {
+          "type": "object",
+          "description": "Additional error context"
+        },
+        "step": {
+          "type": "string",
+          "description": "Which workflow step failed"
+        }
+      }
+    },
+    "workflow_state": {
+      "type": "object",
+      "properties": {
+        "workflow_id": {
+          "type": "string",
+          "description": "e.g., 'start-task', 'implement-feature'"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "in_progress",
+            "completed",
+            "failed",
+            "awaiting_input"
+          ],
+          "description": "Current status"
+        },
+        "current_step": {
+          "type": "integer",
+          "description": "Which step (1-8)"
+        },
+        "total_steps": {
+          "type": "integer",
+          "description": "Total steps in this workflow"
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/error"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "metadata",
+    "workflow"
+  ],
+  "properties": {
+    "metadata": {
+      "$ref": "#/definitions/metadata",
+      "description": "Context metadata (version, timestamps, trace)"
+    },
+    "workflow": {
+      "$ref": "#/definitions/workflow_state",
+      "description": "Current workflow execution state"
+    },
+    "blueprint": {
+      "type": "object",
+      "description": "Output from /start-task workflow (input to /implement-feature)",
+      "properties": {
+        "feature_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/entity"
+          }
+        },
+        "use_cases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/use_case"
+          }
+        },
+        "api_endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/api_endpoint"
+          }
+        },
+        "ui_screens": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "enum": [
+                  "page",
+                  "dialog",
+                  "widget"
+                ]
+              },
+              "description": {
+                "type": "string"
+              },
+              "states": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "design_link": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "state_management": {
+          "type": "object",
+          "properties": {
+            "approach": {
+              "enum": [
+                "BLoC",
+                "Riverpod",
+                "GetX"
+              ]
+            },
+            "events": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "states": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "dor": {
+          "$ref": "#/definitions/dor_checklist"
+        },
+        "contract": {
+          "$ref": "#/definitions/contract"
+        }
+      }
+    },
+    "investigation_report": {
+      "type": "object",
+      "description": "Output from /investigate workflow (input to /fix)",
+      "properties": {
+        "error_type": {
+          "type": "string"
+        },
+        "root_cause": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "affected_layer": {
+          "enum": [
+            "presentation",
+            "domain",
+            "data",
+            "unknown"
+          ]
+        },
+        "affected_files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stack_analysis": {
+          "type": "string"
+        },
+        "reproduction_steps": {
+          "type": "string"
+        }
+      }
+    },
+    "fix_plan": {
+      "type": "object",
+      "description": "Output from /fix workflow planning phase",
+      "properties": {
+        "strategy": {
+          "type": "string"
+        },
+        "files_to_modify": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "estimated_effort": {
+          "type": "string"
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "needs_db_migration": {
+          "type": "boolean"
+        },
+        "needs_api_change": {
+          "type": "boolean"
+        },
+        "approval_status": {
+          "enum": [
+            "pending",
+            "approved",
+            "rejected"
+          ]
+        }
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "description": "Output from /implement-feature workflow",
+      "properties": {
+        "domain_layer": {
+          "type": "object",
+          "properties": {
+            "entities_created": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "repositories_defined": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "use_cases_implemented": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "data_layer": {
+          "type": "object",
+          "properties": {
+            "repositories_implemented": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "data_sources_created": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "models_created": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "presentation_layer": {
+          "type": "object",
+          "properties": {
+            "blocs_created": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "pages_created": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "widgets_created": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "code_generation": {
+          "type": "object",
+          "properties": {
+            "build_runner_success": {
+              "type": "boolean"
+            },
+            "generated_files": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "tests": {
+          "type": "object",
+          "properties": {
+            "unit_tests": {
+              "type": "integer"
+            },
+            "widget_tests": {
+              "type": "integer"
+            },
+            "coverage_percent": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "quality_audit": {
+      "type": "object",
+      "description": "Output from /code-quality-audit workflow",
+      "properties": {
+        "architecture_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "code_quality_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "performance_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "security_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "test_coverage_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "severity": {
+                "enum": [
+                  "critical",
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              "category": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "user_input": {
+      "type": "object",
+      "description": "Stores user decisions at approval gates",
+      "properties": {
+        "gate_id": {
+          "type": "string",
+          "description": "Which approval gate (e.g., 'start-task.step6')"
+        },
+        "decision": {
+          "enum": [
+            "approved",
+            "rejected",
+            "modified"
+          ]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "modifications": {
+          "type": "object",
+          "description": "User changes if decision is 'modified'"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "metadata": {
+        "created_at": "2026-03-09T10:30:00Z",
+        "version": "1.0.0",
+        "created_by": "start-task",
+        "trace_id": "ctx_abc123_xyz"
+      },
+      "workflow": {
+        "workflow_id": "start-task",
+        "status": "completed",
+        "current_step": 6,
+        "total_steps": 6,
+        "started_at": "2026-03-09T10:00:00Z",
+        "completed_at": "2026-03-09T10:45:00Z"
+      },
+      "blueprint": {
+        "feature_name": "Gallery Infinite Scroll",
+        "description": "Add pagination to gallery with lazy loading",
+        "priority": "high",
+        "entities": [
+          {
+            "name": "Photo",
+            "attributes": [
+              {
+                "name": "id",
+                "type": "String",
+                "required": true
+              },
+              {
+                "name": "url",
+                "type": "String",
+                "required": true
+              },
+              {
+                "name": "createdAt",
+                "type": "DateTime",
+                "required": true
+              }
+            ]
+          }
+        ],
+        "use_cases": [
+          {
+            "name": "GetPhotosUseCase",
+            "description": "Fetch paginated photos",
+            "inputs": [
+              "limit",
+              "offset"
+            ],
+            "outputs": [
+              "List<Photo>"
+            ]
+          }
+        ],
+        "dor": {
+          "requirement_clear": true,
+          "design_complete": true,
+          "api_contract_documented": true,
+          "assets_available": true
+        },
+        "contract": {
+          "in_scope": [
+            "Infinite scroll",
+            "Pagination",
+            "Error handling"
+          ],
+          "out_of_scope": [
+            "Accessibility v1",
+            "Advanced filtering"
+          ],
+          "estimated_effort": "4 hours"
+        }
+      }
+    }
+  ]
+}

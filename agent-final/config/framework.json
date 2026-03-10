@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "description": "Framework-wide defaults for reusable multi-project setup. Override per project via memory/config.override.json (deep-merge).",
+  "defaults": {
+    "language": "vi",
+    "maxIterations": {
+      "start-task": 3,
+      "implement-feature": 1,
+      "fix": 1
+    },
+    "timeoutMinutes": {
+      "start-task": 60,
+      "implement-feature": 120,
+      "fix": 60
+    }
+  },
+  "policies": {
+    "parallelization": {
+      "enabled": true,
+      "guard": "sequential_if_missing_dependencies",
+      "maxConcurrency": 2
+    },
+    "autoApproval": {
+      "fix": { "confidenceScore": 0.85 },
+      "start-task": { "dorCompleteness": 1.0 }
+    },
+    "qualityGates": {
+      "testCoverageMin": 0.7,
+      "linter": "pass"
+    }
+  },
+  "monitoring": {
+    "cli": {
+      "enabled": true,
+      "historyDaysDefault": 7
+    },
+    "events": {
+      "recordAutoApproval": true,
+      "recordCacheStats": true
+    }
+  }
+}

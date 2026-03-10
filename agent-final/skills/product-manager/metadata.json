@@ -1,0 +1,25 @@
+{
+  "name": "product-manager",
+  "version": "1.0.0",
+  "description": "Translates ideas into detailed technical requirements (PRD).",
+  "inputs": [
+    {
+      "name": "idea",
+      "type": "text",
+      "desc": "Raw idea or business request"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "prd",
+      "type": "markdown",
+      "desc": "Product Requirement Document"
+    },
+    {
+      "name": "user_stories",
+      "type": "markdown",
+      "desc": "List of User Stories"
+    }
+  ],
+  "is_active": true
+}

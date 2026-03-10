@@ -1,0 +1,23 @@
+{
+  "defaults": {
+    "language": "en"
+  },
+  "policies": {
+    "autoApproval": {
+      "fix": { "confidenceScore": 0.9 },
+      "implement-feature": { "testCoverageMin": 0.8 }
+    },
+    "parallelization": {
+      "enabled": true,
+      "maxConcurrency": 2
+    },
+    "qualityGates": {
+      "testCoverageMin": 0.8,
+      "linter": "pass"
+    }
+  },
+  "monitoring": {
+    "cli": { "enabled": true },
+    "events": { "recordAutoApproval": true }
+  }
+}

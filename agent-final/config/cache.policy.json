@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "ttlHours": 24,
+  "retentionDays": 30,
+  "compression": "gzip",
+  "maxEntries": 1000,
+  "excludeFields": ["logs", "token_usage"],
+  "paths": {
+    "root": "~/.agents/cache",
+    "workflowContext": "workflow_context"
+  },
+  "cleanup": {
+    "enabled": true,
+    "schedule": "@daily"
+  }
+}
